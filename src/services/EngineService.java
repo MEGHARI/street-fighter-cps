@@ -49,6 +49,3 @@ public interface EngineService {
 	
 	
 }
-// utile surtt 1
-//https://github.com/Sylux6/Street-Fighter/blob/master/src/services/EngineService.java
-//https://github.com/FouquerYohann/RectanglesSometimeSquaresFight/blob/master/src/components/services/FighterService.java

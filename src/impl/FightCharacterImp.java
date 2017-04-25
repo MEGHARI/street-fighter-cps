@@ -8,6 +8,7 @@ import services.FightCharService;
 import services.HitboxService;
 
 public class FightCharacterImp implements FightCharService {
+	
 	private int positionX;
 	private int positionY;
 	private NAME name;
@@ -21,6 +22,9 @@ public class FightCharacterImp implements FightCharService {
 	private boolean isBlockstunned;
 	private boolean isHitstunned;
 	private boolean isTech;
+	private Tech tech;
+	private Tech[]  techs = {new Tech(50, 10, 4, 3, 10, 5),new Tech(50, 10, 7, 7, 10, 5)}; 
+	
 	
 	@Override
 	public int getPositionX() {
@@ -155,8 +159,7 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public Tech getTech() {
-		// TODO Auto-generated method stub
-		return null;
+		return tech;
 	}
 
 	@Override
@@ -173,7 +176,12 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public void startTech(Tech tech) {
-		// TODO Auto-generated method stub
+		if(!notManipulable()) {
+			isTech =true;
+			this.tech = tech;
+			
+			
+		}
 
 	}
 
