@@ -10,10 +10,8 @@ public interface RectangleHitboxService extends /*refine*/ HitboxService{
     
     
     // Invariants
-  
-    
-    
-    // 
+
+	// \inv: belongsTo(x,y) == getPositionX() <= x <= getPositionX()+getWidth() && getPositionY() <= y <= getPositionY()+getHeight() 
     
     // Constructors
     
@@ -27,8 +25,8 @@ public interface RectangleHitboxService extends /*refine*/ HitboxService{
     
     // \pre: w > 0
     // \pre: h > 0
-    // \post: getHeight(w,h) == w
-    // \post: getWidth(w,h) == w
+    // \post: getHeight() == h
+    // \post: getWidth() == w
     public void resize(int w,int h);
     
     

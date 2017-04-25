@@ -6,7 +6,7 @@ public interface HitboxService {
 	
 	public int getPositionY();
 	
-	public boolean belongsTo(int  x,int y);
+	public boolean belongsTo(int x,  int y);
 	
 	public boolean collidesWith(HitboxService h);
 
