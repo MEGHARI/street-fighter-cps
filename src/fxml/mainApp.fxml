@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="602.0" styleClass="anchore" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainController">
+   <children>
+      <Button fx:id="startGame" layoutX="219.0" layoutY="416.0" mnemonicParsing="false" onAction="#startGame" prefHeight="26.0" prefWidth="115.0" styleClass="start" text="start " textFill="#c61e1e">
+         <font>
+            <Font size="23.0" />
+         </font></Button>
+      <ImageView fx:id="bison" fitHeight="210.0" fitWidth="73.0" layoutX="31.0" layoutY="14.0" onMouseClicked="#chooseCharacher" pickOnBounds="true" preserveRatio="true" styleClass="fighter">
+         <image>
+            <Image url="@../images/bison.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="vega" fitHeight="86.0" fitWidth="73.0" layoutX="145.0" layoutY="14.0" onMouseClicked="#chooseCharacher" pickOnBounds="true" preserveRatio="true" styleClass="fighter">
+         <image>
+            <Image url="@../images/vega.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="ry" fitHeight="80.0" fitWidth="115.0" layoutX="205.0" layoutY="10.0" onMouseClicked="#chooseCharacher" pickOnBounds="true" preserveRatio="true" styleClass="fighter">
+         <image>
+            <Image url="@../images/ry.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="chn" fitHeight="80.0" fitWidth="100.0" layoutX="372.0" layoutY="6.0" onMouseClicked="#chooseCharacher" pickOnBounds="true" preserveRatio="true" styleClass="fighter">
+         <image>
+            <Image url="@../images/chn.gif" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="zangief" fitHeight="86.0" fitWidth="123.0" layoutX="519.0" layoutY="14.0" onMouseClicked="#chooseCharacher" pickOnBounds="true" preserveRatio="true" styleClass="fighter">
+         <image>
+            <Image url="@../images/zangief.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="145.0" fitWidth="176.0" layoutX="212.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/vs.png" />
+         </image>
+      </ImageView>
+      <GridPane gridLinesVisible="true" layoutX="30.0" layoutY="172.0" prefHeight="195.0" prefWidth="170.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="choosen1" fitHeight="187.0" fitWidth="169.0" onMouseClicked="#reset" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </GridPane>
+      <GridPane gridLinesVisible="true" layoutX="407.0" layoutY="172.0" prefHeight="195.0" prefWidth="170.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="choosen2" fitHeight="187.0" fitWidth="169.0" onMouseClicked="#reset" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </GridPane>
+      <Text fill="#241de0" layoutX="65.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="joueur : 1" wrappingWidth="99.99999257922173">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#2516cc" layoutX="442.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="joueur : 2" wrappingWidth="99.99999257922173">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
