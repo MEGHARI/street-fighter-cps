@@ -1,7 +1,6 @@
 
 package impl;
 
-
 import enums.COMMAND;
 import enums.NAME;
 import services.CharacterService;
@@ -18,7 +17,7 @@ public class CharacterImpl implements CharacterService {
 	private int life;
 	private int speed;
 	private boolean faceRight;
-	private boolean dead ;
+	private boolean dead;
 
 	@Override
 	public int getPositionX() {
@@ -29,6 +28,7 @@ public class CharacterImpl implements CharacterService {
 	public int getPositionY() {
 		return positionY;
 	}
+
 	@Override
 	public NAME getName() {
 		return name;
@@ -65,7 +65,7 @@ public class CharacterImpl implements CharacterService {
 	}
 
 	@Override
-	public void init(NAME name,int l, int s, boolean f, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e) {
 		this.name = name;
 		this.life = l;
 		this.dead = false;
@@ -73,17 +73,17 @@ public class CharacterImpl implements CharacterService {
 		this.faceRight = f;
 		this.engine = e;
 	}
-	
+
 	@Override
 	public void setPositions(int x, int y) {
-		this.positionX =x;
-		this.positionY =y;	
+		this.positionX = x;
+		this.positionY = y;
 	}
-	
+
 	@Override
 	public void initFace(boolean face) {
 		faceRight = face;
-		
+
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class CharacterImpl implements CharacterService {
 
 	@Override
 	public void moveRight() {
-		positionX = Math.min(positionX + speed,getEngine().getWidth() );
+		positionX = Math.min(positionX + speed, getEngine().getWidth());
 	}
 
 	@Override
@@ -107,12 +107,15 @@ public class CharacterImpl implements CharacterService {
 		case LEFT:
 			moveLeft();
 			break;
+		case RIGHT:
+			moveRight();
+			break;
 		case NEUTRAL:
 			break;
-			
+		default:
+			break;
+
 		}
 	}
-	
 
-	
 }

@@ -17,6 +17,10 @@ public class FightCharacterImp implements FightCharService {
 	private int speed;
 	private boolean faceRight;
 	private boolean dead;
+	private boolean isBlocking;
+	private boolean isBlockstunned;
+	private boolean isHitstunned;
+	private boolean isTech;
 	
 	@Override
 	public int getPositionX() {
@@ -74,68 +78,79 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public void setPositions(int x, int y) {
-		
+		this.positionX =x;
+		this.positionY =y;
 
 	}
 
 	@Override
 	public void initFace(boolean face) {
-		// TODO Auto-generated method stub
+		faceRight = face;
 
 	}
 
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
+		positionX = Math.max(0, positionX - speed);
 
 	}
 
 	@Override
 	public void moveRight() {
-		// TODO Auto-generated method stub
+		positionX = Math.min(positionX + speed,getEngine().getWidth() );
 
 	}
 
 	@Override
 	public void switchSide() {
-		// TODO Auto-generated method stub
+		faceRight = !faceRight;
 
 	}
 
 	@Override
 	public void step(COMMAND c) {
-		// TODO Auto-generated method stub
+		switch (c) {
+		case LEFT:
+			moveLeft();
+			break;
+		case RIGHT:
+			moveRight();
+			break;
+		case JUMP:
+			jump();
+			break;
+		case CROUCH:
+			crouch();
+			break;
+		default:
+			break;
+		}
 
 	}
 
 	@Override
 	public boolean notManipulable() {
-		// TODO Auto-generated method stub
-		return false;
+		return isBlockstunned() || isHitstunned() || isTeching() ;
 	}
 
 	@Override
 	public boolean isBlocking() {
-		// TODO Auto-generated method stub
-		return false;
+		return isBlocking;
 	}
 
 	@Override
 	public boolean isBlockstunned() {
-		// TODO Auto-generated method stub
-		return false;
+		return isBlockstunned;
 	}
 
 	@Override
 	public boolean isHitstunned() {
-		// TODO Auto-generated method stub
-		return false;
+		return isHitstunned;
 	}
 
 	@Override
 	public boolean isTeching() {
-		// TODO Auto-generated method stub
-		return false;
+		return isTech;
 	}
 
 	@Override
