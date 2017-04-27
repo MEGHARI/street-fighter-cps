@@ -43,4 +43,11 @@ public class HitboxImpl implements HitboxService {
 		this.positionX = x;
 		this.positionY = y;
 	}
+	
+	@Override
+	public HitboxImpl clone(){
+		HitboxImpl h = new HitboxImpl();
+		h.init(positionX,positionY);
+		return h;
+	}
 }

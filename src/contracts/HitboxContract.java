@@ -101,4 +101,9 @@ public class HitboxContract extends HitboxDecorator {
 			throw new PostconditionError("Position incorrecte");
 	}
 	
+	@Override
+	public HitboxContract clone(){
+		return new HitboxContract(getDelegate().clone());
+	}
+	
 }

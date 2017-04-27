@@ -36,7 +36,7 @@
 **** -10 < 0
 **** #Exception Levée
 
-** Test 2.1 : RectangleHitbox:testMoveTo
+** Test 2.1 : RectangleHitbox:testMoveTo1
 
 *** Condition initiale :
 **** L =(def) init(10,0,10,15)

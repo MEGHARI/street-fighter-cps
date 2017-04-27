@@ -51,5 +51,10 @@ public class HitboxDecorator implements HitboxService {
 		delegate.moveTo(x, y);
 
 	}
+	
+	@Override
+	public HitboxDecorator clone(){
+		return new HitboxDecorator(delegate.clone());
+	}
 
 }

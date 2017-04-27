@@ -104,4 +104,11 @@ public class RectangleHitboxImpl implements RectangleHitboxService {
 		this.positionX = x;
 		this.positionY = y;
 	}
+	
+	@Override
+	public RectangleHitboxImpl clone(){
+		RectangleHitboxImpl rh = new RectangleHitboxImpl();
+		rh.init(positionX,positionY, width, height);
+		return rh;
+	}
 }

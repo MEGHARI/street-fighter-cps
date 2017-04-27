@@ -29,5 +29,6 @@ public interface RectangleHitboxService extends /*refine*/ HitboxService{
     // \post: getWidth() == w
     public void resize(int w,int h);
     
-    
+    @Override
+	public RectangleHitboxService clone();
 }

@@ -30,6 +30,5 @@ public interface HitboxService {
     // \post: \forall u, v: int x int { belongsTo(u, v) == belongsTo(u-(x-getPositionX()@pre), v-(y-getPositionY()@pre))@pre }
 	public void moveTo(int x, int y);
 	
-	
-	
+	public HitboxService clone();
 }

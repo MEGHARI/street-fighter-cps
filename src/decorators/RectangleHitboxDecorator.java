@@ -35,5 +35,10 @@ public class RectangleHitboxDecorator extends HitboxDecorator implements Rectang
 		delegate.resize(w, h);
 
 	}
+	
+	@Override
+	public RectangleHitboxDecorator clone(){
+		return new RectangleHitboxDecorator(delegate.clone());
+	}
 
 }
