@@ -1,5 +1,5 @@
 package enums;
 
 public enum COMMAND {
-	CROUCH,RIGHT, LEFT, JUMP, NEUTRAL,TECH	 
+	CROUCH, RIGHT, LEFT, JUMP, NEUTRAL,TECH	 
 }

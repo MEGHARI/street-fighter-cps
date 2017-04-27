@@ -1,0 +1,55 @@
+* Test RectangleHitbox
+
+** Test 1.1 : RectangleHitbox:testInit1
+
+*** Condition initiale : null
+*** Opération : L0 =(def) init(100,0,150,10)
+*** Oracle :
+**** PositionX(L0) = 100
+**** PositionY(L0) = 0
+**** Height(L0) = 150
+**** Width(L0) = 10
+
+** Test 1.2 : RectangleHitbox:testInit2
+
+*** Condition initiale : null
+*** Opération : L0 =(def) init(15,-10,15,10)
+*** Oracle :
+**** PositionX(L0) = 15
+**** PositionY(L0) = -10
+**** Height(L0) = 15
+**** Width(L0) = 10
+
+** Test 1.3 : RectangleHitbox:testInitFail1
+
+*** Condition initiale : null
+*** Opération : L0 =(def) init(10,0,-10,15)
+*** Oracle :
+**** -10 < 0
+**** #Exception Levée
+
+** Test 1.4 : RectangleHitbox:testInitFail2
+
+*** Condition initiale : null
+*** Opération : L0 =(def) init(10,0,10,-15)
+*** Oracle :
+**** -15 < 0
+**** #Exception Levée
+
+** Test 2.1 : RectangleHitbox:testMoveTo
+
+*** Condition initiale : L =(def) init(10,0,15,10)
+*** Opération : L0 =(def) MoveTo(L, 2, 5)
+*** Oracle :
+**** PositionX(L0) = 2
+**** PositionY(L0) = 5
+**** ∀u, ∀v ∈ int * int, BelongsTo(L0,u,v) = BelongsTo(L, u-(2-PositionX(L)), v-(5-PositionY(L)))
+
+** Test 2.2 : RectangleHitbox:testMoveTo2
+
+*** Condition initiale : L =(def) init(10,0,15,10)
+*** Opération : L0 =(def) MoveTo(L, -20, 5)
+*** Oracle :
+**** PositionX(L0) = -20
+**** PositionY(L0) = 5
+**** ∀u, ∀v ∈ int * int, BelongsTo(L0,u,v) = BelongsTo(L, u-(-20-PositionX(L)), v-(5-PositionY(L)))
