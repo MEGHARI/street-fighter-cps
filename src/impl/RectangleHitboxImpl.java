@@ -59,12 +59,21 @@ public class RectangleHitboxImpl implements RectangleHitboxService {
 
 	@Override
 	public boolean collidesWith(HitboxService h) {
-		if (h instanceof RectangleHitboxService)
+		if (h instanceof RectangleHitboxService){
+			for (int i = getPositionX(); i < width+getPositionX(); i++)
+				for (int j = getPositionY(); j < height+getPositionY(); j++)
+					if (h.belongsTo(i,j))
+						return true;
+			
+			
+		/*	System.out.println("coucou");
 			return positionX < ((RectangleHitboxService) h).getPositionX() + ((RectangleHitboxService) h).getWidth()
 					&& positionX > ((RectangleHitboxService) h).getPositionX()
 					&& positionY < ((RectangleHitboxService) h).getPositionY()
 							+ ((RectangleHitboxService) h).getHeight()
 					&& height + positionY > ((RectangleHitboxService) h).getPositionY();
+		*/
+		}
 
 		else
 			for (int i = 0; i < width; i++)
