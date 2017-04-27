@@ -1,0 +1,83 @@
+
+Service:Character
+Types:bool, int, Commande
+Observators:
+	positionX: [Character] → int
+	positionY: [Character] → int
+	const name:[Character] -> String
+	engine: [Character] → Engine
+	charBox: [Character] → Hitbox
+	life: [Character] → int
+	const speed: [Character] → int
+	faceRight: [Character] → bool
+	dead: [Character] → bool
+
+Constructors:
+init: String × int × int × bool × Engine  → [Character]
+	pre init(name, l,s,f,e, h) requires l > 0 ∧ s > 0
+Operators:
+	initFace: boolean ->[Character]
+	setPositions: [Character] × int  × int ->[Character]
+	moveLeft: [Character] → [Character]
+	moveRight: [Character] → [Character]
+	switchSide: [Character] → [Character]
+	step: [Character] × Commande → [Character]
+		pre step(Char, C) requires ¬dead(Char) ^ C (appartient) { RIGHT, LEFT, NEUTRAL } 
+
+Observations:
+	[invariant]:
+		positionX(C) >= 0 ∧ positionX(C) <= Engine:: width(engine)
+		positionY(C) >= 0 ∧ positionY(C) <= Engine:: height(engine)
+/* AJOUT */	positionX(C) = Hitbox::PositionX(charbox(C)) ^ PositionY(C) = Hitbox::PositionY(charbox(C))
+		dead(C) = ¬(life > 0)
+
+	[init]:
+		name(init(name,l, s, f, e)) = name ^ life(init(name,l, s, f, e)) = l ∧ speed(init(name,l, s, f, e)) = s ∧ 
+		faceRight(init(name,l, s, f, e)) = f ∧ engine(init(name,l, s, f, e)) = e
+		∃h :Hitbox, charbox(init(name,l, s, f, e)) = h
+
+[setPositions]:
+		positionX(setPositions(C,x,y)) == x
+		positionX(setPositions(C,x,y)) == y
+[initFace]
+	faceRight() == face 
+
+[moveLeft]:
+	(∃i, char(engine(C), i) != C ∧ collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = positionX(C)
+
+	positionX(C) ≤ speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = 0
+
+	positionX(C) > speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = positionX(C) − speed(C)
+
+	faceRight(moveLeft(C)) = faceRight(C) ∧ life(moveLeft(C)) = life(C)
+
+	positionY(moveLeft(C)) = positionY(C)
+
+
+[moveRight]:
+	(∃i, char(engine(C), i) != C ∧ collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveRight(C)) = positionX(C)
+
+	positionX(C) ≤ width(engine(C))-speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) =positionX(C)+speed(C)
+
+	positionX(C) > width(engine(C))-speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) =width(engine(C))
+
+	faceRight(moveRight(C)) = faceRight(C) ∧ life(moveRight(C)) = life(C)
+
+	positionY(moveRight(C)) = positionY(C)
+
+[switchSide]:
+	faceRight(switchSide(C)) != faceRight(C)
+	positionX(switchSide(C)) = positionX(C)
+	positionY(switchSide(C)) = positionY(C)
+
+[step]:
+	step(C, LEFT) = moveLeft(C)
+	step(C, RIGHT) = moveRight(C)
+	step(C, NEUTRAL) = C
+

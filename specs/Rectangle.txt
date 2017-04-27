@@ -1,0 +1,33 @@
+Service : RectangleHitbBox
+Refine : HitbBox
+Types: int, bool
+
+Observators:
+
+height :[RectangleHitBox]->int
+width :[RectangleHitBox]->int
+BelongsTo: [RectangleHitbox] × int × int → bool
+
+Constructors:
+
+	init :int*init*int*int->[RectangleHitbox]
+		pre:init(x,y,h,w) require h>0 ^ w>0
+
+Operators:
+
+	resize : [RectangleHitbox] × int  × int ->[RectangleHitbox]
+		pre resize(w,h) require w>0 && h>0
+
+Observations:
+
+[Ivariants]:
+	BelongsTo(RH,x,y) =(min) Position(RH)<=x<=Position(HR)+width(RH) ^ Position(RH)<=y<=Position(HR)+height(RH)
+[Init]:
+	PositionX(init(x,y,h,w)) = x
+	PositionY(init(x,y,h,w)) = y
+	height(init(x,y,h,w))=h
+	width(init(x,y,h,w))=w
+
+[resize]:
+	height(resize(R,w,h)) = h
+	width(resize(R,w,h)) = w

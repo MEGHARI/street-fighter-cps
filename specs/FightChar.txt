@@ -1,0 +1,53 @@
+Service: FightChar 
+refines: Character
+
+Observators:
+
+	isOutOfControl: [FightChar] -> bool
+	isBlocking: [FightChar] → bool
+	isBlockstunned: [FightChar] → bool
+	isHitstunned: [FightChar] → bool
+	isTeching: [FightChar] → bool
+	tech: [FightChar] → Tech
+		pre tech(C) requires isBlocking(C)
+	techFrame: [FightChar] → bool
+		pre techFrame(C) requires isTeching(C)
+	techHasAlreadyHit: [FightChar] → bool
+		pre techHasAlreadyHit(C) requires isTeching(C)
+Constructors:
+init: String × int × int × bool × Engine → [Character]
+	pre init(l,s,f,e) requires l > 0 ∧ s > 0
+
+Operators: 
+
+	startTech: [FightChar] × Tech → [FightChar]
+		pre startTech(C,T) requires ¬isOutOfControl(C))
+	jump :[Character]→ [Character]
+		pre jump(C) require  ¬isOutOfControl(C)
+	crouch:[Character]→ [Character]
+		pre crouch(C) require ¬isOutOfControl(C)
+	startBloking: [Character] -> [Character]
+		pre startBloking(C) requires ¬isBloking(C)
+
+Observation:
+
+[Invariant]
+	isOutOfControl(C) =(min) isTeching(C) || isBlockstunned(C) || isHitStunned(C)
+
+[init]:
+	isOutOfControl(init(name,l, s, f, e)) = false ^ isBlocking(init(name,l, s, f, e)) = false
+[jump]
+	positionX(jump(C)) = positionX()
+	positionY(jump(C)) = positionY()
+[crouch]
+	positionX(crouch(C)) = positionX()
+	positionY(crouch(C)) = positionY()
+[moveLeft]:
+/* MAJ */	(isOutOfControl(moveLeft(C)) || isBlocking(moveLeft(C))) => positionX(moveLeft(C)) = positionX()
+
+[moveRight]:
+/* MAJ */	(isOutOfControl(moveRight(C)) || isBlocking(moveRight(C))) => positionX(moveRight(C)) = positionX()
+[startBloking]
+	isBloking = false;
+
+/* AJOUT redéfinition de la méthode step pour prendre en compte JUMP CROUCH .... */

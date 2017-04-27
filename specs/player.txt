@@ -1,0 +1,16 @@
+Service : player
+type : int,String,Command
+
+Observators:
+character[player]->Character
+numPlayer[player]->int
+command[player] ->Command
+
+
+Constructors:
+/* MAJ */ init: int -> [player]
+
+Operators :
+selectCharacter[player]-> Character
+pressCommand[player]->[player]
+

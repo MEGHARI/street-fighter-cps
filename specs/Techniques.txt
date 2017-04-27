@@ -1,0 +1,11 @@
+Data:
+Observators: Tech
+damage: [Tech] → int
+hstun: [Tech] → int
+bstun: [Tech] → int
+sframe: [Tech] → int
+hframe: [Tech] → int
+rframe: [Tech] → int
+hitbox: [Tech] × int × int → Hitbox
+
+
