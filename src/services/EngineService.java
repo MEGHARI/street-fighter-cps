@@ -43,14 +43,12 @@ public interface EngineService {
 	// \pre: !isGameOver()
 	// \post: getChar(1) = getChar(1)@pre.step(C1)
 	// \post: getChar(2) = getChar(2)@pre.step(C2)
-<<<<<<< HEAD
+
 	public void step(COMMAND c1, COMMAND c2);
 	
 	
 	
 	
 }
-=======
-	public void step(COMMAND c1, COMMAND c2);	
-}
->>>>>>> 3fffa420cceec38e21e8f1e9a6035af20d4b6f0a
+
+	

@@ -8,6 +8,6 @@
     -fx-background-radius: 20;
     -fx-padding: 5;
 }
-.anchore{
-	-fx-background-image: url("/images/index.jpg");
+#anchore{
+	-fx-background-image: url("/images/partie.gif");
 }
