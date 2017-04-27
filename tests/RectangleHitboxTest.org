@@ -3,22 +3,22 @@
 ** Test 1.1 : RectangleHitbox:testInit1
 
 *** Condition initiale : null
-*** Opération : L0 =(def) init(10,0,15,10)
+*** Opération : L0 =(def) init(10,0,10,15)
 *** Oracle :
 **** PositionX(L0) = 10
 **** PositionY(L0) = 0
-**** Height(L0) = 15
 **** Width(L0) = 10
+**** Height(L0) = 15
 
 ** Test 1.2 : RectangleHitbox:testInit2
 
 *** Condition initiale : null
-*** Opération : L0 =(def) init(-10,0,15,10)
+*** Opération : L0 =(def) init(-10,0,10,15)
 *** Oracle :
 **** PositionX(L0) = -10
 **** PositionY(L0) = 0
-**** Height(L0) = 15
 **** Width(L0) = 10
+**** Height(L0) = 15
 
 ** Test 1.3 : RectangleHitbox:testInitFail1
 
@@ -39,7 +39,7 @@
 ** Test 2.1 : RectangleHitbox:testMoveTo
 
 *** Condition initiale :
-**** L =(def) init(10,0,15,10)
+**** L =(def) init(10,0,10,15)
 *** Opération : L0 =(def) MoveTo(L, 20, 5)
 *** Oracle :
 **** PositionX(L0) = 20
@@ -49,7 +49,7 @@
 ** Test 2.2 : RectangleHitbox:testMoveTo2
 
 *** Condition initiale :
-**** L =(def) init(10,0,15,10)
+**** L =(def) init(10,0,10,15)
 *** Opération : L0 =(def) MoveTo(L, -20, 5)
 *** Oracle :
 **** PositionX(L0) = -20
@@ -59,17 +59,17 @@
 ** Test 3.1 : RectangleHitbox:testResize
 
 *** Condition initiale :
-**** L =(def) init(10,0,15,10)
-*** Opération : L0 =(def) Resize(L, 20, 5)
+**** L =(def) init(10,0,10,15)
+*** Opération : L0 =(def) Resize(L, 5, 20)
 *** Oracle :
-**** Height(L0) = 20
 **** Width(L0) = 5
+**** Height(L0) = 20
 
 ** Test 3.2 : RectangleHitbox:testResizeFail1
 
 *** Condition initiale :
-**** L =(def) init(10,0,15,10)
-*** Opération : L0 =(def) Resize(L, -20, 5)
+**** L =(def) init(10,0,10,15)
+*** Opération : L0 =(def) Resize(L, 5, -20)
 *** Oracle :
 **** -20 < 0
 **** #Exception Levée
@@ -77,8 +77,8 @@
 ** Test 3.3 : RectangleHitbox:testResizeFail2
 
 *** Condition initiale :
-**** L =(def) init(10,0,15,10)
-*** Opération : L0 =(def) Resize(L, 20, -5)
+**** L =(def) init(10,0,10,15)
+*** Opération : L0 =(def) Resize(L, -5,  20)
 *** Oracle :
 **** -5 < 0
 **** #Exception Levée
