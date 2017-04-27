@@ -3,31 +3,31 @@ refines: Character
 
 Observators:
 
-	isOutOfControl: [FightChar] -> bool
+	notManipulable: [FightChar] -> bool
 	isBlocking: [FightChar] → bool
 	isBlockstunned: [FightChar] → bool
 	isHitstunned: [FightChar] → bool
 	isTeching: [FightChar] → bool
 	tech: [FightChar] → Tech
-		pre tech(C) requires isBlocking(C)
+		pre tech(C) requires isTeching(C)
 	techFrame: [FightChar] → bool
 		pre techFrame(C) requires isTeching(C)
 	techHasAlreadyHit: [FightChar] → bool
 		pre techHasAlreadyHit(C) requires isTeching(C)
 Constructors:
-init: String × int × int × bool × Engine → [Character]
-	pre init(l,s,f,e) requires l > 0 ∧ s > 0
+	init: String × int × int × bool × Engine → [Character]
+		pre init(l,s,f,e) requires l > 0 ∧ s > 0
 
 Operators: 
 
 	startTech: [FightChar] × Tech → [FightChar]
 		pre startTech(C,T) requires ¬isOutOfControl(C))
 	jump :[Character]→ [Character]
-		pre jump(C) require  ¬isOutOfControl(C)
+		pre jump(C) require  ¬notManipulable(C)
 	crouch:[Character]→ [Character]
-		pre crouch(C) require ¬isOutOfControl(C)
+		pre crouch(C) require ¬notManipulable(C)
 	startBloking: [Character] -> [Character]
-		pre startBloking(C) requires ¬isBloking(C)
+		pre startBloking(C) requires ¬isBloking(C) && ¬notManipulable(C) 
 
 Observation:
 
@@ -43,11 +43,45 @@ Observation:
 	positionX(crouch(C)) = positionX()
 	positionY(crouch(C)) = positionY()
 [moveLeft]:
-/* MAJ */	(isOutOfControl(moveLeft(C)) || isBlocking(moveLeft(C))) => positionX(moveLeft(C)) = positionX()
+	(notManipulable() || isBlocking()) => positionX(moveLeft(C)) = positionX()
+	
+	( ∃i, char(engine(C), i) != C ∧ (!(notManipulable() || isBlocking())) ∧  collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = positionX(C)
+
+	(!(notManipulable() || isBlocking())) ∧ positionX(C) ≤ speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = 0
+
+	(!(notManipulable() || isBlocking())) ∧ positionX(C) > speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) = positionX(C) − speed(C)
+
+	faceRight(moveLeft(C)) = faceRight(C) ∧ life(moveLeft(C)) = life(C)
+
+	positionY(moveLeft(C)) = positionY(C)
 
 [moveRight]:
-/* MAJ */	(isOutOfControl(moveRight(C)) || isBlocking(moveRight(C))) => positionX(moveRight(C)) = positionX()
+	(notManipulable() || isBlocking()) => positionX(moveRight(C)) = positionX()(∃i, char(engine(C), i) != C ∧ collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveRight(C)) = positionX(C)
+
+	(!(notManipulable() || isBlocking()))∧ positionX(C) ≤ width(engine(C))-speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) =positionX(C)+speed(C)
+
+	(!(notManipulable() || isBlocking()))∧ positionX(C) > width(engine(C))-speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
+	⇒ positionX(moveLeft(C)) =width(engine(C))
+
+	faceRight(moveRight(C)) = faceRight(C) ∧ life(moveRight(C)) = life(C)
+
+	positionY(moveRight(C)) = positionY(C)
 [startBloking]
 	isBloking = false;
+[switchSide]
+	faceRight(switchSide(C)) != faceRight(C)
+	positionX(switchSide(C)) = positionX(C)
+	positionY(switchSide(C)) = positionY(C)
 
-/* AJOUT redéfinition de la méthode step pour prendre en compte JUMP CROUCH .... */
+[step]
+	step(C, LEFT) = moveLeft(C)
+	step(C, RIGHT) = moveRight(C)
+	step(C, NEUTRAL) = C
+	step(C, JUMP) = jump(C)
+	step(C, CROUCH) = crouch(C)
+	

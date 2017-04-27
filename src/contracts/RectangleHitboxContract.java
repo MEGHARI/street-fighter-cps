@@ -19,12 +19,6 @@ public class RectangleHitboxContract extends HitboxContract implements Rectangle
 	public void checkInvariant() {
 		
 		super.checkInvariant();
-		
-		// \inv: collidesWith(h) == \exists x, y: int x int { belongsTo(x, y) &&
-		// h.belongsTo(x, y) }
-
-		// \inv: equalsTo(h) == \forall x: int x int { belongsTo(x, y) ==
-		// h.belongsTo(x, y) }
 
 	}
 

@@ -26,6 +26,12 @@ public class CharacterContract extends CharacterDecorator {
 		// \inv: isDead() == !(getLife() > 0)
 		if (!(isDead() == !(getLife() > 0)))
 		    throw new InvariantError("Incohérence au niveau de la vie du personage");
+		// \inv : getPositionX() = getCharBox().getPositionX()
+		if(!(getPositionX() == getCharBox().getPositionX()))
+			throw new InvariantError("Incohérence de positionX entre le charactere et sa hitbox");
+		// \inv : getPositionY() = getCharBox().getPositionY()
+		if(!(getPositionY() == getCharBox().getPositionY()))
+			throw new InvariantError("Incohérence de positionY entre le charactere et sa hitbox");
 	}
 		/*Observators*/
 	
@@ -117,7 +123,9 @@ public class CharacterContract extends CharacterDecorator {
 		if (!(getEngine() == e))
 		    throw new PostconditionError("initialisation du moteur de jeu incorrect");
 	    // post: \exists h: HitboxService { getCharBox() == h }
-		//TODO
+		if(getCharBox() == null)
+			throw new PostconditionError("initialisation de la hitbox  incorrect");
+			
 		
     }
     			/*Operators	*/
@@ -152,9 +160,20 @@ public class CharacterContract extends CharacterDecorator {
     	// postInvariant
     	checkInvariant();
     	
+    	// capture
+    	int positionXPre=getPositionX();
+    	int positionYPre = getPositionY();
+    	
     	// postConditions
+    	// \post faceRight() == face
     	if(faceRight()!=face)
     		throw new PostconditionError("initialisation incorrect de la face du joueur");
+    	// \post: getPositionX() == getPositionX()@pre
+    	if(getPositionX() != positionXPre)
+			throw new PostconditionError("la position 'x' est incohérente");
+    	// \post: getPositionY() == getPositionY()@pre
+    	if(getPositionY() != positionYPre)
+			throw new PostconditionError("la position 'y' est incohérente");
     }
     
     @Override
@@ -305,7 +324,7 @@ public class CharacterContract extends CharacterDecorator {
 		if (!(getPositionY() == positionYPre))
 		    throw new PostconditionError("La position Y a changé");
     }
-
+    
     @Override
     public void step(COMMAND c) {
     	
@@ -313,6 +332,9 @@ public class CharacterContract extends CharacterDecorator {
 		// pre: !isDead()
 		if (isDead())
 		    throw new PreconditionError("Le personnage est KO");
+		// \pre : c ∈ {RIGHT, LEFT, NEUTRAL }
+		if(!(c==COMMAND.RIGHT || c == COMMAND.LEFT || c==COMMAND.NEUTRAL))
+			throw new PreconditionError("COMMANDE INVALIDE");
 		
 		// preInvariants
 		checkInvariant();

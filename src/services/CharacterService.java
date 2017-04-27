@@ -27,9 +27,11 @@ public interface CharacterService {
 	
 	// \inv: getPositionX() >= 0 && getPositionX() <= getEngine().getWidth()
 	// \inv: getPositionY() >= 0 && getPositionY() <= getEngine().getHeight()
-	// \inv: isDead() == !(getLife() > 0)
-
-			/* Initialisations */
+	// \inv: isDead() = !(getLife() > 0)
+	// \inv : getPositionX() = getCharBox().getPositionX()
+	// \inv : getPositionY() = getCharBox().getPositionY()
+			
+	/* Initialisations */
 	
 	// pre: l > 0
 	// pre: s > 0
@@ -50,6 +52,8 @@ public interface CharacterService {
 	public void setPositions(int x,int y);
 	
 	// \post faceRight() == face
+	// \post: getPositionX() == getPositionX()@pre
+	// \post: getPositionY() == getPositionY()@pre
 	public void initFace(boolean face);
 	
 	
@@ -97,7 +101,7 @@ public interface CharacterService {
 	// \post: getPositionX() == getPositionX()@pre
 	// \post: getPositionY() == getPositionY()@pre
 	public void switchSide();
-	
+	// \pre : c ∈ {RIGHT, LEFT, NEUTRAL }
 	// \pre : !isDead()
 	// \post : c == LEFT => (step(c) == moveLeft())
 	// \post : c == RIGHT => (step(c) == moveRight())
