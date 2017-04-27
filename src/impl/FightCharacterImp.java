@@ -141,11 +141,6 @@ public class FightCharacterImp implements FightCharService {
 					i = 0;
 				}
 			} else if (techFrame == 2) {
-				for (CharacterService c : getEngine().getChar(1)) {
-					if (c != this) {
-
-					}
-				}
 				i++;
 				if (tech.getHframe() <= i) {
 					techFrame = 3;
