@@ -9,7 +9,7 @@ import services.FightCharService;
 import services.HitboxService;
 
 public class FightCharacterImp implements FightCharService {
-	
+
 	private int positionX;
 	private int positionY;
 	private NAME name;
@@ -25,9 +25,8 @@ public class FightCharacterImp implements FightCharService {
 	private boolean isHitstunned;
 	private boolean isTech;
 	private Tech tech;
-	private Tech[]  techs = {new Tech(50, 10, 4, 3, 10, 5),new Tech(50, 10, 7, 7, 10, 5)}; 
-	
-	
+	private Tech[] techs = { new Tech(50, 10, 4, 3, 10, 5), new Tech(50, 10, 7, 7, 10, 5) };
+
 	@Override
 	public int getPositionX() {
 		return positionX;
@@ -70,22 +69,22 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public boolean isDead() {
-		return (life>0);
+		return (life > 0);
 	}
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
-		this.name =name;
+		this.name = name;
 		life = l;
-		speed =s;
+		speed = s;
 		faceRight = f;
-		engine =e;
+		engine = e;
 	}
 
 	@Override
 	public void setPositions(int x, int y) {
-		this.positionX =x;
-		this.positionY =y;
+		this.positionX = x;
+		this.positionY = y;
 
 	}
 
@@ -103,7 +102,7 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public void moveRight() {
-		positionX = Math.min(positionX + speed,getEngine().getWidth() );
+		positionX = Math.min(positionX + speed, getEngine().getWidth());
 
 	}
 
@@ -115,7 +114,7 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public void step(COMMAND c) {
-		
+
 		switch (c) {
 		case LEFT:
 			moveLeft();
@@ -133,42 +132,43 @@ public class FightCharacterImp implements FightCharService {
 			break;
 		}
 		int i = 0;
-		if(isTeching()) {
-			
-			if(techFrame == 1) {
+		if (isTeching()) {
+
+			if (techFrame == 1) {
 				i++;
-				if(tech.getSframe()<=i) {
+				if (tech.getSframe() <= i) {
 					techFrame = 2;
 					i = 0;
 				}
-			}else if(techFrame == 2) {
-				for(CharacterService c : getEngine().getChar(1)) {
-					if(c != this) {
-						
+			} else if (techFrame == 2) {
+				for (CharacterService c : getEngine().getChar(1)) {
+					if (c != this) {
+
 					}
 				}
 				i++;
-				if(tech.getHframe()<=i) {
+				if (tech.getHframe() <= i) {
 					techFrame = 3;
 					i = 0;
 				}
-				
-			}else if(techFrame == 3) {
+
+			} else if (techFrame == 3) {
 				i++;
-				if(tech.getRframe()<=i) {
+				if (tech.getRframe() <= i) {
 					techFrame = 0;
 					i = 0;
 					isTech = false;
 				}
-				
-			}else {}
+
+			} else {
+			}
 		}
-		
+
 	}
 
 	@Override
 	public boolean notManipulable() {
-		return isBlockstunned() || isHitstunned() || isTeching() ;
+		return isBlockstunned() || isHitstunned() || isTeching();
 	}
 
 	@Override
@@ -209,13 +209,11 @@ public class FightCharacterImp implements FightCharService {
 
 	@Override
 	public void startTech(Tech tech) {
-		if(!notManipulable()) {
-			isTech =true;
+		if (!notManipulable()) {
+			isTech = true;
 			this.tech = tech;
 			this.techFrame = 1;
 		}
-		
-		
 
 	}
 

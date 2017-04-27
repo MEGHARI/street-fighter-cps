@@ -43,16 +43,26 @@ public interface CharacterService {
 	
 		/* Operators */
 	
+
+	
+	// \post : getPositionX() == x
+	// \post : getPositionY() == y
+	public void setPositions(int x,int y);
+	
+	// \post faceRight() == face
+	public void initFace(boolean face);
+	
+	
 	// \post:  \exists i:int if ( getEngine()@pre.getChar(i) != self &&
 	//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 	//	then getPositionX() == getPositionX()@pre
 	
-	// \post: if ( getPositionX()@pre <= getSpeed()@pre) && 
-	//(\exists i: int { getEngine()@pre.getChar(i) == self)
+	// \post: if ( getPositionX()@pre <= getSpeed()) && 
+	//(\exist i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then   getPositionX() == 0
 	
-	// \post: if ( getPositionX()@pre > getSpeed()@pre) && 
+	// \post: if ( getPositionX()@pre > getSpeed()) && 
 	//(\exists i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then  getPositionX() == getPositionX()@pre -getSpeed()@pre
@@ -60,28 +70,22 @@ public interface CharacterService {
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 	
 	// \post: getPositionY() == getPositionY()@pre
-	
-	// \post : getPositionX()==x
-	// \post : getPositionY()==y
-	public void setPositions(int x,int y);
-	
-	// \post faceRight() == face
-	public void initFace(boolean face);
-	
 	public void moveLeft();
+	
+	
 	// \post:  \exists i:int if ( getEngine()@pre.getChar(i) != self &&
 	//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 	//	then getPositionX() == getPositionX()@pre
 	
-	// \post: if ( (getPositionX()@pre <= getEngine()@pre.getWith()-getSpeed()@pre) && 
+	// \post: if ( (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre) && 
 	//(\exists i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then   getPositionX() == getPositionX()@pre+getSpeed()@pre
 	
-	// \post: if ( (getPositionX()@pre > getEngine()@pre.getWith()-getSpeed()@pre) && 
+	// \post: if ( (getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre) && 
 	// (\exists i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then   getPositionX() == getEngine()@pre.getWith()
+	//        then   getPositionX() == getEngine()@pre.getWidth()
 	
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 	
@@ -95,9 +99,9 @@ public interface CharacterService {
 	public void switchSide();
 	
 	// \pre : !isDead()
-	// \post : c == LEFT => (step(c) == moveLeft(c))
-	// \post : c == RIGHT => (step(c) == moveRIGHT(c))
-	// \post : c==NEUTRAL => (step(c) == step(c)@pre)
+	// \post : c == LEFT => (step(c) == moveLeft())
+	// \post : c == RIGHT => (step(c) == moveRight())
+	// \post : c == NEUTRAL => (step(c) == step(c)@pre)
 	public void step(COMMAND c);
 	
 }

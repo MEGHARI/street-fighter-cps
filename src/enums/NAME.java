@@ -6,6 +6,4 @@ public enum NAME {
 	RY,
 	VEGA,
 	ZANGIEF
-	
-	
 }

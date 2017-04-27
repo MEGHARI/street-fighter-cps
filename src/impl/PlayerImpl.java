@@ -27,13 +27,6 @@ public class PlayerImpl implements PlayerService {
 		this.ch=ch;
 	}
 	
-	/*@Override
-	public void sendCommand() {
-		if(this.num == 1) {
-			
-		}else if(this.num == 2) {
-			
-		}
-	}*/
+	
 	
 }
