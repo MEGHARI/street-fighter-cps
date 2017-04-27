@@ -38,7 +38,8 @@
 
 ** Test 2.1 : RectangleHitbox:testMoveTo
 
-*** Condition initiale : L =(def) init(10,0,15,10)
+*** Condition initiale :
+**** L =(def) init(10,0,15,10)
 *** Opération : L0 =(def) MoveTo(L, 2, 5)
 *** Oracle :
 **** PositionX(L0) = 2

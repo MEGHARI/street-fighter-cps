@@ -2,9 +2,10 @@
 
 ** Test 1.1 : FightChar:testInit
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 50, P1,P2)
+*** Condition initiale :	
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 50, P1,P2)
 
 *** Opération : L0 =(def) init("Ken", 50, 5, true, E)
 *** Oracle :
@@ -17,9 +18,10 @@
 
 ** Test 1.2 : FightChar:testInitFail1
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 50, P1,P2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 50, P1,P2)
 
 *** Opération : L0 =(def) init("Ken", -50, 5, true, E)
 *** Oracle :
@@ -28,9 +30,10 @@
 
 ** Test 1.3 : FightChar:testInitFail2
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 50, P1,P2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 50, P1,P2)
 
 *** Opération : L0 =(def) init("Ken", 50, -5, true, E)
 *** Oracle :
@@ -39,15 +42,16 @@
 
 ** Test 2.1 : FightChar:testMoveLeft1
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
-				F1 = (def) setPositions(F, 245,0)
-				F2 = (def) init("Ryu", 15, 15, true, E)
-				F3 = (def) setPositions(F, 255,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F1 = (def) setPositions(F, 245,0)
+**** F2 = (def) init("Ryu", 15, 15, true, E)
+**** F3 = (def) setPositions(F, 255,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveLeft(F3)
 *** Oracle :
@@ -58,15 +62,16 @@
 
 ** Test 2.2 : FightChar:testMoveLeft2
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
-				F1 = (def) setPositions(F, 245,0)
-				F2 = (def) init("Ryu", 15, 5, true, E)
-				F3 = (def) setPositions(F, 255,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F1 = (def) setPositions(F, 245,0)
+**** F2 = (def) init("Ryu", 15, 5, true, E)
+**** F3 = (def) setPositions(F, 255,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveLeft(F1)
 *** Oracle :
@@ -77,15 +82,16 @@
 
 ** Test 2.3 : FightChar:testMoveLeft3
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 15, true, E)
-				F1 = (def) setPositions(F, 5,0)
-				F2 = (def) init("Ryu", 15, 15, true, E)
-				F3 = (def) setPositions(F, 255,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 15, true, E)
+**** F1 = (def) setPositions(F, 5,0)
+**** F2 = (def) init("Ryu", 15, 15, true, E)
+**** F3 = (def) setPositions(F, 255,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveLeft(F1)
 *** Oracle :
@@ -96,15 +102,16 @@
 
 ** Test 3.1: FightChar:testMoveRight1
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 15, true, E)
-				F1 = (def) setPositions(F, 245,0)
-				F2 = (def) init("Ryu", 15, 5, true, E)
-				F3 = (def) setPositions(F, 255,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 15, true, E)
+**** F1 = (def) setPositions(F, 245,0)
+**** F2 = (def) init("Ryu", 15, 5, true, E)
+**** F3 = (def) setPositions(F, 255,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveRight(F1)
 *** Oracle :
@@ -115,15 +122,16 @@
 
 ** Test 3.2: FightChar:testMoveRight2
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
-				F1 = (def) setPositions(F, 245,0)
-				F2 = (def) init("Ryu", 15, 5, true, E)
-				F3 = (def) setPositions(F, 255,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F1 = (def) setPositions(F, 245,0)
+**** F2 = (def) init("Ryu", 15, 5, true, E)
+**** F3 = (def) setPositions(F, 255,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveRight(F1)
 *** Oracle :
@@ -134,15 +142,16 @@
 
 ** Test 3.3: FightChar:testMoveRight3
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 15, true, E)
-				F1 = (def) setPositions(F, 245,0)
-				F2 = (def) init("Ryu", 15, 15, true, E)
-				F3 = (def) setPositions(F, 495,0)
-				E1 = (def) char(F1,1)
-				E2 = (def) char(F2,2)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 15, true, E)
+**** F1 = (def) setPositions(F, 245,0)
+**** F2 = (def) init("Ryu", 15, 15, true, E)
+**** F3 = (def) setPositions(F, 495,0)
+**** E1 = (def) char(F1,1)
+**** E2 = (def) char(F2,2)
 
 *** Opération : L0 =(def) moveRight(F3)
 *** Oracle :
@@ -153,10 +162,11 @@
 
 ** Test 4.1 : FightChar:testSwitchSide
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
 
 *** Opération : L0 =(def) switchSide(F0)
 *** Oracle :
@@ -166,10 +176,11 @@
 
 ** Test 5.1 : FightChar:testStep
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
 
 *** Opération : L0 =(def) step(F0, LEFT)
 *** Oracle :
@@ -179,11 +190,12 @@
 
 ** Test 6.1 : FightChar:testJump
 
-*** Condition initiale : 	P1 = (def) Player.init(1)
-				P2 = (def) Player.init(2)
-				E = (def) Engine.init(250,500, 10, P1,P2)
-				F0 = (def) init("Ken", 15, 5, true, E)
-				F1 = (def) setPositions(F, 245,0)
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** E = (def) Engine.init(250,500, 10, P1,P2)
+**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F1 = (def) setPositions(F, 245,0)
 
 *** Opération : L0 =(def) jump(F1)
 *** Oracle :
