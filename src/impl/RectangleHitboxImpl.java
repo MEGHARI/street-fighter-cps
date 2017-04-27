@@ -49,11 +49,11 @@ public class RectangleHitboxImpl implements RectangleHitboxService {
 		this.positionX = x;
 		this.positionY = y;
 	}
-	
+
 	@Override
 	public void resize(int w, int h) {
-		this.height =h;
-		this.width =w;
+		this.height = h;
+		this.width = w;
 
 	}
 
@@ -94,7 +94,7 @@ public class RectangleHitboxImpl implements RectangleHitboxService {
 		else
 			for (int i = 0; i < width; i++)
 				for (int j = 0; j < height; j++)
-					if (! h.belongsTo(i + positionX, j + positionY))
+					if (!h.belongsTo(i + positionX, j + positionY))
 						return false;
 		return true;
 	}

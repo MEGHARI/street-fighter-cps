@@ -1,13 +1,20 @@
 package main;
 
+import com.sun.corba.se.pept.transport.EventHandler;
+
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.*;
-import javafx.scene.image.*;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Hold down an arrow key to have your hero move around the screen.
@@ -27,6 +34,10 @@ public class test extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+    	new Thread(()-> new Timeline(new KeyFrame(Duration.millis(1000 / 60), e -> {
+            System.out.println("slt");
+        })).setCycleCount(Timeline.INDEFINITE)).start();
+    
         heroImage = new Image(HERO_IMAGE_LOC);
         hero = new ImageView(heroImage);
 
@@ -36,31 +47,7 @@ public class test extends Application {
 
         Scene scene = new Scene(dungeon, W, H, Color.FORESTGREEN);
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case UP:    goNorth = true; break;
-                    case DOWN:  goSouth = true; break;
-                    case LEFT:  goWest  = true; break;
-                    case RIGHT: goEast  = true; break;
-                    case SHIFT: running = true; break;
-                }
-            }
-        });
-
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case UP:    goNorth = false; break;
-                    case DOWN:  goSouth = false; break;
-                    case LEFT:  goWest  = false; break;
-                    case RIGHT: goEast  = false; break;
-                    case SHIFT: running = false; break;
-                }
-            }
-        });
+       
 
         stage.setScene(scene);
         stage.show();

@@ -1,6 +1,9 @@
 package enums;
 
 public enum NAME {
-	KEN,
-	RYO
+	BISON,
+	CHN,
+	RY,
+	VEGA,
+	ZANGIEF
 }
