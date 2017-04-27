@@ -12,9 +12,15 @@
             <Image url="@../images/partie.gif" />
          </image>
       </ImageView>
-      <ProgressBar layoutX="432.0" layoutY="27.0" prefHeight="19.0" prefWidth="168.0" progress="0.0" />
-      <ProgressBar layoutX="65.0" layoutY="27.0" prefHeight="20.0" prefWidth="168.0" progress="0.0" />
-      <ImageView fitHeight="167.0" fitWidth="104.0" layoutX="156.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="167.0" fitWidth="104.0" layoutX="380.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true" />
+      <ProgressBar fx:id="vieJoueur2" layoutX="432.0" layoutY="27.0" prefHeight="19.0" prefWidth="168.0" progress="0.0" />
+      <ProgressBar fx:id="vieJoueur2" layoutX="65.0" layoutY="27.0" prefHeight="20.0" prefWidth="168.0" progress="0.0" />
+      <ImageView fx:id="joueur1" fitHeight="167.0" fitWidth="104.0" layoutX="202.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/bison.gif" />
+         </image></ImageView>
+      <ImageView fx:id="joueur2" fitHeight="129.0" fitWidth="175.0" layoutX="257.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/ry.gif" />
+         </image></ImageView>
    </children>
 </AnchorPane>
