@@ -72,7 +72,8 @@ Observations:
 	positionY(moveRight(C)) = positionY(C)
 
 [switchSide]:
-	faceRight(switchSide(C)) != faceRight(C)
+	(notManipulable() || isBlocking()) => faceRight(switchSide(C)) = faceRight(C)
+	!(notManipulable() || isBlocking()) => faceRight(switchSide(C)) != faceRight(C)
 	positionX(switchSide(C)) = positionX(C)
 	positionY(switchSide(C)) = positionY(C)
 
