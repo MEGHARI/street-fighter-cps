@@ -28,8 +28,8 @@ public class RectangleHitboxImpl extends HitboxImpl implements RectangleHitboxSe
 	@Override
 	public void init(int x, int y, int w, int h) {
 		init(x, y);
-		this.positionX = x;
-		this.positionY = y;
+		this.width = w;
+		this.height = h;
 
 	}
 
