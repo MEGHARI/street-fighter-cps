@@ -1,7 +1,8 @@
 package data;
 
-import decorators.HitboxDecorator;
+import contracts.RectangleHitboxContract;
 import impl.HitboxImpl;
+import impl.RectangleHitboxImpl;
 import services.HitboxService;
 
 public class Tech {
@@ -48,7 +49,7 @@ public class Tech {
 	}
 
 	public HitboxService hitbox(int x, int y) {
-		hitbox = new HitboxDecorator(new HitboxImpl());
+		hitbox = new RectangleHitboxContract(new RectangleHitboxImpl());
 		hitbox.init(x, y);
 		return hitbox;
 	}
