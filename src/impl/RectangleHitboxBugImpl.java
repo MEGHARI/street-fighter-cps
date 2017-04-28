@@ -95,8 +95,8 @@ public class RectangleHitboxBugImpl extends HitboxImpl implements RectangleHitbo
 	}
 	
 	@Override
-	public RectangleHitboxImpl clone(){
-		RectangleHitboxImpl rh = new RectangleHitboxImpl();
+	public RectangleHitboxBugImpl clone(){
+		RectangleHitboxBugImpl rh = new RectangleHitboxBugImpl();
 		rh.init(positionX,positionY, width, height);
 		return rh;
 	}
