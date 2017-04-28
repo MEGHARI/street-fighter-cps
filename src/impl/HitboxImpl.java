@@ -35,7 +35,8 @@ public class HitboxImpl implements HitboxService {
 
 	@Override
 	public boolean equalsTo(HitboxService h) {
-		return belongsTo(h.getPositionX(), h.getPositionY());
+		// bug
+		return this ==h;
 	}
 
 	@Override
