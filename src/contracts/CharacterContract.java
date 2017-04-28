@@ -350,6 +350,11 @@ public class CharacterContract extends CharacterDecorator {
 		// \post : c == RIGHT => (step(c) == moveRIGHT(c))
 		// \post : c==NEUTRAL => (step(c) == step(c)@pre)
     }
+    
+    @Override
+    public CharacterContract clone(){
+    	return new CharacterContract(getDelegate().clone());
+    }
 
 
 }

@@ -113,4 +113,19 @@ public class CharacterBugImpl implements CharacterService {
 			break;
 		}
 	}
+	
+	@Override
+	public CharacterBugImpl clone(){
+		CharacterBugImpl ci = new CharacterBugImpl();
+		ci.charBox = charBox.clone();
+		ci.dead = dead;
+		ci.engine = engine;
+		ci.faceRight = faceRight;
+		ci.life = life;
+		ci.name = name;
+		ci.positionX = positionX;
+		ci.positionY = positionY;
+		ci.speed = speed;
+		return ci;
+	}
 }

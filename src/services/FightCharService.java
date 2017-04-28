@@ -106,4 +106,8 @@ public interface FightCharService extends /* refine */ CharacterService {
 		// \post : c == CROUCH => (step(c) == crouch())
 		@Override
 		public void step(COMMAND c);
+		
+	    //@Override
+		public FightCharService clone();
+
 }

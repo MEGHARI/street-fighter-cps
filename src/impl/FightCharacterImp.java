@@ -18,7 +18,6 @@ public class FightCharacterImp implements FightCharService {
 	private int life;
 	private int speed;
 	private int techFrame;
-	// jsk
 	private boolean faceRight;
 	private boolean isBlocking;
 	private boolean isBlockstunned;
@@ -228,6 +227,27 @@ public class FightCharacterImp implements FightCharService {
 	public void startBlock() {
 		isBlocking = true;
 
+	}
+	
+	@Override
+	public FightCharacterImp clone(){
+		FightCharacterImp fci = new FightCharacterImp();
+		fci.engine = engine;
+		fci.faceRight = faceRight;
+		fci.hitbox = hitbox.clone();
+		fci.isBlocking = isBlocking;
+		fci.isBlockstunned = isBlockstunned;
+		fci.isHitstunned = isHitstunned;
+		fci.isTech = isTech;
+		fci.life = life;
+		fci.name = name;
+		fci.positionX = positionX;
+		fci.positionY = positionY;
+		fci.speed = speed;
+		fci.tech = tech;
+		fci.techFrame = techFrame;
+		fci.techs = techs;
+		return fci;
 	}
 
 }

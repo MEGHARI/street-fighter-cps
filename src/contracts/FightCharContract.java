@@ -380,4 +380,9 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// \post : c == JUMP => (step(c) == jump())
 		// \post : c == CROUCH => (step(c) == crouch())
 	}
+	
+	@Override
+	public FightCharContract clone(){
+		return new FightCharContract(getDelegate().clone());
+	}
 }
