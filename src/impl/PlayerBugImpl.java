@@ -18,8 +18,7 @@ public class PlayerBugImpl implements PlayerService {
 	}
 	
 	@Override
-	public void init(CharacterService c, int n) {
-		this.ch =c;
+	public void init( int n) {
 		this.num =n;
 	}
 	@Override
