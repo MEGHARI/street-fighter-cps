@@ -17,23 +17,13 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 	private boolean isHitstunned;
 	private boolean isTech;
 	private Tech tech;
-	private Tech[] techs = { new Tech(50, 10, 4, 3, 10, 5), new Tech(50, 10, 7, 7, 10, 5) };
-
-	@Override
-	public int getPositionX() {
-		return positionX;
-	}
-
+	private Tech[] techs ;
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
-		this.name = name;
-		life = l;
-		speed = s;
-		faceRight = f;
-		engine = e;
-		this.charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		this.charBox.init(getPositionX(), getPositionY(),63,63);
+		super.init(name, l, s, f, e);
+		techs = new Tech[2];
+		
 	}
 
 	@Override

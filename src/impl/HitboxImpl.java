@@ -4,8 +4,8 @@ import services.HitboxService;
 
 public class HitboxImpl implements HitboxService {
 	
-	private int positionX;
-	private int positionY;
+	protected int positionX;
+	protected int positionY;
 
 	@Override
 	public void init(int x, int y) {

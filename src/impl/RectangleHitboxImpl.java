@@ -6,20 +6,9 @@ import services.RectangleHitboxService;
 
 public class RectangleHitboxImpl extends HitboxImpl implements RectangleHitboxService {
 
-	private int positionX;
-	private int positionY;
 	private int width;
 	private int height;
 
-	@Override
-	public int getPositionX() {
-		return positionX;
-	}
-
-	@Override
-	public int getPositionY() {
-		return positionY;
-	}
 
 	@Override
 	public int getWidth() {
@@ -38,10 +27,9 @@ public class RectangleHitboxImpl extends HitboxImpl implements RectangleHitboxSe
 
 	@Override
 	public void init(int x, int y, int w, int h) {
+		init(x, y);
 		this.positionX = x;
 		this.positionY = y;
-		this.height = h;
-		this.width = w;
 
 	}
 
