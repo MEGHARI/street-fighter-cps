@@ -100,5 +100,10 @@ public class CharacterDecorator implements CharacterService {
 		delegate.step(c);
 
 	}
+	
+	@Override
+	public CharacterDecorator clone(){
+		return new CharacterDecorator(delegate.clone());
+	}
 
 }

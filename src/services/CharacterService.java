@@ -108,4 +108,6 @@ public interface CharacterService {
 	// \post : c == NEUTRAL => (step(c) == step(c)@pre)
 	public void step(COMMAND c);
 	
+	public CharacterService clone();
+	
 }

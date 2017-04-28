@@ -117,5 +117,21 @@ public class CharacterImpl implements CharacterService {
 
 		}
 	}
+	
+	@Override
+	public CharacterImpl clone(){
+		CharacterImpl ci = new CharacterImpl();
+		ci.charBox = charBox.clone();
+		ci.dead = dead;
+		ci.engine = engine;
+		ci.faceRight = faceRight;
+		ci.life = life;
+		ci.name = name;
+		ci.positionX = positionX;
+		ci.positionY = positionY;
+		ci.speed = speed;
+		
+		return ci;
+	}
 
 }
