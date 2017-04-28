@@ -1,13 +1,10 @@
 package impl;
 
-import contracts.RectangleHitboxContract;
 import data.Tech;
 import enums.COMMAND;
 import enums.NAME;
-import services.CharacterService;
 import services.EngineService;
 import services.FightCharService;
-import services.HitboxService;
 
 public class FightCharacterImp extends CharacterImpl implements FightCharService {
 
