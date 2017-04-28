@@ -76,7 +76,7 @@ public class mainApplication extends Application {
 		
          Scene scene = new Scene(anchore,659,340);
          scene.getStylesheets().add("/css/main.css");
-         scene.setOnKeyPressed(e->{});
+         scene.setOnKeyPressed(e->{System.out.println(e.getCode());});
          scene.setOnKeyReleased(e->{});
          
          primaryStage.setTitle("street-fighter");

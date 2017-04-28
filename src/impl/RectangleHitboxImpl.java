@@ -1,5 +1,6 @@
 package impl;
 
+import javafx.scene.shape.Rectangle;
 import services.HitboxService;
 import services.RectangleHitboxService;
 

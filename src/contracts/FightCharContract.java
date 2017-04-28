@@ -24,6 +24,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(getDelegate().notManipulable() == getDelegate().isTeching() || getDelegate().isBlockstunned()
 				|| getDelegate().isHitstunned()))
 			throw new InvariantError("incohérrence au niveau de notManipulable ");
+		
 		super.checkInvariant();
 	}
 
