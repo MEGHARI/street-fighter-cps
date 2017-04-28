@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 import services.HitboxService;
 import services.RectangleHitboxService;
 
-public class RectangleHitboxImpl implements RectangleHitboxService {
+public class RectangleHitboxImpl extends HitboxImpl implements RectangleHitboxService {
 
 	private int positionX;
 	private int positionY;

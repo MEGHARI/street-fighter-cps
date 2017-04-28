@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.RectangleHitboxContract;
 import data.Tech;
 import enums.COMMAND;
 import enums.NAME;
@@ -8,17 +9,9 @@ import services.EngineService;
 import services.FightCharService;
 import services.HitboxService;
 
-public class FightCharacterImp implements FightCharService {
+public class FightCharacterImp extends CharacterImpl implements FightCharService {
 
-	private int positionX;
-	private int positionY;
-	private NAME name;
-	private EngineService engine;
-	private HitboxService hitbox;
-	private int life;
-	private int speed;
 	private int techFrame;
-	private boolean faceRight;
 	private boolean isBlocking;
 	private boolean isBlockstunned;
 	private boolean isHitstunned;
@@ -31,45 +24,6 @@ public class FightCharacterImp implements FightCharService {
 		return positionX;
 	}
 
-	@Override
-	public int getPositionY() {
-		return positionY;
-	}
-
-	@Override
-	public NAME getName() {
-		return name;
-	}
-
-	@Override
-	public EngineService getEngine() {
-		return engine;
-	}
-
-	@Override
-	public HitboxService getCharBox() {
-		return hitbox;
-	}
-
-	@Override
-	public int getLife() {
-		return life;
-	}
-
-	@Override
-	public int getSpeed() {
-		return speed;
-	}
-
-	@Override
-	public boolean faceRight() {
-		return faceRight;
-	}
-
-	@Override
-	public boolean isDead() {
-		return (life > 0);
-	}
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
@@ -78,37 +32,8 @@ public class FightCharacterImp implements FightCharService {
 		speed = s;
 		faceRight = f;
 		engine = e;
-	}
-
-	@Override
-	public void setPositions(int x, int y) {
-		this.positionX = x;
-		this.positionY = y;
-
-	}
-
-	@Override
-	public void initFace(boolean face) {
-		faceRight = face;
-
-	}
-
-	@Override
-	public void moveLeft() {
-		positionX = Math.max(0, positionX - speed);
-
-	}
-
-	@Override
-	public void moveRight() {
-		positionX = Math.min(positionX + speed, getEngine().getWidth());
-
-	}
-
-	@Override
-	public void switchSide() {
-		faceRight = !faceRight;
-
+		this.charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
+		this.charBox.init(getPositionX(), getPositionY(),63,63);
 	}
 
 	@Override
@@ -234,7 +159,7 @@ public class FightCharacterImp implements FightCharService {
 		FightCharacterImp fci = new FightCharacterImp();
 		fci.engine = engine;
 		fci.faceRight = faceRight;
-		fci.hitbox = hitbox.clone();
+		fci.charBox = charBox.clone();
 		fci.isBlocking = isBlocking;
 		fci.isBlockstunned = isBlockstunned;
 		fci.isHitstunned = isHitstunned;

@@ -1,9 +1,10 @@
 package main;
 
-import com.sun.xml.internal.ws.api.pipe.Engine;
+
 
 import enums.COMMAND;
 import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import services.CharacterService;
+import services.EngineService;
 import services.HitboxService;
 import services.PlayerService;
 
@@ -26,22 +28,25 @@ public class mainApplication extends Application {
 	private int frame = 60; 
  	private COMMAND c1 ;
  	private COMMAND c2 ;
- 	private Engine engine;
+ 	private EngineService engine;
  	private PlayerService p1,p2;
  	private CharacterService fighter1,fighter2;
  	private HitboxService hirFighter1,hitFighter2;
+ 	private ProgressBar vieJoueur1,vieJoueur2;
+ 	private Rectangle joueur1,joueur2;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
          
 		//Parent loader = FXMLLoader.load((getClass().getResource("/fxml/partie.fxml")));
+		// Initialisation
 		
 		// joueur 1
-		ProgressBar vieJoueur1 = new ProgressBar(100);
+		vieJoueur1 = new ProgressBar(100);
 		vieJoueur1.setLayoutX(432);
 		vieJoueur1.setLayoutY(27);
 		vieJoueur1.prefHeight(20);
 		vieJoueur1.prefHeight(168);
-		Rectangle joueur1 = new Rectangle();
+		joueur1 = new Rectangle();
 		joueur1.setArcHeight(5.0);
 		joueur1.setArcWidth(5.0);
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
@@ -55,12 +60,12 @@ public class mainApplication extends Application {
 		//joueur1.setOnKeyPressed(e->{System.out.println("player2");});
 		
 		// joueur 2
-		ProgressBar vieJoueur2 = new ProgressBar(100);
+		vieJoueur2 = new ProgressBar(100);
 		vieJoueur2.setLayoutX(65);
 		vieJoueur2.setLayoutY(27);
 		vieJoueur2.prefHeight(20);
 		vieJoueur2.prefHeight(168);
-		Rectangle joueur2 = new Rectangle();
+		joueur2 = new Rectangle();
 		joueur2.setArcHeight(5.0);
 		joueur2.setArcWidth(5.0);
 		joueur2.setFill(Paint.valueOf("#1c1d1e"));
@@ -76,7 +81,7 @@ public class mainApplication extends Application {
 		
          Scene scene = new Scene(anchore,659,340);
          scene.getStylesheets().add("/css/main.css");
-         scene.setOnKeyPressed(e->{System.out.println(e.getCode());});
+         scene.setOnKeyPressed(e->{});
          scene.setOnKeyReleased(e->{});
          
          primaryStage.setTitle("street-fighter");
@@ -90,15 +95,17 @@ public class mainApplication extends Application {
 		       }
 		    });
          primaryStage.show();
-         //Timeline timerThread = new Timeline(keyFrame);
-         //timerThread.setCycleCount(Timeline.INDEFINITE);
-         //timerThread.play();
+         Timeline timerThread = new Timeline(keyFrame);
+         timerThread.setCycleCount(Timeline.INDEFINITE);
+         timerThread.play();
          
 	}
 	
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/frame ), e -> {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000 ), e -> {
 		//engine.step(c1, c2);
-		System.out.println("mouloud");
+		//System.out.println("mouloud");
+		joueur1.setLayoutX(joueur1.getLayoutX() - 1);
+		
     });
 	
 	public static void main(String...args) {

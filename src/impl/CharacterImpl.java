@@ -1,23 +1,24 @@
 
 package impl;
 
+import contracts.RectangleHitboxContract;
 import enums.COMMAND;
 import enums.NAME;
 import services.CharacterService;
 import services.EngineService;
 import services.HitboxService;
+import services.RectangleHitboxService;
 
 public class CharacterImpl implements CharacterService {
 
-	private int positionX;
-	private int positionY;
-	private NAME name;
-	private EngineService engine;
-	private HitboxService charBox;
-	private int life;
-	private int speed;
-	private boolean faceRight;
-	private boolean dead;
+	protected int positionX;
+	protected int positionY;
+	protected NAME name;
+	protected EngineService engine;
+	protected RectangleHitboxService charBox;
+	protected int life;
+	protected int speed;
+	protected boolean faceRight;
 
 	@Override
 	public int getPositionX() {
@@ -61,23 +62,26 @@ public class CharacterImpl implements CharacterService {
 
 	@Override
 	public boolean isDead() {
-		return dead;
+		return (getLife()<=0);
 	}
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
 		this.name = name;
 		this.life = l;
-		this.dead = false;
 		this.speed = s;
 		this.faceRight = f;
 		this.engine = e;
+		this.charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
+		this.charBox.init(getPositionX(), getPositionY(),63,63);
+		
 	}
 
 	@Override
 	public void setPositions(int x, int y) {
 		this.positionX = x;
 		this.positionY = y;
+		getCharBox().moveTo(x, y);
 	}
 
 	@Override
@@ -89,16 +93,20 @@ public class CharacterImpl implements CharacterService {
 	@Override
 	public void moveLeft() {
 		positionX = Math.max(0, positionX - speed);
+		getCharBox().moveTo(this.positionX, this.positionY);
 	}
 
 	@Override
 	public void moveRight() {
 		positionX = Math.min(positionX + speed, getEngine().getWidth());
+		getCharBox().moveTo(this.positionX, this.positionY);
 	}
 
 	@Override
 	public void switchSide() {
 		faceRight = !faceRight;
+		getCharBox().moveTo(this.positionX, this.positionY);
+
 	}
 
 	@Override
@@ -122,7 +130,6 @@ public class CharacterImpl implements CharacterService {
 	public CharacterImpl clone(){
 		CharacterImpl ci = new CharacterImpl();
 		ci.charBox = charBox.clone();
-		ci.dead = dead;
 		ci.engine = engine;
 		ci.faceRight = faceRight;
 		ci.life = life;
