@@ -132,6 +132,12 @@ public class EngineContract extends EngineDecorator {
 		// \post: getChar(1) = getChar(1)@pre.step(C1)
 		
 		// \post: getChar(2) = getChar(2)@pre.step(C2)
+		
+		// \post: if getChar(1).getPositionX() < getChar(2).getPositionX() 
+		// then !getChar(1).faceRight() && getChar(2).faceRight()
+		if(getChar(1).getPositionX() < getChar(2).getPositionX())
+			if(!(!getChar(1).faceRight() && getChar(2).faceRight()))
+				throw new PostconditionError("erreur au niveau du face a face");
     }
 
 }

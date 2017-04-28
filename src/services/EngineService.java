@@ -43,7 +43,10 @@ public interface EngineService {
 	// \pre: !isGameOver()
 	// \post: getChar(1) = getChar(1)@pre.step(C1)
 	// \post: getChar(2) = getChar(2)@pre.step(C2)
-
+	// \post: if getChar(1).getPositionX() < getChar(1).getPositionX() 
+	// && getChar(1).faceRight() then getChar(1).switchFace()
+	// \post: if getChar(1).getPositionX() < getChar(2).getPositionX() 
+	// && getChar(1).faceRight() then !getChar(1).faceRight() && getChar(2).faceRight()
 	public void step(COMMAND c1, COMMAND c2);
 	
 	

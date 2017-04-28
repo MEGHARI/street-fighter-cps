@@ -35,12 +35,12 @@ public class EngineImpl implements EngineService {
 
 	@Override
 	public CharacterService getChar(int i) {
-		return player[i].getCharacter();
+		return player[i-1].getCharacter();
 	}
 
 	@Override
 	public PlayerService getPlayer(int i) {
-		return player[i];
+		return player[i-1];
 	}
 
 	@Override
@@ -49,17 +49,26 @@ public class EngineImpl implements EngineService {
 		this.width = w;
 		this.player[0] = p1.getNum() == 1 ? p1:p2;
 		this.player[1] = p1.getNum() == 2 ? p1:p2;
-		player[0].getCharacter().setPositions(w/2 - s/2, 0);
-		player[0].getCharacter().initFace(true);
-		player[1].getCharacter().setPositions(w/2 + s/2, 0);
-		player[1].getCharacter().initFace(false);
+		getChar(1).setPositions(w/2 - s/2, 0);
+		getChar(1).initFace(true);
+		getChar(2).setPositions(w/2 + s/2, 0);
+		getChar(2).initFace(false);
 		
 	}
 
 	@Override
 	public void step(COMMAND c1, COMMAND c2) {
-		player[0].getCharacter().step(c1);
-		player[1].getCharacter().step(c2);
+		getChar(1).step(c1);
+		getChar(2).step(c2);
+		if(getChar(1).getPositionX()<getChar(2).getPositionX()) {
+			if(getChar(1).faceRight()) {
+				getChar(1).switchSide();
+			}
+			if(!getChar(2).faceRight()) {
+				getChar(2).switchSide();
+			}
+				
+		}
 	}
 	
 

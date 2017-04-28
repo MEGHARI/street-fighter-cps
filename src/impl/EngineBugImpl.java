@@ -44,11 +44,11 @@ public class EngineBugImpl implements EngineService {
 		this.player[0] = p1.getNum() == 1 ? p1:p2;
 		this.player[1] = p1.getNum() == 2 ? p1:p2;;
 		player[0].getCharacter().setPositions(w/2 - s/2, 0);
-		// debug
+		// bug
 		player[0].getCharacter().initFace(false);
-		// debug
+		// bug
 		player[1].getCharacter().setPositions(w/2 + s, 0);
-		// debug
+		// bug
 		player[1].getCharacter().initFace(true);
 		
 	}
@@ -57,6 +57,7 @@ public class EngineBugImpl implements EngineService {
 	public void step(COMMAND c1, COMMAND c2) {
 		player[0].getCharacter().step(c1);
 		player[1].getCharacter().step(c2);
+		// bug
 	}
 
 }
