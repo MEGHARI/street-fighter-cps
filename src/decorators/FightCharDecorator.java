@@ -63,6 +63,15 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 		delegate.startBlock();
 	}
 	
+	@Override 
+	public void jumpRight() {
+		delegate.jumpRight();
+	}
+	
+	@Override
+	public void jumpLeft() {
+		delegate.jumpLeft();
+	}
     @Override
 	public FightCharDecorator clone(){
     	return new FightCharDecorator(delegate.clone());
