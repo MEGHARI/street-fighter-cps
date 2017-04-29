@@ -58,6 +58,8 @@ public class mainApplication extends Application {
 		combinationsPlayer2 = new ArrayList<>();
 		pressNumberPlayer1 = 0;
 		pressNumberPlayer2 = 0;
+		commandPlayer1=COMMAND.NEUTRAL;
+		commandPlayer2=COMMAND.NEUTRAL;
 
 		// joueur 1
 		vieJoueur1 = new ProgressBar(100);
@@ -130,53 +132,48 @@ public class mainApplication extends Application {
 					pressNumberPlayer1--;
 					if (pressNumberPlayer1 == 0) {
 						if (combinationsPlayer1.contains(KeyCode.UP) && combinationsPlayer1.contains(KeyCode.RIGHT)) {
-							// commandPlayer1 = COMMAND.UP_RIGHT;
+							commandPlayer1 = COMMAND.JUMP_RIGHT;
 						} else if (combinationsPlayer1.contains(KeyCode.UP) && combinationsPlayer1.contains(KeyCode.LEFT)) {
-							// commandPlayer1 = COMMAND.UP_LEFT;
+							commandPlayer1 = COMMAND.JUMP_LEFT;
 						} else if (combinationsPlayer1.contains(KeyCode.UP)) {
-							// commandPlayer1 = COMMAND.UP;
+							commandPlayer1 = COMMAND.JUMP;
 						} else if (combinationsPlayer1.contains(KeyCode.LEFT)) {
-							// commandPlayer1 = COMMAND.LEFT;
+							commandPlayer1 = COMMAND.LEFT;
 						} else if (combinationsPlayer1.contains(KeyCode.RIGHT)) {
-							System.out.println("UP right");
-							// commandPlayer1 = COMMAND.RIGHT;
+							commandPlayer1 = COMMAND.RIGHT;
 						} else if (combinationsPlayer1.contains(KeyCode.DOWN)) {
-							// commandPlayer1 = COMMAND.DOWN;
+							commandPlayer1 = COMMAND.CROUCH;
 						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD4)) {
-							// commandPlayer1 = COMMAND.TECH_1;
+							commandPlayer1 = COMMAND.TECH_1;
 						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD6)) {
-							// commandPlayer1 = COMMAND.TECH_2;
+							commandPlayer1 = COMMAND.TECH_2;
 						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD5)) {
-							// commandPlayer1 = COMMAND.PROTECT;
-						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD3)) {
-							// commandPlayer1 = COMMAND.SWITCH_SIDE;
-						}
+							commandPlayer1 = COMMAND.PROTECT;
+						} 
 						combinationsPlayer1.clear();
 					}
 				}else if(combinationsPlayer2.contains(event.getCode())) {
 					pressNumberPlayer2--;
 					if (pressNumberPlayer2 == 0) {
 						if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.E)) {
-							// commandPlayer1 = COMMAND.UP_RIGHT;
+							commandPlayer1 = COMMAND.JUMP_RIGHT;
 						} else if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.A)) {
-							// commandPlayer1 = COMMAND.UP_LEFT;
+							 commandPlayer1 = COMMAND.JUMP_LEFT;
 						} else if (combinationsPlayer2.contains(KeyCode.Z)) {
-							// commandPlayer1 = COMMAND.UP;
+							 commandPlayer1 = COMMAND.JUMP;
 						} else if (combinationsPlayer2.contains(KeyCode.A)) {
-							// commandPlayer1 = COMMAND.LEFT;
+							 commandPlayer1 = COMMAND.LEFT;
 						} else if (combinationsPlayer2.contains(KeyCode.E)) {
-							// commandPlayer1 = COMMAND.RIGHT;
+							 commandPlayer1 = COMMAND.RIGHT;
 						} else if (combinationsPlayer2.contains(KeyCode.S)) {
-							// commandPlayer1 = COMMAND.DOWN;
+							commandPlayer1 = COMMAND.CROUCH;
 						} else if (combinationsPlayer2.contains(KeyCode.F)) {
-							// commandPlayer1 = COMMAND.TECH_1;
+							 commandPlayer1 = COMMAND.TECH_1;
 						} else if (combinationsPlayer2.contains(KeyCode.H)) {
-							// commandPlayer1 = COMMAND.TECH_2;
+							commandPlayer1 = COMMAND.TECH_2;
 						} else if (combinationsPlayer2.contains(KeyCode.G)) {
-							// commandPlayer1 = COMMAND.PROTECT;
-						} else if (combinationsPlayer2.contains(KeyCode.B)) {
-							// commandPlayer1 = COMMAND.SWITCH_SIDE;
-						}
+							 commandPlayer1 = COMMAND.PROTECT;
+						} 
 						combinationsPlayer2.clear();
 					}
 				}
@@ -201,8 +198,10 @@ public class mainApplication extends Application {
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), e -> {
 		// engine.step(c1, c2);
+		System.out.println(commandPlayer1);
+		System.out.println(commandPlayer1);
 		// System.out.println("mouloud");
-		joueur1.setLayoutX(joueur1.getLayoutX() - 1);
+		//joueur1.setLayoutX(joueur1.getLayoutX() - 1);
 
 	});
 
