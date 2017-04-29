@@ -174,6 +174,16 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PostconditionError("erreur de positionnement lors du crouch 'Y'");
 		}
 	}
+	
+	@Override
+	public void jumpRight() {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void jumpLeft() {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void startBlock() {
