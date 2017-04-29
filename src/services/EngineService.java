@@ -36,7 +36,7 @@ public interface EngineService {
 	// \post: getChar(2).getPositionY() == 0
 	// \post: getChar(1).faceRight()
 	// \post: !(getChar(2).faceRight())
-	public void init(int h, int s, int w, PlayerService p1, PlayerService p2);
+	public void init(int h, int w, int s, PlayerService p1, PlayerService p2);
 	
 	/* Operators */
 	

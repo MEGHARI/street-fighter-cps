@@ -197,7 +197,7 @@ public class CharacterContract extends CharacterDecorator {
 		//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 		//	then getPositionX() == getPositionX()@pre
 			
-		for (int i = 0; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			 if (enginePre.getChar(i)!=this && getCharBox().collidesWith(enginePre.getChar(i).getCharBox())) {
 				 if(getPositionX() != positionXPre)
 					 throw new PostconditionError("erreur de position de x");

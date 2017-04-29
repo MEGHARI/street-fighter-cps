@@ -44,11 +44,11 @@ public class EngineImpl implements EngineService {
 	}
 
 	@Override
-	public void init(int h, int s, int w, PlayerService p1, PlayerService p2) {
+	public void init(int h, int w, int s, PlayerService p1, PlayerService p2) {
 		this.height = h;
 		this.width = w;
-		this.player[0] = p1.getNum() == 1 ? p1:p2;
-		this.player[1] = p1.getNum() == 2 ? p1:p2;
+		this.player[0] = p1;
+		this.player[1] = p2;
 		getChar(1).setPositions(w/2 - s/2, 0);
 		getChar(1).initFace(true);
 		getChar(2).setPositions(w/2 + s/2, 0);

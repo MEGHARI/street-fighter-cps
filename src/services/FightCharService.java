@@ -104,8 +104,18 @@ public interface FightCharService extends /* refine */ CharacterService {
 		public void switchSide();
 		// \post : c == JUMP => (step(c) == jump())
 		// \post : c == CROUCH => (step(c) == crouch())
+		
+		// pre: !notManipulable()
+		// \post : jumpRight() (def)= moveRight()@pre
+		public void jumpRight();
+		// pre: !notManipulable()
+		// \post : jumpLeft() (def)= moveLeft()@pre
+		public void jumpLeft();
 		@Override
 		public void step(COMMAND c);
+		
+		
+		
 		
 	    //@Override
 		public FightCharService clone();

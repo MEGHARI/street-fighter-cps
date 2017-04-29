@@ -17,7 +17,7 @@ public class EngineContract extends EngineDecorator {
 	/* Invariants */
 	public void checkInvariant() {
 		// \inv: isGameOver() == getChar(1).isDead() || getChar(2).isDead()
-		if (getChar(0) != null && getChar(1) != null && !(isGameOver() == getChar(0).isDead() || getChar(1).isDead()))
+		if (getChar(1) != null && getChar(2) != null && !(isGameOver() == getChar(1).isDead() || getChar(2).isDead()))
 			throw new InvariantError("Incohérence au niveau de la fin de partie");
 	}
 
@@ -52,7 +52,7 @@ public class EngineContract extends EngineDecorator {
 	}
 
 	@Override
-	public void init(int h, int s, int w, PlayerService p1, PlayerService p2) {
+	public void init(int h, int w, int s, PlayerService p1, PlayerService p2) {
 		
 		// preconditions
 		// \pre: h > 0
@@ -68,11 +68,8 @@ public class EngineContract extends EngineDecorator {
 		if (!(p1 != p2))
 			throw new PreconditionError("Les joueurs sont identiques");
 		
-		// preInvariants
-		checkInvariant();
-		
 		// run
-		super.init(h, s, w, p1, p2);
+		super.init(h, w, s, p1, p2);
 		
 		// postInvariants
 		checkInvariant();
@@ -85,28 +82,28 @@ public class EngineContract extends EngineDecorator {
 		if (!(getWidth() == w))
 			throw new PostconditionError("La largeur n'est pas correctement initialisée");
 		// \post: getPlayer(1) == p1
-		if (!(getPlayer(0) == p1))
+		if (!(getPlayer(1) == p1))
 			throw new PostconditionError("Le joueur 1 n'est pas correctement initialisé");
 		// \post: getPlayer(2) == p2
-		if (!(getPlayer(1) == p2))
+		if (!(getPlayer(2) == p2))
 			throw new PostconditionError("Le joueur 2 n'est pas correctement initialisé");
 		// \post: getChar(1).getPositionX() == w/2 - s/2
-		if (!(getChar(0).getPositionX() == w / 2 - s / 2))
+		if (!(getChar(1).getPositionX() == w / 2 - s / 2))
 			throw new PostconditionError("La position X du joueur 1 n'est pas correctement initialisée");
 		// \post: getChar(2).getPositionX() == w/2 + s/2
-		if (!(getChar(1).getPositionX() == w / 2 + s / 2))
+		if (!(getChar(2).getPositionX() == w / 2 + s / 2))
 			throw new PostconditionError("La position X du joueur 2 n'est pas correctement initialisée");
 		// \post: getChar(1).getPositionY() == 0
-		if (!(getChar(0).getPositionY() == 0))
+		if (!(getChar(1).getPositionY() == 0))
 			throw new PostconditionError("La position Y du joueur 1 n'est pas correctement initialisée");
 		// \post: getChar(2).getPositionY() == 0
-		if (!(getChar(1).getPositionY() == 0))
+		if (!(getChar(2).getPositionY() == 0))
 			throw new PostconditionError("La position Y du joueur 2 n'est pas correctement initialisée");
 		// \post: getChar(1).faceRight()
-		if (!(getChar(0).faceRight()))
+		if (!(getChar(1).faceRight()))
 			throw new PostconditionError("L'orientation du joueur 1 n'est pas correctement initialisée");
 		// \post: !(getChar(2).faceRight())
-		if (!(!getChar(1).faceRight()))
+		if (!(!getChar(2).faceRight()))
 			throw new PostconditionError("L'orientation du joueur 2 n'est pas correctement initialisée");
 	}
 	
