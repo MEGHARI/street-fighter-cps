@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.HitboxContract;
 import contracts.RectangleHitboxContract;
 import enums.COMMAND;
 import enums.NAME;
@@ -14,7 +15,7 @@ public class CharacterImpl implements CharacterService {
 	protected int positionY;
 	protected NAME name;
 	protected EngineService engine;
-	protected RectangleHitboxService charBox;
+	protected HitboxService charBox;
 	protected int life;
 	protected int speed;
 	protected boolean faceRight;
@@ -71,9 +72,9 @@ public class CharacterImpl implements CharacterService {
 		this.speed = s;
 		this.faceRight = f;
 		this.engine = e;
-		this.charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		this.charBox.init(getPositionX(), getPositionY(),63,63);
-		
+		this.charBox = new HitboxContract(new HitboxImpl());
+		this.charBox.init(getPositionX(), getPositionY());
+
 	}
 
 	@Override
@@ -91,14 +92,36 @@ public class CharacterImpl implements CharacterService {
 
 	@Override
 	public void moveLeft() {
-		positionX = Math.max(0, positionX - speed);
-		getCharBox().moveTo(this.positionX, this.positionY);
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX()-getSpeed(),getPositionY());
+		if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+				positionX = Math.max(0, positionX - speed);
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+				positionX = Math.max(0, positionX - speed);
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
 	}
 
 	@Override
 	public void moveRight() {
-		positionX = Math.min(positionX + speed, getEngine().getWidth());
-		getCharBox().moveTo(this.positionX, this.positionY);
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX()+getSpeed(),getPositionY());
+		if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
 	}
 
 	@Override
@@ -124,7 +147,7 @@ public class CharacterImpl implements CharacterService {
 
 		}
 	}
-	
+
 	@Override
 	public CharacterImpl clone(){
 		CharacterImpl ci = new CharacterImpl();
@@ -136,7 +159,7 @@ public class CharacterImpl implements CharacterService {
 		ci.positionX = positionX;
 		ci.positionY = positionY;
 		ci.speed = speed;
-		
+
 		return ci;
 	}
 

@@ -30,7 +30,7 @@ public abstract class AbstractCharacterTest {
 	public abstract void beforeTests();
 
 	/**** TESTS ****/
-/*
+	/*
 	@Test
 	public void testInit(){
 		PlayerImpl p1 = new PlayerImpl();
@@ -44,8 +44,8 @@ public abstract class AbstractCharacterTest {
 		p2.setCharacter(cc);
 		EngineImpl e = new EngineImpl();
 		e.init(250,400,20,p1,p2);
-		
-		
+
+
 		Assert.assertEquals(character.getName(), NAME.BISON);
 		Assert.assertEquals(character.getLife(), 50);
 		Assert.assertEquals(character.getSpeed(), 5);
@@ -82,8 +82,8 @@ public abstract class AbstractCharacterTest {
 		}catch(PreconditionError e){
 			Assert.assertTrue(true);
 		}
-	}
-*/
+	}*/
+
 	@Test
 	public void testMoveLeft1(){
 		PlayerImpl p1 = new PlayerImpl();
@@ -93,135 +93,154 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.BISON, 15,5,true,e);
-		
+
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		cc.init(NAME.CHN,15,15,false,e);
-		
+		cc.init(NAME.CHN,15,10,false,e);
+
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract cccopy = cc.clone();
 		cc.moveLeft();
-		
-		 	Assert.assertEquals(cc.getPositionX(), cccopy.getPositionX());
-		 	Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
-		 	Assert.assertEquals(cc.getLife(), cccopy.getLife());
-		 	Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
-		 
+
+		Assert.assertEquals(cc.getPositionX(), cccopy.getPositionX());
+		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
+		Assert.assertEquals(cc.getLife(), cccopy.getLife());
+		Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
+
 	}
 
 	@Test
 	public void testMoveLeft2(){
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,5,true,e);
-		//c.setPositions(F,245,0);
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,5,true,e);
+
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		//cc.init("Ryu",15,5,false,e);
-		//cc.setPositions(F,255,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveLeft();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), ccopy.getPositionX()-ccopy.speed());
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
+		cc.init(NAME.CHN,15,5,false,e);
+
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		character.setPositions(100, 0);
+		cc.setPositions(255, 0);
+		CharacterContract ccopy = (CharacterContract) character.clone();
+		character.moveLeft();
+		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()-ccopy.getSpeed());
+		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
+		Assert.assertEquals(character.getLife(), ccopy.getLife());
+		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
+
 	}
 
 	@Test
 	public void testMoveLeft3(){
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,15,true,e);
-		//c.setPositions(F,5,0);
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,15,true,e);
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		//cc.init("Ryu",15,5,false,e);
-		//cc.setPositions(F,255,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveLeft();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), 0);
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
+		cc.init(NAME.CHN,15,15,false,e);
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		character.setPositions(5, 0);
+		cc.setPositions(255, 0);
+		CharacterContract ccopy = (CharacterContract) character.clone();
+		character.moveLeft();
+		Assert.assertEquals(character.getPositionX(), 0);
+		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
+		Assert.assertEquals(character.getLife(), ccopy.getLife());
+		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
 	}
 
 	@Test
 	public void testMoveRight1(){
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,15,true,e);
-		//c.setPositions(F,245,0);
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		//cc.init("Ryu",15,5,false,e);
-		//cc.setPositions(F,255,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveRight();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), ccopy.getPositionX());
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
-	}
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,10,true,e);
 
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		cc.init(NAME.CHN,15,5,false,e);
+
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		character.setPositions(245, 0);
+		cc.setPositions(255, 0);
+		CharacterContract ccopy = (CharacterContract) character.clone();
+		character.moveRight();
+
+		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX());
+		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
+		Assert.assertEquals(character.getLife(), ccopy.getLife());
+		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
+	}
+	
 	@Test
 	public void testMoveRight2(){
+		
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,5,true,e);
-		//c.setPositions(F,245,0);
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,5,true,e);
+
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		//cc.init("Ryu",15,5,false,e);
-		//cc.setPositions(F,255,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveRight();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), ccopy.getPositionX() + ccopy.speed());
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
+		cc.init(NAME.CHN,15,5,false,e);
+
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		character.setPositions(100, 0);
+		cc.setPositions(255, 0);
+		CharacterContract ccopy = (CharacterContract) character.clone();
+		character.moveRight();
+
+		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()+ccopy.getSpeed());
+		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
+		Assert.assertEquals(character.getLife(), ccopy.getLife());
+		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
 	}
 
 	@Test
-	public void testMoveRight3(){
+	public void testMoveRight3(){		
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,5,true,e);
+
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		cc.init(NAME.CHN,15,5,false,e);
+
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		character.setPositions(255, 0);
+		cc.setPositions(495, 0);
+		CharacterContract cccopy = (CharacterContract) cc.clone();
+		cc.moveRight();
+
+		Assert.assertEquals(cc.getPositionX(), e.getWidth());
+		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
+		Assert.assertEquals(cc.getLife(), cccopy.getLife());
+		Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
+		
 		//e.init(250,500,10,p1,p2);
 		//c.init("Ken",15,15,true,e);
 		//c.setPositions(F,245,0);
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		//cc.init("Ryu",15,15,false,e);
 		//cc.setPositions(F,495,0);
 		//e.setChar(c,1);
@@ -240,18 +259,21 @@ public abstract class AbstractCharacterTest {
 	public void testSwitchSide(){
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
-		//p1.init(1);
-		//p2.init(2);
-		EngineImpl e = new EngineImpl();
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,5,true,e);
-		//CharacterContract cc = c.clone();
-		//c.switchSide();
-		/*
-		 	Assert.assertEquals(c.faceRight(), !cc.faceRight);
-		 	Assert.assertEquals(c.getPositionX(), cc.getPositionX());
-		 	Assert.assertEquals(c.getPositionY(), cc.getPositionY());
-		 */
+		p1.init(0);
+		p2.init(1);
+		p1.setCharacter(character);
+		EngineContract e = new EngineContract(new EngineImpl());
+		character.init(NAME.BISON, 15,15,true,e);
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		cc.init(NAME.CHN,15,15,false,e);
+		p2.setCharacter(cc);
+		e.init(250,500,10,p1,p2);
+		CharacterContract ccopy = (CharacterContract) character.clone();
+		character.switchSide();
+		Assert.assertEquals(character.faceRight(), !ccopy.faceRight());
+		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX());
+		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
+
 	}
 
 	@Test
