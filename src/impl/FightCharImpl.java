@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.FightCharContract;
 import contracts.HitboxContract;
 import contracts.RectangleHitboxContract;
 import data.Tech;
@@ -16,6 +17,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	private boolean isBlockstunned;
 	private boolean isHitstunned;
 	private boolean isTech;
+	private boolean isTechHasAlreadyHit;
 	private Tech tech;
 	private Tech[] techs ;
 	private RectangleHitboxService charBox;
@@ -72,7 +74,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public boolean isTechHasAlreadyHit() {
 		// TODO Auto-generated method stub
-		return false;
+		return isTechHasAlreadyHit;
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		if (!notManipulable()) {
 			isTech = true;
 			this.tech = tech;
-			this.techFrame = 1;
+			this.techFrame = 0;
 		}
 
 	}
@@ -151,8 +153,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	}
 	
 	@Override
-	public void step(COMMAND c) {
-		
+	public void step(COMMAND c) {	
 		switch (c) {
 		case LEFT:
 			moveLeft();
@@ -186,7 +187,50 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		default:
 			break;
 		}
+		
+		if(isTeching()) {
+			FightCharService autherFighter = getEngine().getChar(1) == this ?
+					(FightCharService) getEngine().getChar(1):(FightCharService)getEngine().getChar(2);
+				 
+			techFrame++;
+			if(techFrame <= tech.getSframe()) {
+				
+			} else if(techFrame > tech.getSframe() && techFrame <= tech.getHframe() && !isTechHasAlreadyHit) {
+				if(getCharBox().collidesWith(autherFighter.getCharBox())) {
+					isTechHasAlreadyHit = true;
+					if(autherFighter.isBlocking()) {
+						autherFighter.setBlokstunned(true);
+					}
+					else {
+						autherFighter.setHitstunned(true);
+						autherFighter.updateLife(tech.getDamage());
+					}
+				}
+				
+			}else if(techFrame >tech.getHframe() && techFrame <= tech.getRframe()) {
+				isTechHasAlreadyHit= false;
+			}
+			else {
+				isTech = false;
+				tech = null;
+			}
+		}
+	}
+	
 
+	public void setBlokstunned(boolean bool) {
+		isBlockstunned = bool;
+	}
+
+
+	public void setHitstunned(boolean bool) {
+		isHitstunned = bool;
+	}
+	
+	public void updateLife(int damage) {
+		if(damage > 0) {
+			life= Math.max(0, life-damage);
+		}
 	}
 
 	

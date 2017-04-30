@@ -68,7 +68,21 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 	public RectangleHitboxService getCharBox(){
 		return delegate.getCharBox();
 	}
-
+	
+	@Override
+	public void updateLife(int dammage) {
+		delegate.updateLife(dammage);
+	}
+	
+	@Override
+	public void setHitstunned(boolean h) {
+		delegate.setHitstunned(h);
+	}
+	
+	@Override
+	public void setBlokstunned(boolean b) {
+		delegate.setBlokstunned(b);
+	}
 	
 	
 	@Override

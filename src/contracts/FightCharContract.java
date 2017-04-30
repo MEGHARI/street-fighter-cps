@@ -396,6 +396,78 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(getPositionY() == positionYPre))
 			throw new PostconditionError("La position Y a changé");
 	}
+	
+		@Override
+		public void setBlokstunned(boolean b) {
+			// preCondition
+			
+			// preInvariants
+			checkInvariant();
+			
+			//run
+			getDelegate().setBlokstunned(b);
+			
+			// postInvariants
+			checkInvariant();
+			
+			// postInvariants
+			// post : getBlokstunned = b
+			if(!(getDelegate().isBlockstunned() == b))
+				throw new PostconditionError("erreur d'initialisation 'Blockstunned' ");
+			
+		}
+			
+		public void setHitstunned(boolean h) {
+			// preCondition
+			
+			// preInvariants
+			checkInvariant();
+			
+			//run
+			getDelegate().setBlokstunned(h);
+			
+			// postInvariants
+			checkInvariant();
+			
+			// postInvariants
+			// post : getHitstunned() = h
+			if(!(getDelegate().isBlockstunned() == h))
+				throw new PostconditionError("erreur d'initialisation 'Histstunned' ");
+		}
+		
+		
+		
+		public void updateLife(int damage) {
+			// precondition
+			// pre : damage > 0
+			if(!(damage >0))
+				throw new PreconditionError("le damage doit etre positif ");
+			
+			// preInvariant
+			checkInvariant();
+			
+			// captures
+			int lifePre = getLife();
+			
+			// run
+			getDelegate().updateLife(damage);
+			
+			// postInvariants
+			checkInvariant();
+		
+			// postConditions
+			// post : getLife()@pre = > dammage -> getLife() = getLife()@pre - damage
+			if((lifePre >= damage)) {
+				if(!(getLife() == lifePre - damage))
+						throw new PostconditionError("la vie doit etre etre == lifePre - damage");
+			}
+			// post : getLife()@pre < damage -> getLife() =0
+			else if(lifePre < damage) {
+				if(!(getLife() == 0))
+					throw new PostconditionError("la vie doit etre etre == 0");
+
+			}
+		}
 
 	@Override
 	public void step(COMMAND c) {

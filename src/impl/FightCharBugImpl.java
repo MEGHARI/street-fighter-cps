@@ -1,81 +1,42 @@
 package impl;
 
+import contracts.HitboxContract;
+import contracts.RectangleHitboxContract;
 import data.Tech;
 import enums.COMMAND;
 import enums.NAME;
 import services.EngineService;
 import services.FightCharService;
+import services.RectangleHitboxService;
 
-public class FightCharBugImpl extends CharacterImpl implements FightCharService{
-	
+public class FightCharBugImpl extends CharacterImpl implements FightCharService {
+
 	private int techFrame;
 	private boolean isBlocking;
 	private boolean isBlockstunned;
 	private boolean isHitstunned;
 	private boolean isTech;
-	Tech tech;
-	Tech[] techs ;
+	private boolean isTechHasAlreadyHit;
+	private Tech tech;
+	private Tech[] techs;
+	private RectangleHitboxService charBox;
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
 		super.init(name, l, s, f, e);
 		techs = new Tech[2];
-		
+		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
+		charBox.init(getPositionX(), getPositionY(), 10, 63);
+
 	}
 
-	@Override
-	public void step(COMMAND c) {
-
-		switch (c) {
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
-		case JUMP:
-			jump();
-			break;
-		case CROUCH:
-			crouch();
-			break;
-		default:
-			break;
-		}
-		int i = 0;
-		if (isTeching()) {
-
-			if (techFrame == 1) {
-				i++;
-				if (tech.getSframe() <= i) {
-					techFrame = 2;
-					i = 0;
-				}
-			} else if (techFrame == 2) {
-				i++;
-				if (tech.getHframe() <= i) {
-					techFrame = 3;
-					i = 0;
-				}
-
-			} else if (techFrame == 3) {
-				i++;
-				if (tech.getRframe() <= i) {
-					techFrame = 0;
-					i = 0;
-					isTech = false;
-				}
-
-			} else {
-			}
-		}
-
+	public RectangleHitboxService getCharBox() {
+		return charBox;
 	}
 
 	@Override
 	public boolean notManipulable() {
-		// bug
-		return isBlockstunned() || isHitstunned() ;
+		return isBlockstunned() || isHitstunned() || isTeching();
 	}
 
 	@Override
@@ -111,7 +72,7 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService{
 	@Override
 	public boolean isTechHasAlreadyHit() {
 		// TODO Auto-generated method stub
-		return false;
+		return isTechHasAlreadyHit;
 	}
 
 	@Override
@@ -119,8 +80,53 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService{
 		if (!notManipulable()) {
 			isTech = true;
 			this.tech = tech;
-			this.techFrame = 1;
+			this.techFrame = 0;
 		}
+
+	}
+
+	@Override
+	public void moveLeft() {
+		// bug
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX() - getSpeed(), getPositionY());
+		if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
+			if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
+				positionX = Math.max(0, positionX - speed);
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
+			if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
+				positionX = Math.max(0, positionX - speed);
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
+
+	}
+
+	@Override
+	public void moveRight() {
+		// bug
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX() + getSpeed(), getPositionY());
+		if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
+			if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
+			if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
+
+	}
+
+	@Override
+	public void switchSide() {
+		faceRight = !faceRight;
+		getCharBox().moveTo(this.positionX, this.positionY);
 
 	}
 
@@ -132,20 +138,97 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService{
 
 	@Override
 	public void crouch() {
-		// TODO Auto-generated method stub
+		if (!notManipulable()) {
+			getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
+		}
 
 	}
-	
-	
 
 	@Override
 	public void startBlock() {
 		isBlocking = true;
 
 	}
-	
+
 	@Override
-	public FightCharBugImpl clone(){
+	public void step(COMMAND c) {
+		switch (c) {
+		case LEFT:
+			moveLeft();
+			break;
+		case RIGHT:
+			moveRight();
+			break;
+		case JUMP:
+			jump();
+			break;
+		case CROUCH:
+			crouch();
+			break;
+		case TECH_1:
+			startTech(techs[0]);
+			break;
+		case TECH_2:
+			startTech(techs[1]);
+			break;
+		case JUMP_TECH_1:
+			break;
+		case JUMP_TECH_2:
+			break;
+		case CROUCH_TECH_1:
+			break;
+		case CROUCH_TECH_2:
+			break;
+		case PROTECT:
+			startBlock();
+			break;
+		default:
+			break;
+		}
+
+		if (isTeching()) {
+			FightCharService autherFighter = getEngine().getChar(1) == this ? (FightCharService) getEngine().getChar(1)
+					: (FightCharService) getEngine().getChar(2);
+
+			techFrame++;
+			if (techFrame <= tech.getSframe()) {
+
+			} else if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() && !isTechHasAlreadyHit) {
+				if (getCharBox().collidesWith(autherFighter.getCharBox())) {
+					isTechHasAlreadyHit = true;
+					if (autherFighter.isBlocking()) {
+						autherFighter.setBlokstunned(true);
+					} else {
+						autherFighter.setHitstunned(true);
+						autherFighter.updateLife(tech.getDamage());
+					}
+				}
+
+			} else if (techFrame > tech.getHframe() && techFrame <= tech.getRframe()) {
+				isTechHasAlreadyHit = false;
+			} else {
+				isTech = false;
+				tech = null;
+			}
+		}
+	}
+
+	public void setBlokstunned(boolean bool) {
+		isBlockstunned = bool;
+	}
+
+	public void setHitstunned(boolean bool) {
+		isHitstunned = bool;
+	}
+
+	public void updateLife(int damage) {
+		if(damage > 0) {
+			life= Math.max(0, life-damage);
+		}
+	}
+
+	@Override
+	public FightCharBugImpl clone() {
 		FightCharBugImpl fci = new FightCharBugImpl();
 		fci.engine = engine;
 		fci.faceRight = faceRight;
