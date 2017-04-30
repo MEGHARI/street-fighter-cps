@@ -8,6 +8,7 @@ import enums.COMMAND;
 import enums.NAME;
 import impl.CharacterImpl;
 import impl.EngineImpl;
+import impl.FightCharImpl;
 import impl.FightCharacterImp;
 import impl.PlayerImpl;
 import javafx.animation.KeyFrame;
@@ -51,8 +52,8 @@ public class mainApplication extends Application {
 		
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
-		CharacterContract c1 = new FightCharContract(new FightCharacterImp());
-		CharacterContract c2 = new FightCharContract(new FightCharacterImp());
+		CharacterContract c1 = new FightCharContract(new FightCharImpl());
+		CharacterContract c2 = new FightCharContract(new FightCharImpl());
 		engine = new EngineContract(new EngineImpl());
 		c1.init(NAME.RY,15,5,true,engine);
 		c2.init(NAME.BISON,15,5,false,engine);
