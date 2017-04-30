@@ -35,7 +35,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void step(COMMAND c) {
-
 		switch (c) {
 		case LEFT:
 			moveLeft();
@@ -48,6 +47,10 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			break;
 		case CROUCH:
 			crouch();
+			break;
+		case TECH_1:
+			break;
+		case TECH_2:
 			break;
 		case JUMP_TECH_1:
 			break;
@@ -170,7 +173,9 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void crouch() {
-		// TODO Auto-generated method stub
+		if(!notManipulable()) {
+			getCharBox().resize(getCharBox().getWidth(),(getCharBox().getHeight())/2);
+		}
 
 	}
 	
