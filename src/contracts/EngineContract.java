@@ -133,8 +133,6 @@ public class EngineContract extends EngineDecorator {
 		// \post: if getChar(1).getPositionX() < getChar(2).getPositionX()
 		// then !getChar(1).faceRight() && getChar(2).faceRight()
 		if (getChar(1).getPositionX() < getChar(2).getPositionX()) {
-			System.out.println(getChar(1).getPositionX());
-			System.out.println(getChar(2).getPositionX());
 			if (!(getChar(1).faceRight() && !getChar(2).faceRight())) {
 				System.out.println(!getChar(1).faceRight() +" | "+ getChar(2).faceRight());
 				throw new PostconditionError("erreur au niveau du face a face");

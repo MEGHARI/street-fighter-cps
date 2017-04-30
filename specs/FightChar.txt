@@ -28,10 +28,7 @@ Operators:
 		pre crouch(C) require ¬notManipulable(C)
 	startBloking: [FightCharacter] -> [FightChar]
 		pre startBloking(C) requires ¬isBloking(C) && ¬notManipulable(C) 
-	jumpRight :[FightChar]→ [FightCharacter]
-		pre jump(C) require  ¬notManipulable(C)
-	jumpLeft :[FightChar]→ [FightChar]
-		pre jump(C) require  ¬notManipulable(C)
+
 
 Observation:
 
@@ -39,7 +36,7 @@ Observation:
 	isOutOfControl(C) =(min) isTeching(C) || isBlockstunned(C) || isHitStunned(C)
 
 [init]:
-	isOutOfControl(init(name,l, s, f, e)) = false ^ isBlocking(init(name,l, s, f, e)) = false
+	notManipulable(init(name,l, s, f, e)) = false ^ isBlocking(init(name,l, s, f, e)) = false
 [jump]
 	positionX(jump(C)) = positionX()
 	positionY(jump(C)) = positionY()
@@ -82,10 +79,6 @@ Observation:
 	positionX(switchSide(C)) = positionX(C)
 	positionY(switchSide(C)) = positionY(C)
 	
-[jumpRight]
-	jumpRight(fc) = mooveRight(fc)
-[jumpLeft]	
-	jumplLeft(fc) = moveLeft(fc)
 [step]
 	step(C, LEFT) = moveLeft(C)
 	step(C, RIGHT) = moveRight(C)

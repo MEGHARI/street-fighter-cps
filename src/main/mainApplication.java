@@ -48,17 +48,16 @@ public class mainApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Initialisation
+		
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
 		CharacterContract c1 = new FightCharContract(new FightCharacterImp());
 		CharacterContract c2 = new FightCharContract(new FightCharacterImp());
-		
 		engine = new EngineContract(new EngineImpl());
 		c1.init(NAME.RY,15,5,true,engine);
 		c2.init(NAME.BISON,15,5,false,engine);
 		p1.setCharacter(c1);
 		p2.setCharacter(c2);
-		
 		engine.init(659, 340, 20, p1, p2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
@@ -111,6 +110,10 @@ public class mainApplication extends Application {
 					commandPlayer1 = COMMAND.JUMP_TECH_1;
 				} else if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD2)) {
 					commandPlayer1 = COMMAND.JUMP_TECH_2;
+				}else if (event.isPressed(KeyCode.DOWN) && event.isPressed(KeyCode.NUMPAD1)) {
+					commandPlayer1 = COMMAND.CROUCH_TECH_1;
+				} else if (event.isPressed(KeyCode.DOWN) && event.isPressed(KeyCode.NUMPAD2)) {
+					commandPlayer1 = COMMAND.JUMP_TECH_2;
 				} else if (event.isPressed(KeyCode.UP)) {
 					commandPlayer1 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.LEFT)) {
@@ -132,6 +135,10 @@ public class mainApplication extends Application {
 					commandPlayer2 = COMMAND.JUMP_TECH_1;
 				} else if (event.isPressed(KeyCode.Z) && event.isPressed(KeyCode.R)) {
 					commandPlayer2 = COMMAND.JUMP_TECH_2;
+				}else if (event.isPressed(KeyCode.S) && event.isPressed(KeyCode.E)) {
+					commandPlayer2 = COMMAND.CROUCH_TECH_1;
+				}else if (event.isPressed(KeyCode.S) && event.isPressed(KeyCode.R)) {
+					commandPlayer2 = COMMAND.CROUCH_TECH_2;
 				}else if (event.isPressed(KeyCode.Z)) {
 					commandPlayer2 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.D)) {
@@ -146,7 +153,7 @@ public class mainApplication extends Application {
 					commandPlayer2 = COMMAND.TECH_2;
 				} else if (event.isPressed(KeyCode.A)) {
 					commandPlayer2 = COMMAND.PROTECT;
-				}
+				} 
 			}
 		});
 		scene.setOnKeyPressed(keyHandler);

@@ -175,15 +175,6 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		}
 	}
 	
-	@Override
-	public void jumpRight() {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void jumpLeft() {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
 	public void startBlock() {
