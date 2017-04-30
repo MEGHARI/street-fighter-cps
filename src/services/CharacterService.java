@@ -62,12 +62,12 @@ public interface CharacterService {
 	//	then getPositionX() == getPositionX()@pre
 	
 	// \post: if ( getPositionX()@pre <= getSpeed()) && 
-	//(\exist i: int { getEngine()@pre.getChar(i) == self)
+	//(\forall i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then   getPositionX() == 0
 	
 	// \post: if ( getPositionX()@pre > getSpeed()) && 
-	//(\exists i: int { getEngine()@pre.getChar(i) == self)
+	//(\forall i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then  getPositionX() == getPositionX()@pre -getSpeed()@pre
 	
@@ -82,12 +82,12 @@ public interface CharacterService {
 	//	then getPositionX() == getPositionX()@pre
 	
 	// \post: if ( (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre) && 
-	//(\exists i: int { getEngine()@pre.getChar(i) == self)
+	//(\forall i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then   getPositionX() == getPositionX()@pre+getSpeed()@pre
 	
 	// \post: if ( (getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre) && 
-	// (\exists i: int { getEngine()@pre.getChar(i) == self)
+	// (\forall i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 	//        then   getPositionX() == getEngine()@pre.getWidth()
 	

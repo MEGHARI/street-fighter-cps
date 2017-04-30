@@ -6,6 +6,7 @@
 **** P1 = (def) Player.init(1)
 **** P2 = (def) Player.init(2)
 **** E = (def) Engine.init(250,400, 20, P1,P2)
+**** F = (def) Character.init("Ken",15,15,false,E)
 
 *** Opération : L0 =(def) init("Ryu", 50, 5, true, E)
 *** Oracle :
@@ -46,12 +47,12 @@
 **** P1 = (def) Player.init(1)
 **** P2 = (def) Player.init(2)
 **** E = (def) Engine.init(250,500, 10, P1,P2)
-**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F0 = (def) init("Ryu", 15, 5, true, E)
 **** F1 = (def) setPositions(F, 245,0)
-**** F2 = (def) init("Ryu", 15, 15, false, E)
+**** F2 = (def) init("Ken", 15, 10, false, E)
 **** F3 = (def) setPositions(F, 255,0)
-**** E1 = (def) char(F1,1)
-**** E2 = (def) char(F2,2)
+**** E1 = (def) Player.setCharacter(F1,1)
+**** E2 = (def) Player.setCharacter(F2,2)
 
 *** Opération : L0 =(def) moveLeft(F3)
 *** Oracle :
@@ -66,12 +67,12 @@
 **** P1 = (def) Player.init(1)
 **** P2 = (def) Player.init(2)
 **** E = (def) Engine.init(250,500, 10, P1,P2)
-**** F0 = (def) init("Ken", 15, 5, true, E)
+**** F0 = (def) init("Ryu", 15, 5, true, E)
 **** F1 = (def) setPositions(F, 245,0)
-**** F2 = (def) init("Ryu", 15, 5, false, E)
+**** F2 = (def) init("Ken", 15, 5, false, E)
 **** F3 = (def) setPositions(F, 255,0)
-**** E1 = (def) char(F1,1)
-**** E2 = (def) char(F2,2)
+**** E1 = (def) Player.setCharacter(F1,1)
+**** E2 = (def) Player.setCharacter(F2,2)
 
 *** Opération : L0 =(def) moveLeft(F1)
 *** Oracle :

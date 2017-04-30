@@ -308,7 +308,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			if (!(getPositionX() == positionXPre))
 				throw new PostconditionError("le fighter ne peut pas se deplacer a droite");
 
-		// \post: \exists i:int if ( !(notManipulable()@pre || isBlocking()@pre)
+		// \post: \forall i:int if ( !(notManipulable()@pre || isBlocking()@pre)
 		// && getEngine()@pre.getChar(i) != self &&
 		// getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 		// then getPositionX() == getPositionX()@pre
@@ -323,7 +323,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		}
 		// \post: if (!(notManipulable()@pre || isBlocking()@pre) &&
 		// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre) &&
-		// (\exists i: int { getEngine()@pre.getChar(i) == self)
+		// (\forall i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre+getSpeed()@pre
