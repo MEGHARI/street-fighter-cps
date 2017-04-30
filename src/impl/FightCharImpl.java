@@ -9,7 +9,7 @@ import services.EngineService;
 import services.FightCharService;
 import services.RectangleHitboxService;
 
-public class FightCharacterImp extends CharacterImpl implements FightCharService {
+public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	private int techFrame;
 	private boolean isBlocking;
@@ -17,7 +17,7 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 	private boolean isHitstunned;
 	private boolean isTech;
 	private Tech tech;
-	private Tech[] techs;
+	private Tech[] techs ;
 	private RectangleHitboxService charBox;
 
 	@Override
@@ -180,8 +180,8 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 	}
 	
 	@Override
-	public FightCharacterImp clone(){
-		FightCharacterImp fci = new FightCharacterImp();
+	public FightCharImpl clone(){
+		FightCharImpl fci = new FightCharImpl();
 		fci.engine = engine;
 		fci.faceRight = faceRight;
 		fci.charBox = charBox.clone();

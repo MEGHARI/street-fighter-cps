@@ -239,21 +239,6 @@ public abstract class AbstractCharacterTest {
 		Assert.assertEquals(cc.getLife(), cccopy.getLife());
 		Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
 		
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,15,true,e);
-		//c.setPositions(F,245,0);
-		//cc.init("Ryu",15,15,false,e);
-		//cc.setPositions(F,495,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveRight();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), e.getWidth());
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
 	}
 
 	@Test

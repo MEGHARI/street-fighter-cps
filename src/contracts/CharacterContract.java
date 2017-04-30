@@ -187,6 +187,7 @@ public class CharacterContract extends CharacterDecorator {
 		int lifePre = getLife();
 		boolean faceRightPre = faceRight();
 		EngineService enginePre = getEngine();
+		
 		HitboxService hitPost = getCharBox().clone();
 		hitPost.moveTo(positionXPre-speedPre, positionYPre);
 		// run

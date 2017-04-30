@@ -9,6 +9,7 @@ import errors.PostconditionError;
 import errors.PreconditionError;
 import services.EngineService;
 import services.FightCharService;
+import services.HitboxService;
 
 public class FightCharContract extends CharacterContract implements FightCharService {
 
@@ -24,7 +25,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(getDelegate().notManipulable() == getDelegate().isTeching() || getDelegate().isBlockstunned()
 				|| getDelegate().isHitstunned()))
 			throw new InvariantError("incohérrence au niveau de notManipulable ");
-		
+
 		super.checkInvariant();
 	}
 
@@ -174,7 +175,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PostconditionError("erreur de positionnement lors du crouch 'Y'");
 		}
 	}
-	
+
 
 	@Override
 	public void startBlock() {
@@ -211,6 +212,10 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		EngineService enginePre = getEngine();
 		boolean notManipulablePre = getDelegate().notManipulable();
 		boolean isBlockingPre = getDelegate().isBlocking();
+
+		HitboxService hitPost = getCharBox().clone();
+		hitPost.moveTo(positionXPre-speedPre, positionYPre);
+
 		// run
 		getDelegate().moveLeft();
 		// postInvariants
@@ -226,9 +231,12 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 		// then getPositionX() == getPositionX()@pre
 
-		for (int i = 0; i < 2; i++) {
-			if ((!(notManipulablePre || isBlockingPre)) && enginePre.getChar(i) != this
-					&& getCharBox().collidesWith(enginePre.getChar(i).getCharBox())) {
+		boolean collision = false;
+		for (int i = 1; i < 3; i++) {
+			if ((!(notManipulablePre || isBlockingPre)) 
+					&& enginePre.getChar(i) != this
+					&& hitPost.collidesWith(enginePre.getChar(i).getCharBox())) {
+				collision = true;
 				if (getPositionX() != positionXPre)
 					throw new PostconditionError("erreur de position de x");
 			}
@@ -240,11 +248,13 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		/// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == 0
-		for (int i = 0; i < 2; i++) {
-			if ((!(notManipulablePre || isBlockingPre)) && (positionXPre <= speedPre) && (enginePre.getChar(i) == this)
-					|| (!getCharBox().collidesWith(enginePre.getChar(i).getCharBox()))) {
-				if (getPositionX() != 0) {
-					throw new PostconditionError("erreur de positions");
+		if(positionXPre <= speedPre && !collision){
+			for (int i = 1; i < 3; i++) {
+				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
+						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
+					if (getPositionX() != 0) {
+						throw new PostconditionError("erreur de positions");
+					}
 				}
 			}
 		}
@@ -254,11 +264,13 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre -getSpeed()@pre
-		for (int i = 0; i < 2; i++) {
-			if ((!(notManipulablePre || isBlockingPre)) && (positionXPre > speedPre) && (enginePre.getChar(i) == this)
-					|| (!getCharBox().collidesWith(enginePre.getChar(i).getCharBox())))
-				if (getPositionX() != positionXPre - speedPre)
-					throw new PostconditionError("erreur de position");
+		else if(positionXPre>speedPre && !collision){ 
+			for (int i = 1; i < 3; i++) {
+				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
+						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox()))))
+					if (getPositionX() != positionXPre - speedPre)
+						throw new PostconditionError("erreur de position");
+			}
 		}
 		// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 		if (!(faceRight() == faceRightPre && getLife() == lifePre))
@@ -296,7 +308,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// && getEngine()@pre.getChar(i) != self &&
 		// getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 		// then getPositionX() == getPositionX()@pre
-		for (int i = 0; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			if ((!(notManipulablePre || isBlockingPre)) && enginePre.getChar(i) != this
 					&& getCharBox().collidesWith(enginePre.getChar(i).getCharBox())) {
 				if (getPositionX() != positionXPre)
@@ -309,7 +321,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre+getSpeed()@pre
-		for (int i = 0; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			if ((!(notManipulablePre || isBlockingPre)) && (positionXPre <= enginePre.getWidth() - speedPre)
 					&& (enginePre.getChar(i) == this)
 					|| (!getCharBox().collidesWith(enginePre.getChar(i).getCharBox()))) {
@@ -323,7 +335,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getEngine()@pre.getWidth()
-		for (int i = 0; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			if ((!(notManipulablePre || isBlockingPre)) && (positionXPre > enginePre.getWidth() - speedPre)
 					&& (enginePre.getChar(i) == this)
 					|| (!getCharBox().collidesWith(enginePre.getChar(i).getCharBox()))) {
@@ -340,40 +352,40 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 	}
 
 	@Override
-    public void switchSide() {
-		
+	public void switchSide() {
+
 		// preInvariants
 		checkInvariant();
-		
+
 		// captures
 		boolean faceRightPre = faceRight();
 		int positionXPre = getPositionX();
 		int positionYPre = getPositionY();
 		boolean notManipulablePre = getDelegate().notManipulable();
 		boolean isBlockingPre = getDelegate().isBlocking();
-		
+
 		// run
 		switchSide();
-		
+
 		// postInvariants
 		checkInvariant();
-		
+
 		// postConditions
 		// post:(notManipulable()@pre || isBlocking()@pre) => faceRight() = faceRight()@pre
-		
+
 		if(notManipulablePre || isBlockingPre)
 			if (!(faceRight() == faceRightPre))
-			    throw new PostconditionError("L'orientation devra pas etre changé");
+				throw new PostconditionError("L'orientation devra pas etre changé");
 		if(!(notManipulablePre || isBlockingPre))
 			if ((faceRight() == faceRightPre))
-			    throw new PostconditionError("L'orientation n'a pas changé");
+				throw new PostconditionError("L'orientation n'a pas changé");
 		// \post: getPositionX() == getPositionX()@pre
 		if (!(getPositionX() == positionXPre))
-		    throw new PostconditionError("La position X a changé");
+			throw new PostconditionError("La position X a changé");
 		// \post: getPositionY() == getPositionY()@pre
 		if (!(getPositionY() == positionYPre))
-		    throw new PostconditionError("La position Y a changé");
-    }
+			throw new PostconditionError("La position Y a changé");
+	}
 
 	@Override
 	public void step(COMMAND c) {
@@ -381,9 +393,21 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// \post : c == JUMP => (step(c) == jump())
 		// \post : c == CROUCH => (step(c) == crouch())
 	}
-	
+
 	@Override
 	public FightCharContract clone(){
 		return new FightCharContract(getDelegate().clone());
+	}
+
+	@Override
+	public void jumpRight() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void jumpLeft() {
+		// TODO Auto-generated method stub
+
 	}
 }
