@@ -41,15 +41,14 @@ public abstract class AbstractFightCharTest {
 		p2.init(2);
 		p1.setCharacter(fightchar);
 		EngineImpl e = new EngineImpl();
-		fightchar.init(NAME.RYU, 50,5,true,e);
+		fightchar.init(NAME.KEN, 50,5,true,e);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,15,false,e);
+		cc.init(NAME.RYU,15,15,false,e);
 		p2.setCharacter(cc);
-		
 		e.init(250,400,20,p1,p2);
 
 
-		Assert.assertEquals(fightchar.getName(), NAME.RYU);
+		Assert.assertEquals(fightchar.getName(), NAME.KEN);
 		Assert.assertEquals(fightchar.getLife(), 50);
 		Assert.assertEquals(fightchar.getSpeed(), 5);
 		Assert.assertEquals(fightchar.faceRight(), true);
@@ -65,7 +64,7 @@ public abstract class AbstractFightCharTest {
 		p2.init(2);
 		p1.setCharacter(fightchar);
 		try{
-			fightchar.init(NAME.RYU,-50,5,true,null);
+			fightchar.init(NAME.KEN,-50,5,true,null);
 			Assert.fail();
 		}catch(PreconditionError e){
 			Assert.assertTrue(true);
@@ -80,7 +79,7 @@ public abstract class AbstractFightCharTest {
 		p2.init(2);
 		p1.setCharacter(fightchar);
 		try{
-			fightchar.init(NAME.RYU,50,-5,true,null);
+			fightchar.init(NAME.KEN,50,-5,true,null);
 			Assert.fail();
 		}catch(PreconditionError e){
 			Assert.assertTrue(true);
@@ -96,10 +95,8 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,5,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,15,false,e);
-
+		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -107,6 +104,7 @@ public abstract class AbstractFightCharTest {
 		CharacterContract cccopy = cc.clone();
 		cc.moveLeft();
 
+		
 		Assert.assertEquals(cc.getPositionX(), cccopy.getPositionX());
 		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
 		Assert.assertEquals(cc.getLife(), cccopy.getLife());
@@ -123,16 +121,16 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,5,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
-		fightchar.setPositions(100, 0);
+		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.moveLeft();
+		
+		
 		Assert.assertEquals(fightchar.getPositionX(), ccopy.getPositionX()-ccopy.getSpeed());
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getLife(), ccopy.getLife());
@@ -157,6 +155,8 @@ public abstract class AbstractFightCharTest {
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.moveLeft();
+		
+		
 		Assert.assertEquals(fightchar.getPositionX(), 0);
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getLife(), ccopy.getLife());
@@ -172,10 +172,8 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,15,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -183,6 +181,7 @@ public abstract class AbstractFightCharTest {
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.moveRight();
 
+		
 		Assert.assertEquals(fightchar.getPositionX(), ccopy.getPositionX());
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getLife(), ccopy.getLife());
@@ -199,17 +198,16 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,5,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		fightchar.setPositions(100, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.moveRight();
-
+		
+		
 		Assert.assertEquals(fightchar.getPositionX(), ccopy.getPositionX()+ccopy.getSpeed());
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getLife(), ccopy.getLife());
@@ -225,37 +223,20 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,5,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
-		fightchar.setPositions(255, 0);
+		fightchar.setPositions(245, 0);
 		cc.setPositions(495, 0);
 		CharacterContract cccopy = (CharacterContract) cc.clone();
 		cc.moveRight();
-
+		
+		
 		Assert.assertEquals(cc.getPositionX(), e.getWidth());
 		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
 		Assert.assertEquals(cc.getLife(), cccopy.getLife());
 		Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
-		
-		//e.init(250,500,10,p1,p2);
-		//c.init("Ken",15,15,true,e);
-		//c.setPositions(F,245,0);
-		//cc.init("Ryu",15,15,false,e);
-		//cc.setPositions(F,495,0);
-		//e.setChar(c,1);
-		//e.setChar(cc,2);
-		//CharacterContract ccopy = c.clone();
-		//c.moveRight();
-		/*
-		 	Assert.assertEquals(c.getPositionX(), e.getWidth());
-		 	Assert.assertEquals(c.faceRight(), ccopy.faceRight());
-		 	Assert.assertEquals(c.life(), ccopy.life());
-		 	Assert.assertEquals(c.getPositionY(), ccopy.getPositionY());
-		 */
 	}
 
 	@Test
@@ -288,16 +269,16 @@ public abstract class AbstractFightCharTest {
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.RYU, 15,5,true,e);
-
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,10,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.step(COMMAND.LEFT);
+		
+		
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getPositionX(), ccopy.getPositionX()-ccopy.getSpeed());
 		Assert.assertEquals(fightchar.getPositionY(), ccopy.getPositionY());
@@ -320,6 +301,8 @@ public abstract class AbstractFightCharTest {
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.step(COMMAND.RIGHT);
+		
+		
 		Assert.assertEquals(fightchar.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(fightchar.getPositionX(), ccopy.getPositionX());
 		Assert.assertEquals(fightchar.getPositionY(), ccopy.getPositionY());

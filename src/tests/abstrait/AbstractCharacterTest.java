@@ -121,21 +121,20 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.moveLeft();
+		
+		
 		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()-ccopy.getSpeed());
 		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(character.getLife(), ccopy.getLife());
 		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
-
 	}
 
 	@Test
@@ -155,6 +154,8 @@ public abstract class AbstractCharacterTest {
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.moveLeft();
+		
+		
 		Assert.assertEquals(character.getPositionX(), 0);
 		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(character.getLife(), ccopy.getLife());
@@ -189,7 +190,6 @@ public abstract class AbstractCharacterTest {
 
 	@Test
 	public void testMoveRight2(){
-
 		PlayerImpl p1 = new PlayerImpl();
 		PlayerImpl p2 = new PlayerImpl();
 		p1.init(0);
@@ -197,17 +197,16 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
-		character.setPositions(100, 0);
+		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.moveRight();
-
+		
+		
 		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()+ccopy.getSpeed());
 		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(character.getLife(), ccopy.getLife());
@@ -223,17 +222,16 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		cc.init(NAME.KEN,15,5,false,e);
-
+		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
-		character.setPositions(255, 0);
+		character.setPositions(245, 0);
 		cc.setPositions(495, 0);
 		CharacterContract cccopy = (CharacterContract) cc.clone();
 		cc.moveRight();
-
+		
+		
 		Assert.assertEquals(cc.getPositionX(), e.getWidth());
 		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
 		Assert.assertEquals(cc.getLife(), cccopy.getLife());
@@ -271,16 +269,16 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
-
 		p2.setCharacter(cc);
 		e.init(250,500,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.step(COMMAND.LEFT);
+		
+		
 		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()-ccopy.getSpeed());
 		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
@@ -303,6 +301,8 @@ public abstract class AbstractCharacterTest {
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.step(COMMAND.RIGHT);
+		
+		
 		Assert.assertEquals(character.faceRight(), ccopy.faceRight());
 		Assert.assertEquals(character.getPositionX(), ccopy.getPositionX()+ccopy.getSpeed());
 		Assert.assertEquals(character.getPositionY(), ccopy.getPositionY());
