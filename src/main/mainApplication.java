@@ -6,6 +6,7 @@ import java.util.List;
 
 import enums.COMMAND;
 import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
@@ -28,7 +30,8 @@ import services.HitboxService;
 import services.PlayerService;
 
 public class mainApplication extends Application {
-
+	private  double xJumpRadius = 20 ;
+	private final double yJumpRadius = 80 ;
 	private int frame = 60;
 	private COMMAND c1;
 	private COMMAND c2;
@@ -135,6 +138,7 @@ public class mainApplication extends Application {
 							commandPlayer1 = COMMAND.JUMP_RIGHT;
 						} else if (combinationsPlayer1.contains(KeyCode.UP) && combinationsPlayer1.contains(KeyCode.LEFT)) {
 							commandPlayer1 = COMMAND.JUMP_LEFT;
+							System.out.println("jump_left");
 						} else if (combinationsPlayer1.contains(KeyCode.UP)) {
 							commandPlayer1 = COMMAND.JUMP;
 						} else if (combinationsPlayer1.contains(KeyCode.LEFT)) {
@@ -157,10 +161,12 @@ public class mainApplication extends Application {
 					if (pressNumberPlayer2 == 0) {
 						if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.E)) {
 							commandPlayer1 = COMMAND.JUMP_RIGHT;
+							jumpRight(joueur2);
 						} else if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.A)) {
 							 commandPlayer1 = COMMAND.JUMP_LEFT;
 						} else if (combinationsPlayer2.contains(KeyCode.Z)) {
 							 commandPlayer1 = COMMAND.JUMP;
+							 normalyJump(joueur2);
 						} else if (combinationsPlayer2.contains(KeyCode.A)) {
 							 commandPlayer1 = COMMAND.LEFT;
 						} else if (combinationsPlayer2.contains(KeyCode.E)) {
@@ -196,14 +202,61 @@ public class mainApplication extends Application {
 
 	}
 
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000), e -> {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/60), e -> {
 		// engine.step(c1, c2);
-		System.out.println(commandPlayer1);
-		System.out.println(commandPlayer1);
+		//System.out.println(commandPlayer1);
+		//System.out.println(commandPlayer1);
 		// System.out.println("mouloud");
 		//joueur1.setLayoutX(joueur1.getLayoutX() - 1);
 
 	});
+	
+	private void jumpRight(Rectangle rect) {
+        jump(rect, 180,-180, getHorizontalCenter(rect) + xJumpRadius, getVerticalCenter(rect));
+        //System.out.println(rect.getTranslateY());
+		rect.setTranslateY(0.0);
+
+    }
+
+    private void jumpLeft(Rectangle rect) {        
+        jump(rect, 0, 180, getHorizontalCenter(rect) - xJumpRadius, getVerticalCenter(rect));
+        rect.setTranslateY(0.0);
+    }
+    
+    private void normalyJump(Rectangle rect) { 
+    	xJumpRadius=0;
+        jump(rect, 0, 180, getHorizontalCenter(rect), getVerticalCenter(rect));
+        xJumpRadius=20;
+    }
+
+    private void jump(Rectangle rect, double startAngle, double angularLength, double centerX, double centerY) {
+        if(rect.getTranslateY()==0.0) {
+        	
+        	Arc arc = new Arc();
+            arc.setCenterX(centerX);
+            arc.setCenterY(centerY);
+            arc.setRadiusX(xJumpRadius);
+            arc.setRadiusY(yJumpRadius);
+            arc.setStartAngle(startAngle);
+            arc.setLength(angularLength);
+
+            PathTransition transition = new PathTransition(Duration.seconds(1), arc, rect);
+
+            transition.playFromStart();
+        }
+    	
+    }
+
+    private double getHorizontalCenter(Rectangle rect) {
+        return rect.getX() + rect.getTranslateX() + rect.getWidth() / 2 ;
+      
+    }
+
+    private double getVerticalCenter(Rectangle rect) {
+        return rect.getY() + rect.getTranslateY() + rect.getHeight() / 2 ;
+
+    }
+
 
 	public static void main(String... args) {
 		launch(args);
