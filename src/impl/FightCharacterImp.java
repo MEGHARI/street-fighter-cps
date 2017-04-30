@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.HitboxContract;
 import data.Tech;
 import enums.COMMAND;
 import enums.NAME;
@@ -120,6 +121,51 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 			this.tech = tech;
 			this.techFrame = 1;
 		}
+
+	}
+	@Override
+	public void moveLeft() {
+		if(!notManipulable()) {
+			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+			hit.moveTo(getPositionX()-getSpeed(),getPositionY());
+			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+					positionX = Math.max(0, positionX - speed);
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+				if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+					positionX = Math.max(0, positionX - speed);
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void moveRight() {
+		if(!notManipulable()) {
+			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+			hit.moveTo(getPositionX()+getSpeed(),getPositionY());
+			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+					positionX = Math.min(positionX + speed, getEngine().getWidth());
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+				if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+					positionX = Math.min(positionX + speed, getEngine().getWidth());
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void switchSide() {
+		faceRight = !faceRight;
+		getCharBox().moveTo(this.positionX, this.positionY);
 
 	}
 
