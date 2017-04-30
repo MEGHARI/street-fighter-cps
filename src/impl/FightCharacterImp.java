@@ -1,11 +1,13 @@
 package impl;
 
 import contracts.HitboxContract;
+import contracts.RectangleHitboxContract;
 import data.Tech;
 import enums.COMMAND;
 import enums.NAME;
 import services.EngineService;
 import services.FightCharService;
+import services.RectangleHitboxService;
 
 public class FightCharacterImp extends CharacterImpl implements FightCharService {
 
@@ -15,13 +17,19 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 	private boolean isHitstunned;
 	private boolean isTech;
 	private Tech tech;
-	private Tech[] techs ;
+	private Tech[] techs;
+	private RectangleHitboxService charBox;
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
 		super.init(name, l, s, f, e);
 		techs = new Tech[2];
+		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
 		
+	}
+	
+	public RectangleHitboxService getCharBox() {
+		return charBox;
 	}
 
 	@Override
@@ -40,35 +48,19 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 		case CROUCH:
 			crouch();
 			break;
+		case JUMP_TECH_1:
+			break;
+		case JUMP_TECH_2:
+			break;
+		case CROUCH_TECH_1:
+			break;
+		case CROUCH_TECH_2:
+			break;
+		case PROTECT:
+			startBlock();
+		break;
 		default:
 			break;
-		}
-		int i = 0;
-		if (isTeching()) {
-
-			if (techFrame == 1) {
-				i++;
-				if (tech.getSframe() <= i) {
-					techFrame = 2;
-					i = 0;
-				}
-			} else if (techFrame == 2) {
-				i++;
-				if (tech.getHframe() <= i) {
-					techFrame = 3;
-					i = 0;
-				}
-
-			} else if (techFrame == 3) {
-				i++;
-				if (tech.getRframe() <= i) {
-					techFrame = 0;
-					i = 0;
-					isTech = false;
-				}
-
-			} else {
-			}
 		}
 
 	}
@@ -125,7 +117,7 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 	}
 	@Override
 	public void moveLeft() {
-		if(!notManipulable()) {
+		if(!(notManipulable() || isBlocking())) {
 			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX()-getSpeed(),getPositionY());
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
@@ -144,7 +136,7 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 
 	@Override
 	public void moveRight() {
-		if(!notManipulable()) {
+		if(!(notManipulable() || isBlocking())) {
 			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX()+getSpeed(),getPositionY());
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
