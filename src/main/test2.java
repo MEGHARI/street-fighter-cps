@@ -1,101 +1,80 @@
 package main;
-
+import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.concurrent.Task;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class test2 extends Application {
 
+    private final double xJumpRadius = 20 ;
+    private final double yJumpRadius = 80 ;
+
+
     @Override
     public void start(Stage primaryStage) {
-        Button startButton = new Button("Start");
-        startButton.setOnAction(e -> {
-            ProgressForm pForm = new ProgressForm();
+        Rectangle rect = new Rectangle(50, 200, 50, 100);
+        rect.setFill(Color.CORNFLOWERBLUE);
 
-            // In real life this task would do something useful and return 
-            // some meaningful result:
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() throws InterruptedException {
-                    for (int i = 0; i < 10; i++) {
-                        updateProgress(i, 10);
-                        Thread.sleep(200);
-                    }
-                    updateProgress(10, 10);
-                    return null ;
-                }
-            };
+        Button left = new Button("<");
+        left.setOnAction(e -> jumpLeft(rect));
 
-            // binds progress of progress bars to progress of task:
-            pForm.activateProgressBar(task);
+        Button right = new Button(">");
+        right.setOnAction(e -> jumpRight(rect));
 
-            // in real life this method would get the result of the task
-            // and update the UI based on its value:
-            task.setOnSucceeded(event -> {
-                pForm.getDialogStage().close();
-                startButton.setDisable(false);
-            });
+        HBox controls = new HBox(5, left, right);
+        controls.setPadding(new Insets(10));
+        controls.setAlignment(Pos.CENTER);
 
-            startButton.setDisable(true);
-            pForm.getDialogStage().show();
-
-            Thread thread = new Thread(task);
-            thread.start();
-        });
-
-        StackPane root = new StackPane(startButton);
-        Scene scene = new Scene(root, 350, 75);
-        primaryStage.setScene(scene);
+        Pane pane = new Pane(rect);
+        BorderPane root = new BorderPane(pane, null, null, controls, null);
+        primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
-
     }
 
-    public static class ProgressForm {
-        private final Stage dialogStage;
-        private final ProgressBar pb = new ProgressBar();
-        private final ProgressIndicator pin = new ProgressIndicator();
+    private void jumpRight(Rectangle rect) {
+        jump(rect, 180, -180, getHorizontalCenter(rect) + xJumpRadius, getVerticalCenter(rect));
+    }
 
-        public ProgressForm() {
-            dialogStage = new Stage();
-            dialogStage.initStyle(StageStyle.UTILITY);
-            dialogStage.setResizable(false);
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
+    private void jumpLeft(Rectangle rect) {        
+        jump(rect, 0, 180, getHorizontalCenter(rect) - xJumpRadius, getVerticalCenter(rect));
+    }
 
-            // PROGRESS BAR
-            final Label label = new Label();
-            label.setText("alerto");
+    private void jump(Rectangle rect, double startAngle, double angularLength, double centerX, double centerY) {
+        Arc arc = new Arc();
+        arc.setCenterX(centerX);
+        arc.setCenterY(centerY);
+        arc.setRadiusX(xJumpRadius);
+        arc.setRadiusY(yJumpRadius);
+        arc.setStartAngle(startAngle);
+        arc.setLength(angularLength);
 
-            pb.setProgress(-1F);
-            pin.setProgress(-1F);
+        PathTransition transition = new PathTransition(Duration.seconds(1), arc, rect);
 
-            final HBox hb = new HBox();
-            hb.setSpacing(5);
-            hb.setAlignment(Pos.CENTER);
-            hb.getChildren().addAll(pb, pin);
+        transition.playFromStart();
+    }
 
-            Scene scene = new Scene(hb);
-            dialogStage.setScene(scene);
-        }
+    private double getHorizontalCenter(Rectangle rect) {
+        return rect.getX() + rect.getTranslateX() + rect.getWidth() / 2 ;
+        // Alternatively:
+        // Bounds b = rect.getBoundsInParent();
+        // return (b.getMinX() + b.getMaxX()) / 2 ;
+    }
 
-        public void activateProgressBar(final Task<?> task)  {
-            pb.progressProperty().bind(task.progressProperty());
-            pin.progressProperty().bind(task.progressProperty());
-            dialogStage.show();
-        }
-
-        public Stage getDialogStage() {
-            return dialogStage;
-        }
+    private double getVerticalCenter(Rectangle rect) {
+        return rect.getY() + rect.getTranslateY() + rect.getHeight() / 2 ;
+        // Alternatively:
+        // Bounds b = rect.getBoundsInParent();
+        // return (b.getMinY() + b.getMaxY()) / 2 ;
     }
 
     public static void main(String[] args) {
