@@ -9,7 +9,6 @@ import enums.NAME;
 import impl.CharacterImpl;
 import impl.EngineImpl;
 import impl.FightCharImpl;
-import impl.FightCharacterImp;
 import impl.PlayerImpl;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
