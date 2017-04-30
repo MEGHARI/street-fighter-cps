@@ -1,10 +1,6 @@
 package impl;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import enums.COMMAND;
-import javafx.fxml.Initializable;
 import services.CharacterService;
 import services.EngineService;
 import services.PlayerService;
@@ -58,6 +54,7 @@ public class EngineImpl implements EngineService {
 
 	@Override
 	public void step(COMMAND c1, COMMAND c2) {
+		/*
 		getChar(1).step(c1);
 		getChar(2).step(c2);
 		if(getChar(1).getPositionX()<getChar(2).getPositionX()) {
@@ -68,9 +65,6 @@ public class EngineImpl implements EngineService {
 				getChar(2).switchSide();
 			}
 				
-		}
+		}*/
 	}
-	
-
-
 }

@@ -53,7 +53,7 @@ public class EngineContract extends EngineDecorator {
 
 	@Override
 	public void init(int h, int w, int s, PlayerService p1, PlayerService p2) {
-		
+
 		// preconditions
 		// \pre: h > 0
 		if (!(h > 0))
@@ -67,13 +67,13 @@ public class EngineContract extends EngineDecorator {
 		// \pre: p1 != p2
 		if (!(p1 != p2))
 			throw new PreconditionError("Les joueurs sont identiques");
-		
+
 		// run
 		super.init(h, w, s, p1, p2);
-		
+
 		// postInvariants
 		checkInvariant();
-		
+
 		// postConditions
 		// \post: getHeight() == h
 		if (!(getHeight() == h))
@@ -106,35 +106,40 @@ public class EngineContract extends EngineDecorator {
 		if (!(!getChar(2).faceRight()))
 			throw new PostconditionError("L'orientation du joueur 2 n'est pas correctement initialisée");
 	}
-	
+
 	@Override
-    public void step(COMMAND c1, COMMAND c2) {
-		
+	public void step(COMMAND c1, COMMAND c2) {
+
 		// preConditions
 		// pre: !isGameOver()
 		if (!(!isGameOver()))
-		    throw new PostconditionError("La partie est terminée !!");
-		
+			throw new PostconditionError("La partie est terminée !!");
+
 		// preInvariants
 		checkInvariant();
 		// capture
-		
+
 		// run
 		super.step(c1, c2);
-		
+
 		// postInvariants
 		checkInvariant();
-		
+
 		// postConditions
 		// \post: getChar(1) = getChar(1)@pre.step(C1)
-		
+
 		// \post: getChar(2) = getChar(2)@pre.step(C2)
-		
-		// \post: if getChar(1).getPositionX() < getChar(2).getPositionX() 
+
+		// \post: if getChar(1).getPositionX() < getChar(2).getPositionX()
 		// then !getChar(1).faceRight() && getChar(2).faceRight()
-		if(getChar(1).getPositionX() < getChar(2).getPositionX())
-			if(!(!getChar(1).faceRight() && getChar(2).faceRight()))
+		if (getChar(1).getPositionX() < getChar(2).getPositionX()) {
+			System.out.println(getChar(1).getPositionX());
+			System.out.println(getChar(2).getPositionX());
+			if (!(getChar(1).faceRight() && !getChar(2).faceRight())) {
+				System.out.println(!getChar(1).faceRight() +" | "+ getChar(2).faceRight());
 				throw new PostconditionError("erreur au niveau du face a face");
-    }
+			}
+		}
+	}
 
 }

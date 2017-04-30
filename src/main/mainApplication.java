@@ -1,10 +1,15 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import contracts.CharacterContract;
+import contracts.EngineContract;
+import contracts.FightCharContract;
+import contracts.PlayerContract;
 import enums.COMMAND;
+import enums.NAME;
+import impl.CharacterImpl;
+import impl.EngineImpl;
+import impl.FightCharacterImp;
+import impl.PlayerImpl;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -14,7 +19,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -24,45 +28,40 @@ import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import main.MultiplePressedKeysEventHandler.MultiKeyEvent;
+import main.MultiplePressedKeysEventHandler.MultiKeyEventHandler;
 import services.CharacterService;
-import services.EngineService;
 import services.HitboxService;
-import services.PlayerService;
 
 public class mainApplication extends Application {
-	private  double xJumpRadius = 20 ;
-	private final double yJumpRadius = 80 ;
-	private int frame = 60;
-	private COMMAND c1;
-	private COMMAND c2;
-	private EngineService engine;
-	private PlayerService p1, p2;
+	private double xJumpRadius = 20;
+	private final double yJumpRadius = 80;
+	private int frameRate = 1;
+	private EngineContract engine;
+	private PlayerContract p1, p2;
 	private CharacterService fighter1, fighter2;
 	private HitboxService hitFighter1, hitFighter2;
 	private ProgressBar vieJoueur1, vieJoueur2;
 	private Rectangle joueur1, joueur2;
-	private List<KeyCode> knownKeysPlayer1, knownKeysPlayer2;
-	private int pressNumberPlayer1, pressNumberPlayer2;
-	private List<KeyCode> combinationsPlayer1, combinationsPlayer2;
 	private COMMAND commandPlayer1, commandPlayer2;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Initialisation
-
-		knownKeysPlayer1 = new ArrayList<KeyCode>(Arrays.asList(KeyCode.UP, KeyCode.RIGHT, KeyCode.LEFT, KeyCode.DOWN,
-				KeyCode.NUMPAD3,KeyCode.NUMPAD4, KeyCode.NUMPAD5, KeyCode.NUMPAD6));
-
-		knownKeysPlayer2 = new ArrayList<KeyCode>(Arrays.asList(/* player2 */KeyCode.A, KeyCode.Z, KeyCode.E, KeyCode.S,
-				KeyCode.F, KeyCode.G, KeyCode.H,KeyCode.B));
-
-		// les combinations de touche
-		combinationsPlayer1 = new ArrayList<>();
-		combinationsPlayer2 = new ArrayList<>();
-		pressNumberPlayer1 = 0;
-		pressNumberPlayer2 = 0;
-		commandPlayer1=COMMAND.NEUTRAL;
-		commandPlayer2=COMMAND.NEUTRAL;
+		p1 = new PlayerContract(new PlayerImpl());
+		p2 = new PlayerContract(new PlayerImpl());
+		CharacterContract c1 = new FightCharContract(new FightCharacterImp());
+		CharacterContract c2 = new FightCharContract(new FightCharacterImp());
+		
+		engine = new EngineContract(new EngineImpl());
+		c1.init(NAME.RY,15,5,true,engine);
+		c2.init(NAME.BISON,15,5,false,engine);
+		p1.setCharacter(c1);
+		p2.setCharacter(c2);
+		
+		engine.init(659, 340, 20, p1, p2);
+		commandPlayer1 = COMMAND.NEUTRAL;
+		commandPlayer2 = COMMAND.NEUTRAL;
 
 		// joueur 1
 		vieJoueur1 = new ProgressBar(100);
@@ -105,86 +104,53 @@ public class mainApplication extends Application {
 
 		Scene scene = new Scene(anchore, 659, 340);
 		scene.getStylesheets().add("/css/main.css");
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		MultiplePressedKeysEventHandler keyHandler = new MultiplePressedKeysEventHandler(new MultiKeyEventHandler() {
 			@Override
-			public void handle(KeyEvent event) {
-				KeyCode code = event.getCode();
-				if (knownKeysPlayer1.contains(code)) {
-					if (pressNumberPlayer1 < 0) {
-						pressNumberPlayer1 = 0;
-					}
-					if (!combinationsPlayer1.contains(code)) {
-						pressNumberPlayer1++;
-						combinationsPlayer1.add(code);
-					}
-				} else if (knownKeysPlayer2.contains(code)) {
-					if (pressNumberPlayer2 < 0) {
-						pressNumberPlayer2 = 0;
-					}
-					if (!combinationsPlayer2.contains(code)) {
-						pressNumberPlayer2++;
-						combinationsPlayer2.add(code);
-					}
+			public void handle(MultiKeyEvent event) {
+				if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD1)) {
+					commandPlayer1 = COMMAND.JUMP_TECH_1;
+				} else if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD2)) {
+					commandPlayer1 = COMMAND.JUMP_TECH_2;
+				} else if (event.isPressed(KeyCode.UP)) {
+					commandPlayer1 = COMMAND.JUMP;
+				} else if (event.isPressed(KeyCode.LEFT)) {
+					commandPlayer1 = COMMAND.LEFT;
+				} else if (event.isPressed(KeyCode.RIGHT)) {
+					commandPlayer1 = COMMAND.RIGHT;
+				} else if (event.isPressed(KeyCode.DOWN)) {
+					commandPlayer1 = COMMAND.CROUCH;
+				} else if (event.isPressed(KeyCode.NUMPAD1)) {
+					commandPlayer1 = COMMAND.TECH_1;
+				} else if (event.isPressed(KeyCode.NUMPAD2)) {
+					commandPlayer1 = COMMAND.TECH_2;
+				} else if (event.isPressed(KeyCode.NUMPAD3)) {
+					commandPlayer1 = COMMAND.PROTECT;
+				} 
+				
+				/**player2**/
+				else if (event.isPressed(KeyCode.Z) && event.isPressed(KeyCode.E)) {
+					commandPlayer2 = COMMAND.JUMP_TECH_1;
+				} else if (event.isPressed(KeyCode.Z) && event.isPressed(KeyCode.R)) {
+					commandPlayer2 = COMMAND.JUMP_TECH_2;
+				}else if (event.isPressed(KeyCode.Z)) {
+					commandPlayer2 = COMMAND.JUMP;
+				} else if (event.isPressed(KeyCode.D)) {
+					commandPlayer2 = COMMAND.LEFT;
+				} else if (event.isPressed(KeyCode.Q)) {
+					commandPlayer2 = COMMAND.RIGHT;
+				} else if (event.isPressed(KeyCode.S)) {
+					commandPlayer2 = COMMAND.CROUCH;
+				}else if (event.isPressed(KeyCode.E)) {
+					commandPlayer2 = COMMAND.TECH_1;
+				}else if (event.isPressed(KeyCode.R)) {
+					commandPlayer2 = COMMAND.TECH_2;
+				} else if (event.isPressed(KeyCode.A)) {
+					commandPlayer2 = COMMAND.PROTECT;
 				}
 			}
 		});
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if(combinationsPlayer1.contains(event.getCode())) {
-					pressNumberPlayer1--;
-					if (pressNumberPlayer1 == 0) {
-						if (combinationsPlayer1.contains(KeyCode.UP) && combinationsPlayer1.contains(KeyCode.RIGHT)) {
-							commandPlayer1 = COMMAND.JUMP_RIGHT;
-						} else if (combinationsPlayer1.contains(KeyCode.UP) && combinationsPlayer1.contains(KeyCode.LEFT)) {
-							commandPlayer1 = COMMAND.JUMP_LEFT;
-							System.out.println("jump_left");
-						} else if (combinationsPlayer1.contains(KeyCode.UP)) {
-							commandPlayer1 = COMMAND.JUMP;
-						} else if (combinationsPlayer1.contains(KeyCode.LEFT)) {
-							commandPlayer1 = COMMAND.LEFT;
-						} else if (combinationsPlayer1.contains(KeyCode.RIGHT)) {
-							commandPlayer1 = COMMAND.RIGHT;
-						} else if (combinationsPlayer1.contains(KeyCode.DOWN)) {
-							commandPlayer1 = COMMAND.CROUCH;
-						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD4)) {
-							commandPlayer1 = COMMAND.TECH_1;
-						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD6)) {
-							commandPlayer1 = COMMAND.TECH_2;
-						} else if (combinationsPlayer1.contains(KeyCode.NUMPAD5)) {
-							commandPlayer1 = COMMAND.PROTECT;
-						} 
-						combinationsPlayer1.clear();
-					}
-				}else if(combinationsPlayer2.contains(event.getCode())) {
-					pressNumberPlayer2--;
-					if (pressNumberPlayer2 == 0) {
-						if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.E)) {
-							commandPlayer1 = COMMAND.JUMP_RIGHT;
-							jumpRight(joueur2);
-						} else if (combinationsPlayer2.contains(KeyCode.Z) && combinationsPlayer2.contains(KeyCode.A)) {
-							 commandPlayer1 = COMMAND.JUMP_LEFT;
-						} else if (combinationsPlayer2.contains(KeyCode.Z)) {
-							 commandPlayer1 = COMMAND.JUMP;
-							 normalyJump(joueur2);
-						} else if (combinationsPlayer2.contains(KeyCode.A)) {
-							 commandPlayer1 = COMMAND.LEFT;
-						} else if (combinationsPlayer2.contains(KeyCode.E)) {
-							 commandPlayer1 = COMMAND.RIGHT;
-						} else if (combinationsPlayer2.contains(KeyCode.S)) {
-							commandPlayer1 = COMMAND.CROUCH;
-						} else if (combinationsPlayer2.contains(KeyCode.F)) {
-							 commandPlayer1 = COMMAND.TECH_1;
-						} else if (combinationsPlayer2.contains(KeyCode.H)) {
-							commandPlayer1 = COMMAND.TECH_2;
-						} else if (combinationsPlayer2.contains(KeyCode.G)) {
-							 commandPlayer1 = COMMAND.PROTECT;
-						} 
-						combinationsPlayer2.clear();
-					}
-				}
-			}
-		});
+		scene.setOnKeyPressed(keyHandler);
+		scene.setOnKeyReleased(keyHandler);
 		primaryStage.setTitle("street-fighter");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
@@ -202,61 +168,64 @@ public class mainApplication extends Application {
 
 	}
 
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/60), e -> {
-		// engine.step(c1, c2);
-		//System.out.println(commandPlayer1);
-		//System.out.println(commandPlayer1);
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/frameRate), e -> {
+		System.out.println(commandPlayer1+" > "+commandPlayer2);
+		engine.step(commandPlayer1, commandPlayer2);
+		commandPlayer1 = COMMAND.NEUTRAL;
+		commandPlayer2 = COMMAND.NEUTRAL;
+
+		// System.out.println(commandPlayer1);
+		// System.out.println(commandPlayer1);
 		// System.out.println("mouloud");
-		//joueur1.setLayoutX(joueur1.getLayoutX() - 1);
+		// joueur1.setLayoutX(joueur1.getLayoutX() - 1);
 
 	});
-	
+
 	private void jumpRight(Rectangle rect) {
-        jump(rect, 180,-180, getHorizontalCenter(rect) + xJumpRadius, getVerticalCenter(rect));
-        //System.out.println(rect.getTranslateY());
+		jump(rect, 180, -180, getHorizontalCenter(rect) + xJumpRadius, getVerticalCenter(rect));
+		// System.out.println(rect.getTranslateY());
 		rect.setTranslateY(0.0);
 
-    }
+	}
 
-    private void jumpLeft(Rectangle rect) {        
-        jump(rect, 0, 180, getHorizontalCenter(rect) - xJumpRadius, getVerticalCenter(rect));
-        rect.setTranslateY(0.0);
-    }
-    
-    private void normalyJump(Rectangle rect) { 
-    	xJumpRadius=0;
-        jump(rect, 0, 180, getHorizontalCenter(rect), getVerticalCenter(rect));
-        xJumpRadius=20;
-    }
+	private void jumpLeft(Rectangle rect) {
+		jump(rect, 0, 180, getHorizontalCenter(rect) - xJumpRadius, getVerticalCenter(rect));
+		rect.setTranslateY(0.0);
+	}
 
-    private void jump(Rectangle rect, double startAngle, double angularLength, double centerX, double centerY) {
-        if(rect.getTranslateY()==0.0) {
-        	
-        	Arc arc = new Arc();
-            arc.setCenterX(centerX);
-            arc.setCenterY(centerY);
-            arc.setRadiusX(xJumpRadius);
-            arc.setRadiusY(yJumpRadius);
-            arc.setStartAngle(startAngle);
-            arc.setLength(angularLength);
+	private void normalyJump(Rectangle rect) {
+		xJumpRadius = 0;
+		jump(rect, 0, 180, getHorizontalCenter(rect), getVerticalCenter(rect));
+		xJumpRadius = 20;
+	}
 
-            PathTransition transition = new PathTransition(Duration.seconds(1), arc, rect);
+	private void jump(Rectangle rect, double startAngle, double angularLength, double centerX, double centerY) {
+		if (rect.getTranslateY() == 0.0) {
 
-            transition.playFromStart();
-        }
-    	
-    }
+			Arc arc = new Arc();
+			arc.setCenterX(centerX);
+			arc.setCenterY(centerY);
+			arc.setRadiusX(xJumpRadius);
+			arc.setRadiusY(yJumpRadius);
+			arc.setStartAngle(startAngle);
+			arc.setLength(angularLength);
 
-    private double getHorizontalCenter(Rectangle rect) {
-        return rect.getX() + rect.getTranslateX() + rect.getWidth() / 2 ;
-      
-    }
+			PathTransition transition = new PathTransition(Duration.seconds(1), arc, rect);
 
-    private double getVerticalCenter(Rectangle rect) {
-        return rect.getY() + rect.getTranslateY() + rect.getHeight() / 2 ;
+			transition.playFromStart();
+		}
 
-    }
+	}
 
+	private double getHorizontalCenter(Rectangle rect) {
+		return rect.getX() + rect.getTranslateX() + rect.getWidth() / 2;
+
+	}
+
+	private double getVerticalCenter(Rectangle rect) {
+		return rect.getY() + rect.getTranslateY() + rect.getHeight() / 2;
+
+	}
 
 	public static void main(String... args) {
 		launch(args);
