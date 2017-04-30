@@ -134,6 +134,16 @@ public class FightCharacterImp extends CharacterImpl implements FightCharService
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void jumpRight() {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void jumpLeft() {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void startBlock() {
