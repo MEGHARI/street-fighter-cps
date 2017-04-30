@@ -3,7 +3,7 @@ package services;
 import enums.COMMAND;
 
 public interface EngineService {
-	
+
 	/* Observators */
 
 	public int getHeight();
@@ -15,9 +15,9 @@ public interface EngineService {
 
 	// pre: i \in { 1, 2 }
 	public PlayerService getPlayer(int i);
-	
+
 	public boolean isGameOver();
-	
+
 	/* Invariants */
 	// \inv: isGameOver() == getChar(1).isDead() || getChar(2).isDead()
 
@@ -37,9 +37,9 @@ public interface EngineService {
 	// \post: getChar(1).faceRight()
 	// \post: !(getChar(2).faceRight())
 	public void init(int h, int w, int s, PlayerService p1, PlayerService p2);
-	
+
 	/* Operators */
-	
+
 	// \pre: !isGameOver()
 	// \post: getChar(1) = getChar(1)@pre.step(C1)
 	// \post: getChar(2) = getChar(2)@pre.step(C2)
@@ -48,10 +48,9 @@ public interface EngineService {
 	// \post: if getChar(1).getPositionX() < getChar(2).getPositionX() 
 	// && getChar(1).faceRight() then !getChar(1).faceRight() && getChar(2).faceRight()
 	public void step(COMMAND c1, COMMAND c2);
-	
-	
-	
-	
+
+
+
+
 }
 
-	
