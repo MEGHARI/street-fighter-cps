@@ -106,6 +106,7 @@ public class mainApplication extends Application {
 		MultiplePressedKeysEventHandler keyHandler = new MultiplePressedKeysEventHandler(new MultiKeyEventHandler() {
 			@Override
 			public void handle(MultiKeyEvent event) {
+				/**player1**/
 				if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD1)) {
 					commandPlayer1 = COMMAND.JUMP_TECH_1;
 				} else if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD2)) {
@@ -180,11 +181,6 @@ public class mainApplication extends Application {
 		engine.step(commandPlayer1, commandPlayer2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
-
-		// System.out.println(commandPlayer1);
-		// System.out.println(commandPlayer1);
-		// System.out.println("mouloud");
-		// joueur1.setLayoutX(joueur1.getLayoutX() - 1);
 
 	});
 
