@@ -50,7 +50,7 @@ public class Tech {
 
 	public HitboxService hitbox(int x, int y) {
 		hitbox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		hitbox.init(x, y);
+		((RectangleHitboxContract)hitbox).init(x, y,20,60);
 		return hitbox;
 	}
 }

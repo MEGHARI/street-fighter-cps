@@ -33,39 +33,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		return charBox;
 	}
 
-	@Override
-	public void step(COMMAND c) {
-
-		switch (c) {
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
-		case JUMP:
-			jump();
-			break;
-		case CROUCH:
-			crouch();
-			break;
-		case JUMP_TECH_1:
-			break;
-		case JUMP_TECH_2:
-			break;
-		case CROUCH_TECH_1:
-			break;
-		case CROUCH_TECH_2:
-			break;
-		case PROTECT:
-			startBlock();
-		break;
-		default:
-			break;
-		}
-
-	}
-
+	
 	@Override
 	public boolean notManipulable() {
 		return isBlockstunned() || isHitstunned() || isTeching();
@@ -170,7 +138,9 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void crouch() {
-		// TODO Auto-generated method stub
+		if(!notManipulable()) {
+			getCharBox().resize(getCharBox().getWidth(),(getCharBox().getHeight())/2);
+		}
 
 	}
 	
@@ -179,6 +149,46 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		isBlocking = true;
 
 	}
+	
+	@Override
+	public void step(COMMAND c) {
+		
+		switch (c) {
+		case LEFT:
+			moveLeft();
+			break;
+		case RIGHT:
+			moveRight();
+			break;
+		case JUMP:
+			jump();
+			break;
+		case CROUCH:
+			crouch();
+			break;
+		case TECH_1:
+			startTech(techs[0]);
+			break;
+		case TECH_2:
+			startTech(techs[1]);
+			break;
+		case JUMP_TECH_1:
+			break;
+		case JUMP_TECH_2:
+			break;
+		case CROUCH_TECH_1:
+			break;
+		case CROUCH_TECH_2:
+			break;
+		case PROTECT:
+			startBlock();
+		break;
+		default:
+			break;
+		}
+
+	}
+
 	
 	@Override
 	public FightCharImpl clone(){
