@@ -31,6 +31,7 @@ import javafx.util.Duration;
 import main.MultiplePressedKeysEventHandler.MultiKeyEvent;
 import main.MultiplePressedKeysEventHandler.MultiKeyEventHandler;
 import services.CharacterService;
+import services.FightCharService;
 import services.HitboxService;
 
 public class mainApplication extends Application {
@@ -51,8 +52,8 @@ public class mainApplication extends Application {
 		
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
-		CharacterContract c1 = new FightCharContract(new FightCharImpl());
-		CharacterContract c2 = new FightCharContract(new FightCharImpl());
+		FightCharService c1 = new FightCharContract(new FightCharImpl());
+		FightCharService c2 = new FightCharContract(new FightCharImpl());
 		engine = new EngineContract(new EngineImpl());
 		c1.init(NAME.RY,15,5,true,engine);
 		c2.init(NAME.BISON,15,5,false,engine);

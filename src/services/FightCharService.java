@@ -6,7 +6,9 @@ import enums.NAME;
 
 public interface FightCharService extends /* refine */ CharacterService {
 
-
+	@Override
+	public RectangleHitboxService getCharBox();
+	
 	public boolean notManipulable();
 
 	public boolean isBlocking();

@@ -176,7 +176,7 @@ public abstract class AbstractFightCharTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.BISON, 15,15,true,e);
 
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.CHN,15,5,false,e);
 
 		p2.setCharacter(cc);
@@ -203,7 +203,7 @@ public abstract class AbstractFightCharTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.BISON, 15,5,true,e);
 
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.CHN,15,5,false,e);
 
 		p2.setCharacter(cc);
@@ -229,7 +229,7 @@ public abstract class AbstractFightCharTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		fightchar.init(NAME.BISON, 15,5,true,e);
 
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.CHN,15,5,false,e);
 
 		p2.setCharacter(cc);

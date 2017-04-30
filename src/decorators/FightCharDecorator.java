@@ -2,6 +2,7 @@ package decorators;
 
 import data.Tech;
 import services.FightCharService;
+import services.RectangleHitboxService;
 
 public class FightCharDecorator extends CharacterDecorator implements FightCharService {
 	private FightCharService delegate;
@@ -61,6 +62,11 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 
 	public void startBlock() {
 		delegate.startBlock();
+	}
+	
+	@Override
+	public RectangleHitboxService getCharBox(){
+		return delegate.getCharBox();
 	}
 
 	
