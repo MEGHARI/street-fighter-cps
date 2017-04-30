@@ -30,7 +30,7 @@ public abstract class AbstractCharacterTest {
 	public abstract void beforeTests();
 
 	/**** TESTS ****/
-	/*
+	
 	@Test
 	public void testInit(){
 		PlayerImpl p1 = new PlayerImpl();
@@ -38,11 +38,12 @@ public abstract class AbstractCharacterTest {
 		p1.init(1);
 		p2.init(2);
 		p1.setCharacter(character);
-		character.init(NAME.BISON, 50,5,true,null);
-		CharacterContract cc = new CharacterContract(new CharacterImpl());
-		cc.init(NAME.CHN,15,15,false,null);
-		p2.setCharacter(cc);
 		EngineImpl e = new EngineImpl();
+		character.init(NAME.BISON, 50,5,true,e);
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
+		cc.init(NAME.CHN,15,15,false,e);
+		p2.setCharacter(cc);
+		
 		e.init(250,400,20,p1,p2);
 
 
@@ -51,7 +52,7 @@ public abstract class AbstractCharacterTest {
 		Assert.assertEquals(character.getSpeed(), 5);
 		Assert.assertEquals(character.faceRight(), true);
 		Assert.assertEquals(character.getEngine(), e);
-		Assert.assertTrue(character.getCharBox() == null);
+		Assert.assertTrue(character.getCharBox() != null);
 	}
 
 	@Test
@@ -82,7 +83,7 @@ public abstract class AbstractCharacterTest {
 		}catch(PreconditionError e){
 			Assert.assertTrue(true);
 		}
-	}*/
+	}
 
 	@Test
 	public void testMoveLeft1(){
