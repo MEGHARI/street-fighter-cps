@@ -51,9 +51,9 @@ public abstract class AbstractFightCharTest {
 		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
 				new RectangleHitboxImpl());
 		rhc2.init(0, 0, 20, 30);
-		fightchar.init(NAME.KEN, 50,5,true, rhc1,e);
+		fightchar.init(NAME.KEN, 50,5,true,e,rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.RYU,15,15,false, rhc2,e);
+		cc.init(NAME.RYU,15,15,false,e,rhc2);
 		p2.setCharacter(cc);
 		e.init(400,250,20,p1,p2);
 
@@ -106,13 +106,13 @@ public abstract class AbstractFightCharTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
 				new RectangleHitboxImpl());
-		rhc1.init(0, 0, 20, 30);
-		fightchar.init(NAME.RYU, 15,5,true,rhc1,e);
+		rhc1.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e,rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
 				new RectangleHitboxImpl());
-		rhc2.init(0, 0, 20, 30);
-		cc.init(NAME.KEN,15,5,false,rhc2,e);
+		rhc2.init(0, 0, 10, 30);
+		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -136,10 +136,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		
-		fightchar.init(NAME.RYU, 15,5,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,5,false,e);
+		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -163,9 +168,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,15,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,15,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,15,false,e);
+		cc.init(NAME.KEN,15,15,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(5, 0);
@@ -188,9 +199,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,15,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,15,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,5,false,e);
+		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -214,9 +231,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,5,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,5,false,e);
+		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(100, 0);
@@ -239,13 +262,19 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,5,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,5,false,e);
+		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
-		cc.setPositions(485, 0);
+		cc.setPositions(484, 0);
 		FightCharContract cccopy = (FightCharContract) cc.clone();
 		cc.moveRight();
 		
@@ -264,9 +293,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,15,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,15,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,15,false,e);
+		cc.init(NAME.KEN,15,15,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -285,9 +320,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,5,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,10,false,e);
+		cc.init(NAME.KEN,15,10,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
@@ -309,9 +350,15 @@ public abstract class AbstractFightCharTest {
 		p2.init(1);
 		p1.setCharacter(fightchar);
 		EngineContract e = new EngineContract(new EngineImpl());
-		fightchar.init(NAME.RYU, 15,5,true,e);
+		RectangleHitboxContract rhc1 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc1.init(0, 0, 10, 30);
+		RectangleHitboxContract rhc2 = new RectangleHitboxContract(
+				new RectangleHitboxImpl());
+		rhc2.init(0, 0, 10, 30);
+		fightchar.init(NAME.RYU, 15,5,true,e, rhc1);
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
-		cc.init(NAME.KEN,15,10,false,e);
+		cc.init(NAME.KEN,15,10,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);

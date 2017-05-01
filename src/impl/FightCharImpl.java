@@ -21,18 +21,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	private Tech tech;
 	private Tech[] techs ;
 	private RectangleHitboxService charBox;
-<<<<<<< HEAD
-
-	@Override
-	public void init(NAME name, int l, int s, boolean f, EngineService e) {
-		super.init(name, l, s, f, e);
-		techs = new Tech[2];
-		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		charBox.init(getPositionX(), getPositionY(), 10, 172);
-		
-	}
-=======
->>>>>>> 310742e77820f19ac937677a6d77f3e93422be7d
 	
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
