@@ -89,7 +89,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void moveLeft() {
 		if(!(notManipulable() || isBlocking())) {
-			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX()-getSpeed(),getPositionY());
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
@@ -102,6 +102,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					getCharBox().moveTo(this.positionX, this.positionY);
 				}
 			}
+			System.out.println(hit.collidesWith(getEngine().getChar(1).getCharBox()));
 		}
 	}
 
@@ -134,7 +135,9 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void jump() {
-		// TODO Auto-generated method stub
+		if (!notManipulable()) {
+			
+		}
 
 	}
 
@@ -196,7 +199,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			if(techFrame <= tech.getSframe()) {
 				
 			} else if(techFrame > tech.getSframe() && techFrame <= tech.getHframe() && !isTechHasAlreadyHit) {
-				if(getCharBox().collidesWith(autherFighter.getCharBox())) {
+				if(tech.hitbox(getCharBox().getPositionX(),getCharBox().getPositionY()+(getCharBox().getHeight()-20)).collidesWith(autherFighter.getCharBox())) {
 					isTechHasAlreadyHit = true;
 					if(autherFighter.isBlocking()) {
 						autherFighter.setBlokstunned(true);
