@@ -15,8 +15,8 @@ Observators:
 	techHasAlreadyHit: [FightChar] → bool
 		pre techHasAlreadyHit(C) requires isTeching(C)
 Constructors:
-	init: String × int × int × bool × Engine → [FightChar]
-		pre init(l,s,f,e) requires l > 0 ∧ s > 0
+	init: String × int × int × bool × Engine x RectangleHitbox → [FightChar]
+		pre init(l,s,f,e,r) requires l > 0 ∧ s > 0
 
 Operators: 
 
@@ -36,7 +36,7 @@ Observation:
 	isOutOfControl(C) =(min) isTeching(C) || isBlockstunned(C) || isHitStunned(C)
 
 [init]:
-	notManipulable(init(name,l, s, f, e)) = false ^ isBlocking(init(name,l, s, f, e)) = false
+	notManipulable(init(name,l, s, f, e, r)) = false ^ isBlocking(init(name,l, s, f, e, r)) = false ^ charBox(init(name,l, s, f, e, r)) = r
 [jump]
 	positionX(jump(C)) = positionX()
 	positionY(jump(C)) = positionY()
