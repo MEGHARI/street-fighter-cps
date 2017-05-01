@@ -9,6 +9,7 @@ import enums.NAME;
 import impl.EngineImpl;
 import impl.FightCharImpl;
 import impl.PlayerImpl;
+import impl.RectangleHitboxImpl;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -49,14 +50,17 @@ public class mainApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// Initialisation
 		
-		
+		hitFighter1 = new RectangleHitboxContract(new RectangleHitboxImpl());
+		hitFighter1.init(0, 0,69 , 172);
+		hitFighter2 = new RectangleHitboxContract(new RectangleHitboxImpl());
+		hitFighter2.init(0, 0,69 , 172);
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
 		fighter1 = new FightCharContract(new FightCharImpl());
 		fighter2 = new FightCharContract(new FightCharImpl());
 		engine = new EngineContract(new EngineImpl());
-		fighter1.init(NAME.RY,100,5,true,engine);
-		fighter2.init(NAME.BISON,100,5,false,engine);
+		fighter1.init(NAME.RY,100,5,true,hitFighter1,engine);
+		fighter2.init(NAME.BISON,100,5,false,hitFighter2,engine);
 		p1.init(1);
 		p1.init(2);
 		p1.setCharacter(fighter1);
@@ -80,10 +84,10 @@ public class mainApplication extends Application {
 		
 		joueur1 = new Rectangle();
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
-		joueur1.setHeight(((RectangleHitboxContract)engine.getChar(1).getCharBox()).getHeight());
+		joueur1.setHeight(hitFighter1.getHeight());
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
-		joueur1.setWidth(((RectangleHitboxContract)engine.getChar(1).getCharBox()).getWidth());
+		joueur1.setWidth(hitFighter1.getWidth());
 		paneJoueur1.getChildren().addAll(joueur1);
 
 
@@ -103,10 +107,10 @@ public class mainApplication extends Application {
 		
 		joueur2 = new Rectangle();
 		joueur2.setFill(Paint.valueOf("#1c1d1e"));
-		joueur2.setHeight(((RectangleHitboxContract)engine.getChar(2).getCharBox()).getHeight());
+		joueur2.setHeight(hitFighter2.getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
-		joueur2.setWidth(((RectangleHitboxContract)engine.getChar(2).getCharBox()).getWidth());
+		joueur2.setWidth(hitFighter2.getWidth());
 		paneJoueur2.getChildren().addAll(joueur2);
 		
 		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);

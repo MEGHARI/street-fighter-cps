@@ -87,20 +87,6 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		return getDelegate().isTechHasAlreadyHit();
 	}
 
-	// Constructors
-	@Override
-	public void init(NAME name, int l, int s, boolean f, EngineService e) {
-		// pre
-		// run
-		super.init(name, l, s, f, e);
-		// postCondition
-		// \post: notManipulable(C) = false
-		if (notManipulable())
-			throw new PostconditionError("le figghter doit etre manipulable a linitiialisation");
-		if (isBlocking())
-			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
-
-	}
 
 	// Operators:
 	public void init(NAME name, int l, int s, boolean f, RectangleHitboxService rh, EngineService e) {
