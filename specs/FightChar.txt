@@ -67,7 +67,7 @@ Observation:
 	⇒ positionX(moveLeft(C)) =positionX(C)+speed(C)
 
 	(!(notManipulable() || isBlocking()))∧ positionX(C) > width(engine(C))-speed(C)∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
-	⇒ positionX(moveLeft(C)) =width(engine(C))
+	⇒ positionX(moveLeft(C)) =width(engine(C) - width(charBox()))
 
 	faceRight(moveRight(C)) = faceRight(C) ∧ life(moveRight(C)) = life(C)
 

@@ -342,13 +342,13 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// (\exists i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-		// then getPositionX() == getEngine()@pre.getWidth()
+		// then getPositionX() == getEngine()@pre.getWidth() - getCharBox().getWith()
 		else if(positionXPre > enginePre.getWidth() - speedPre && !collision){
 			for (int i = 1; i < 3; i++) {
 				if ((!(notManipulablePre || isBlockingPre))
 						&& ((enginePre.getChar(i) == this)
 								|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
-					if (getPositionX() != enginePre.getWidth())
+					if (getPositionX() != (enginePre.getWidth() - getCharBox().getWidth()))
 						throw new PostconditionError("erreur de positionement (moveRight)");
 				}
 			}

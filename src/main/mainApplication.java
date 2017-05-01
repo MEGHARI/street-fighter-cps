@@ -63,8 +63,7 @@ public class mainApplication extends Application {
 		engine.init(659, 340,200, p1, p2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
-//      <Pane layoutX="149.0" layoutY="166.0" prefHeight="172.0" prefWidth="63.0" />
-		
+
 		// joueur 1
 		paneJoueur1 = new Pane();
 		paneJoueur1.setPrefHeight(172.0);
@@ -76,14 +75,14 @@ public class mainApplication extends Application {
 		vieJoueur1.setLayoutX(339);
 		vieJoueur1.setLayoutY(27);
 		vieJoueur1.prefHeight(20);
-		vieJoueur1.prefHeight(168);
+		vieJoueur1.prefWidth(168);
 		
 		joueur1 = new Rectangle();
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
-		joueur1.setHeight(172.0);
+		joueur1.setHeight(((RectangleHitboxContract)engine.getChar(1).getCharBox()).getHeight());
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
-		joueur1.setWidth(69.0);
+		joueur1.setWidth(((RectangleHitboxContract)engine.getChar(1).getCharBox()).getWidth());
 		paneJoueur1.getChildren().addAll(joueur1);
 
 
@@ -99,14 +98,14 @@ public class mainApplication extends Application {
 		vieJoueur2.setLayoutX(65);
 		vieJoueur2.setLayoutY(27);
 		vieJoueur2.prefHeight(20);
-		vieJoueur2.prefHeight(168);
+		vieJoueur2.prefWidth(168);
 		
 		joueur2 = new Rectangle();
 		joueur2.setFill(Paint.valueOf("#1c1d1e"));
-		joueur2.setHeight(172.0);
+		joueur2.setHeight(((RectangleHitboxContract)engine.getChar(2).getCharBox()).getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
-		joueur2.setWidth(69.0);
+		joueur2.setWidth(((RectangleHitboxContract)engine.getChar(2).getCharBox()).getWidth());
 		paneJoueur2.getChildren().addAll(joueur2);
 		
 		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);
@@ -133,12 +132,11 @@ public class mainApplication extends Application {
 				} else if (event.isPressed(KeyCode.LEFT)) {
 					commandPlayer1 = COMMAND.LEFT;
 					engine.getChar(1).moveLeft();
-					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX()-engine.getChar(1).getSpeed());
-					System.out.println(engine.getChar(1).getPositionX());
-					System.out.println(engine.getChar(2).getPositionX());
-					
+					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());	
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer1 = COMMAND.RIGHT;
+					engine.getChar(1).moveRight();
+					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
 				} else if (event.isPressed(KeyCode.DOWN)) {
 					commandPlayer1 = COMMAND.CROUCH;
 				} else if (event.isPressed(KeyCode.NUMPAD1)) {
@@ -190,9 +188,7 @@ public class mainApplication extends Application {
 		primaryStage.show();
 		Timeline timerThread = new Timeline(keyFrame);
 		timerThread.setCycleCount(Timeline.INDEFINITE);
-		timerThread.play();
-		System.out.println(engine.getWidth()/2 - 10 +" "+ (engine.getWidth()/2 + 10) );
-	
+		timerThread.play();	
 
 	}
 
