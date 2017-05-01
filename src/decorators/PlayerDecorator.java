@@ -1,6 +1,8 @@
 package decorators;
 
+import contracts.FightCharContract;
 import services.CharacterService;
+import services.FightCharService;
 import services.PlayerService;
 
 public class PlayerDecorator implements PlayerService {
@@ -11,7 +13,7 @@ public class PlayerDecorator implements PlayerService {
 	}
 
 	@Override
-	public CharacterService getCharacter() {
+	public FightCharService getCharacter() {
 		return delegate.getCharacter();
 	}
 
@@ -27,7 +29,7 @@ public class PlayerDecorator implements PlayerService {
 	}
 
 	@Override
-	public void setCharacter(CharacterService ch) {
+	public void setCharacter(FightCharService ch) {
 		delegate.setCharacter(ch);
 
 	}

@@ -2,6 +2,7 @@ package contracts;
 
 import decorators.PlayerDecorator;
 import services.CharacterService;
+import services.FightCharService;
 import services.PlayerService;
 
 public class PlayerContract extends PlayerDecorator {
@@ -10,7 +11,7 @@ public class PlayerContract extends PlayerDecorator {
 		super(delegate);
 	}
 	@Override
-	public CharacterService getCharacter() {
+	public FightCharService getCharacter() {
 		return super.getCharacter();
 	}
 
@@ -26,7 +27,7 @@ public class PlayerContract extends PlayerDecorator {
 	}
 
 	@Override
-	public void setCharacter(CharacterService ch) {
+	public void setCharacter(FightCharService ch) {
 		super.setCharacter(ch);
 
 	}
