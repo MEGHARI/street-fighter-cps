@@ -63,7 +63,7 @@ public abstract class AbstractFightCharTest {
 		Assert.assertEquals(fightchar.getSpeed(), 5);
 		Assert.assertEquals(fightchar.faceRight(), true);
 		Assert.assertEquals(fightchar.getEngine(), e);
-		Assert.assertTrue(fightchar.getCharBox() != null);
+		Assert.assertEquals(fightchar.getCharBox(), rhc1);
 	}
 	
 	@Test
@@ -242,7 +242,7 @@ public abstract class AbstractFightCharTest {
 		cc.init(NAME.KEN,15,5,false,e, rhc2);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
-		fightchar.setPositions(100, 0);
+		fightchar.setPositions(220, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.moveRight();
@@ -274,7 +274,7 @@ public abstract class AbstractFightCharTest {
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
-		cc.setPositions(484, 0);
+		cc.setPositions(486, 0);
 		FightCharContract cccopy = (FightCharContract) cc.clone();
 		cc.moveRight();
 		
