@@ -45,7 +45,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.RYU,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,400,20,p1,p2);
+		e.init(400,250,20,p1,p2);
 
 
 		Assert.assertEquals(fightchar.getName(), NAME.KEN);
@@ -98,7 +98,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract cccopy = cc.clone();
@@ -124,7 +124,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -150,7 +150,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(5, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -175,7 +175,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -201,7 +201,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(100, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -226,7 +226,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(495, 0);
 		CharacterContract cccopy = (CharacterContract) cc.clone();
@@ -251,7 +251,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
 		fightchar.switchSide();
 		Assert.assertEquals(fightchar.faceRight(), !ccopy.faceRight());
@@ -272,7 +272,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();
@@ -296,7 +296,7 @@ public abstract class AbstractFightCharTest {
 		FightCharContract cc = new FightCharContract(new FightCharImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) fightchar.clone();

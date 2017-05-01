@@ -44,7 +44,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,400,20,p1,p2);
+		e.init(400,250,20,p1,p2);
 		
 		
 		Assert.assertEquals(character.getName(), NAME.RYU);
@@ -99,7 +99,7 @@ public abstract class AbstractCharacterTest {
 		cc.init(NAME.KEN,15,10,false,e);
 
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract cccopy = cc.clone();
@@ -124,7 +124,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
@@ -149,7 +149,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(5, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
@@ -176,7 +176,7 @@ public abstract class AbstractCharacterTest {
 		cc.init(NAME.KEN,15,5,false,e);
 
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
@@ -200,7 +200,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
@@ -225,7 +225,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(495, 0);
 		CharacterContract cccopy = (CharacterContract) cc.clone();
@@ -251,7 +251,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		CharacterContract ccopy = (CharacterContract) character.clone();
 		character.switchSide();
 		Assert.assertEquals(character.faceRight(), !ccopy.faceRight());
@@ -272,7 +272,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500, 250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();
@@ -296,7 +296,7 @@ public abstract class AbstractCharacterTest {
 		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
-		e.init(250,500,10,p1,p2);
+		e.init(500,250,10,p1,p2);
 		character.setPositions(245, 0);
 		cc.setPositions(255, 0);
 		CharacterContract ccopy = (CharacterContract) character.clone();

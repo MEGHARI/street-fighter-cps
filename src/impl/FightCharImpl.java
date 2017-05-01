@@ -120,7 +120,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void moveRight() {
 		if(!(notManipulable() || isBlocking())) {
-			HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX()+getSpeed(),getPositionY());
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
