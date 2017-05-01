@@ -89,7 +89,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 
 	// Operators:
-	public void init(NAME name, int l, int s, boolean f, RectangleHitboxService rh, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
 		// preconditions
 		// pre: l > 0
 		if (!(l > 0))
@@ -99,7 +99,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PreconditionError("Vitesse négative ou nulle");
 
 		// run
-		getDelegate().init(name, l, s, f, rh, e);
+		getDelegate().init(name, l, s, f,  e,rh);
 
 		// postInvariants
 		checkInvariant();
