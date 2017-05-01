@@ -134,9 +134,14 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// post: getEngine() == e
 		if (!(getEngine() == e))
 			throw new PostconditionError("initialisation du moteur de jeu incorrect");
-		// post: \exists h: HitboxService { getCharBox() == h }
+		// post:  getCharBox() == rh 
 		if (!(getCharBox() == rh))
 			throw new PostconditionError("initialisation de la hitbox  incorrect");
+		if (notManipulable())
+			throw new PostconditionError("le figghter doit etre manipulable a linitiialisation");
+		if (isBlocking())
+			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
+
 
 	}
 

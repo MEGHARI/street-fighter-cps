@@ -49,6 +49,7 @@ public class mainApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// Initialisation
 		
+		
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
 		fighter1 = new FightCharContract(new FightCharImpl());
