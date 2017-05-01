@@ -27,7 +27,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		super.init(name, l, s, f, e);
 		techs = new Tech[2];
 		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		charBox.init(getPositionX(), getPositionY(), 10, 63);
+		charBox.init(getPositionX(), getPositionY(), 69, 172);
 		
 	}
 	
@@ -91,6 +91,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		if(!(notManipulable() || isBlocking())) {
 			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX()-getSpeed(),getPositionY());
+			System.out.println(hit.collidesWith(getEngine().getChar(2).getCharBox()));
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
 					positionX = Math.max(0, positionX - speed);
@@ -102,7 +103,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					getCharBox().moveTo(this.positionX, this.positionY);
 				}
 			}
-			System.out.println(hit.collidesWith(getEngine().getChar(1).getCharBox()));
+			
 		}
 	}
 
@@ -113,12 +114,12 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			hit.moveTo(getPositionX()+getSpeed(),getPositionY());
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
-					positionX = Math.min(positionX + speed, getEngine().getWidth());
+					positionX = Math.min(positionX + speed, getEngine().getWidth()-getCharBox().getWidth());
 					getCharBox().moveTo(this.positionX, this.positionY);
 				}
 			}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
-					positionX = Math.min(positionX + speed, getEngine().getWidth());
+					positionX = Math.min(positionX + speed, getEngine().getWidth()-getCharBox().getWidth());
 					getCharBox().moveTo(this.positionX, this.positionY);
 				}
 			}

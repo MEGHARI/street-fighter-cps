@@ -90,7 +90,7 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre) && 
 	// (\forall i: int { getEngine()@pre.getChar(i) == self)
 	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then   getPositionX() == getEngine()@pre.getWidth()
+	//        then   getPositionX() == getEngine()@pre.getWidth() - getChar().getWith()
 
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 
