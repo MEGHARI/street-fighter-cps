@@ -27,7 +27,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		super.init(name, l, s, f, e);
 		techs = new Tech[2];
 		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		charBox.init(getPositionX(), getPositionY(), 69, 172);
+		charBox.init(getPositionX(), getPositionY(), 10, 172);
 		
 	}
 	

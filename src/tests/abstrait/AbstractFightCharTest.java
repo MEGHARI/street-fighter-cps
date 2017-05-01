@@ -228,12 +228,12 @@ public abstract class AbstractFightCharTest {
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
 		fightchar.setPositions(245, 0);
-		cc.setPositions(495, 0);
-		CharacterContract cccopy = (CharacterContract) cc.clone();
+		cc.setPositions(485, 0);
+		FightCharContract cccopy = (FightCharContract) cc.clone();
 		cc.moveRight();
 		
 		
-		Assert.assertEquals(cc.getPositionX(), e.getWidth());
+		Assert.assertEquals(cc.getPositionX(), e.getWidth()-cccopy.getCharBox().getWidth());
 		Assert.assertEquals(cc.faceRight(), cccopy.faceRight());
 		Assert.assertEquals(cc.getLife(), cccopy.getLife());
 		Assert.assertEquals(cc.getPositionY(), cccopy.getPositionY());
