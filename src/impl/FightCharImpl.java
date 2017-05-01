@@ -30,6 +30,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		techs = new Tech[2];
 		
 		
+		
 	}
 	
 	public RectangleHitboxService getCharBox() {
@@ -95,7 +96,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			System.out.println(hit.collidesWith(getEngine().getChar(2).getCharBox()));
 			if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 				if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
-					positionX = Math.max(0, positionX - speed);
+					positionX = Math.max(0, positionX - (speed));
 					getCharBox().moveTo(this.positionX, this.positionY);
 				}
 			}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){

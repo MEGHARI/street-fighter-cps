@@ -59,8 +59,8 @@ public class mainApplication extends Application {
 		fighter1 = new FightCharContract(new FightCharImpl());
 		fighter2 = new FightCharContract(new FightCharImpl());
 		engine = new EngineContract(new EngineImpl());
-		fighter1.init(NAME.RY,100,5,true,hitFighter1,engine);
-		fighter2.init(NAME.BISON,100,5,false,hitFighter2,engine);
+		fighter1.init(NAME.RY,100,5,true,engine,hitFighter1);
+		fighter2.init(NAME.BISON,100,5,false,engine,hitFighter2);
 		p1.init(1);
 		p1.init(2);
 		p1.setCharacter(fighter1);

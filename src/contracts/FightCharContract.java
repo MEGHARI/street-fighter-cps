@@ -1,5 +1,7 @@
 package contracts;
 
+import java.nio.CharBuffer;
+
 import data.Tech;
 import decorators.FightCharDecorator;
 import enums.COMMAND;
@@ -353,7 +355,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre+getSpeed()@pre
-		if (positionXPre <= enginePre.getWidth() - speedPre && !collision) {
+		if (positionXPre <= enginePre.getWidth() - getCharBox().getWidth() - speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
 				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
 						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
@@ -369,7 +371,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getEngine()@pre.getWidth() -
 		// getCharBox().getWith()
-		else if (positionXPre > enginePre.getWidth() - speedPre && !collision) {
+		else if (positionXPre > enginePre.getWidth() - getCharBox().getWidth() - speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
 				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
 						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
