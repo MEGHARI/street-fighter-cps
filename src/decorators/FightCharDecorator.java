@@ -49,8 +49,8 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 	public boolean isTechHasAlreadyHit() {
 		return delegate.isTechHasAlreadyHit();
 	}
-	public void init(NAME name,int l, int s, boolean f,RectangleHitboxService rh, EngineService e) {
-		delegate.init(name, l, s, f, rh, e);
+	public void init(NAME name,int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
+		delegate.init(name, l, s, f, e,rh);
 	}
 
 	public void startTech(Tech tech) {

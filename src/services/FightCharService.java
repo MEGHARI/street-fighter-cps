@@ -42,7 +42,7 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// post: getEngine() == e
 	// post: getCharBox() ==rh 
 	// \post: notManipulable(C) = false ^ isBlocking() = false
-	public void init(NAME name,int l, int s, boolean f,RectangleHitboxService rh, EngineService e);
+	public void init(NAME name,int l, int s, boolean f, EngineService e,RectangleHitboxService rh);
 
 	// Operators
 

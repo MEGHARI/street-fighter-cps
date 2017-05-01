@@ -87,23 +87,9 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		return getDelegate().isTechHasAlreadyHit();
 	}
 
-	// Constructors
-	@Override
-	public void init(NAME name, int l, int s, boolean f, EngineService e) {
-		// pre
-		// run
-		super.init(name, l, s, f, e);
-		// postCondition
-		// \post: notManipulable(C) = false
-		if (notManipulable())
-			throw new PostconditionError("le figghter doit etre manipulable a linitiialisation");
-		if (isBlocking())
-			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
-
-	}
 
 	// Operators:
-	public void init(NAME name, int l, int s, boolean f, RectangleHitboxService rh, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
 		// preconditions
 		// pre: l > 0
 		if (!(l > 0))
@@ -113,7 +99,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PreconditionError("Vitesse négative ou nulle");
 
 		// run
-		getDelegate().init(name, l, s, f, rh, e);
+		getDelegate().init(name, l, s, f,  e,rh);
 
 		// postInvariants
 		checkInvariant();
@@ -134,9 +120,14 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// post: getEngine() == e
 		if (!(getEngine() == e))
 			throw new PostconditionError("initialisation du moteur de jeu incorrect");
-		// post: \exists h: HitboxService { getCharBox() == h }
+		// post:  getCharBox() == rh 
 		if (!(getCharBox() == rh))
 			throw new PostconditionError("initialisation de la hitbox  incorrect");
+		if (notManipulable())
+			throw new PostconditionError("le figghter doit etre manipulable a linitiialisation");
+		if (isBlocking())
+			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
+
 
 	}
 

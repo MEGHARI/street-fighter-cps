@@ -21,6 +21,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	private Tech tech;
 	private Tech[] techs ;
 	private RectangleHitboxService charBox;
+<<<<<<< HEAD
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e) {
@@ -30,9 +31,11 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		charBox.init(getPositionX(), getPositionY(), 10, 172);
 		
 	}
+=======
+>>>>>>> 310742e77820f19ac937677a6d77f3e93422be7d
 	
 	@Override
-	public void init(NAME name, int l, int s, boolean f,RectangleHitboxService rh, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
 		super.init(name, l, s, f, e);
 		rh.moveTo(getPositionX(), getPositionY());
 		this.charBox = rh;
