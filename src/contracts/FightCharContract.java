@@ -350,7 +350,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			}
 		}
 		// \post: if (!(notManipulable()@pre || isBlocking()@pre) &&
-		// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre) &&
+		// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
 		// (\forall i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
@@ -365,7 +365,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			}
 		}
 		// \post: if ( !(notManipulable()@pre || isBlocking()@pre)
-		// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre) &&
+		// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre -getCharBox().getWidth()) &&
 		// (\exists i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))

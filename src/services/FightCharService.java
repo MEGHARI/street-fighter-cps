@@ -90,15 +90,20 @@ public interface FightCharService extends /* refine */ CharacterService {
 	//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
 	//	then getPositionX() == getPositionX()@pre
 
-	// \post: if (!(notManipulable()@pre || isBlocking()@pre) && (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre) && 
-	//(\forall i: int { getEngine()@pre.getChar(i) == self)
-	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then   getPositionX() == getPositionX()@pre+getSpeed()@pre
+	// \post: if (!(notManipulable()@pre || isBlocking()@pre) &&
+			// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
+			// (\forall i: int { getEngine()@pre.getChar(i) == self)
+			// ||
+			// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+			// then getPositionX() == getPositionX()@pre+getSpeed()@pre
 
-	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre) && 
-	// (\forall i: int { getEngine()@pre.getChar(i) == self)
-	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then   getPositionX() == getEngine()@pre.getWidth() - getChar().getWith()
+	// \post: if ( !(notManipulable()@pre || isBlocking()@pre)
+			// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre -getCharBox().getWidth()) &&
+			// (\exists i: int { getEngine()@pre.getChar(i) == self)
+			// ||
+			// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+			// then getPositionX() == getEngine()@pre.getWidth() -
+			// getCharBox().getWith()
 
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 
