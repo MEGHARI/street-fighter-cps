@@ -130,9 +130,7 @@ public class mainApplication extends Application {
 				} else if (event.isPressed(KeyCode.UP)) {
 					commandPlayer1 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.LEFT)) {
-					commandPlayer1 = COMMAND.LEFT;
-					engine.getChar(1).moveLeft();
-					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());	
+					commandPlayer1 = COMMAND.LEFT;	
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer1 = COMMAND.RIGHT;
 					engine.getChar(1).moveRight();
@@ -197,6 +195,15 @@ public class mainApplication extends Application {
 		//engine.step(commandPlayer1, commandPlayer2);
 		//commandPlayer1 = COMMAND.NEUTRAL;
 		//commandPlayer2 = COMMAND.NEUTRAL;
+		if(commandPlayer1 == COMMAND.TECH_1) {
+			commandPlayer2 = COMMAND.NEUTRAL;
+			engine.step(commandPlayer1, commandPlayer2);
+		} else if(commandPlayer2 == COMMAND.TECH_1) {
+			commandPlayer1= COMMAND.NEUTRAL;
+			engine.step(commandPlayer1, commandPlayer2);
+		} else {
+			
+		}
 		
 
 	});
@@ -245,6 +252,13 @@ public class mainApplication extends Application {
 	private double getVerticalCenter(Rectangle rect) {
 		return rect.getY() + rect.getTranslateY() + rect.getHeight() / 2;
 
+	}
+	
+	private void update() {
+		paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
+		paneJoueur2.setLayoutX(engine.getChar(2).getPositionY());
+		vieJoueur1.setProgress(engine.getChar(1).getLife()/100);
+		vieJoueur1.setProgress(engine.getChar(2).getLife()/100);
 	}
 
 	public static void main(String... args) {

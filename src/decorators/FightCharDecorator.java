@@ -1,6 +1,8 @@
 package decorators;
 
 import data.Tech;
+import enums.NAME;
+import services.EngineService;
 import services.FightCharService;
 import services.RectangleHitboxService;
 
@@ -46,6 +48,9 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 
 	public boolean isTechHasAlreadyHit() {
 		return delegate.isTechHasAlreadyHit();
+	}
+	public void init(NAME name,int l, int s, boolean f,RectangleHitboxService rh, EngineService e) {
+		delegate.init(name, l, s, f, rh, e);
 	}
 
 	public void startTech(Tech tech) {

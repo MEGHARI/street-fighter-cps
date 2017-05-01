@@ -101,7 +101,44 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
 
 	}
+
 	// Operators:
+	public void init(NAME name, int l, int s, boolean f, RectangleHitboxService rh, EngineService e) {
+		// preconditions
+		// pre: l > 0
+		if (!(l > 0))
+			throw new PreconditionError("Vie négative ou nulle");
+		// pre: s > 0
+		if (!(s > 0))
+			throw new PreconditionError("Vitesse négative ou nulle");
+
+		// run
+		getDelegate().init(name, l, s, f, rh, e);
+
+		// postInvariants
+		checkInvariant();
+
+		// postConditions
+		// \post : getName() = name
+		if (!(getName() == name))
+			throw new PostconditionError("initialisation du nom incorrect");
+		// post: getLife() == l
+		if (!(getLife() == l))
+			throw new PostconditionError("initialisation de la vie incorrect");
+		// post: getSpeed() == s
+		if (!(getSpeed() == s))
+			throw new PostconditionError("initialisation de la vitesse incorrect");
+		// post: faceRight() == f
+		if (!(faceRight() == f))
+			throw new PostconditionError("initialisation de l'orientation incorrect");
+		// post: getEngine() == e
+		if (!(getEngine() == e))
+			throw new PostconditionError("initialisation du moteur de jeu incorrect");
+		// post: \exists h: HitboxService { getCharBox() == h }
+		if (!(getCharBox() == rh))
+			throw new PostconditionError("initialisation de la hitbox  incorrect");
+
+	}
 
 	public void startTech(Tech tech) {
 
@@ -177,7 +214,6 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		}
 	}
 
-
 	@Override
 	public void startBlock() {
 		// precondition
@@ -215,7 +251,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		boolean isBlockingPre = getDelegate().isBlocking();
 
 		RectangleHitboxContract hitPost = (RectangleHitboxContract) getCharBox().clone();
-		hitPost.moveTo(positionXPre-speedPre, positionYPre);
+		hitPost.moveTo(positionXPre - speedPre, positionYPre);
 
 		// run
 		getDelegate().moveLeft();
@@ -234,8 +270,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 		boolean collision = false;
 		for (int i = 1; i < 3; i++) {
-			if ((!(notManipulablePre || isBlockingPre)) 
-					&& enginePre.getChar(i) != this
+			if ((!(notManipulablePre || isBlockingPre)) && enginePre.getChar(i) != this
 					&& hitPost.collidesWith((RectangleHitboxContract) enginePre.getChar(i).getCharBox())) {
 				collision = true;
 				if (getPositionX() != positionXPre)
@@ -249,7 +284,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		/// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == 0
-		if(positionXPre <= speedPre && !collision){
+		if (positionXPre <= speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
 				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
 						|| (!hitPost.collidesWith((RectangleHitboxContract) enginePre.getChar(i).getCharBox())))) {
@@ -265,7 +300,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre -getSpeed()@pre
-		else if(positionXPre>speedPre && !collision){ 
+		else if (positionXPre > speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
 				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
 						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox()))))
@@ -295,7 +330,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		boolean notManipulablePre = getDelegate().notManipulable();
 		boolean isBlockingPre = getDelegate().isBlocking();
 		RectangleHitboxContract hitPost = (RectangleHitboxContract) getCharBox().clone();
-		hitPost.moveTo(positionXPre+speedPre, positionYPre);
+		hitPost.moveTo(positionXPre + speedPre, positionYPre);
 
 		// run
 		getDelegate().moveRight();
@@ -327,11 +362,10 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
 		// then getPositionX() == getPositionX()@pre+getSpeed()@pre
-		if(positionXPre <= enginePre.getWidth() - speedPre && !collision){ 
+		if (positionXPre <= enginePre.getWidth() - speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
-				if ((!(notManipulablePre || isBlockingPre))
-						&& ((enginePre.getChar(i) == this)
-								|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
+				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
+						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
 					if (getPositionX() != positionXPre + speedPre)
 						throw new PostconditionError("erreur de positionnement (moveRight)");
 				}
@@ -342,12 +376,12 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// (\exists i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-		// then getPositionX() == getEngine()@pre.getWidth() - getCharBox().getWith()
-		else if(positionXPre > enginePre.getWidth() - speedPre && !collision){
+		// then getPositionX() == getEngine()@pre.getWidth() -
+		// getCharBox().getWith()
+		else if (positionXPre > enginePre.getWidth() - speedPre && !collision) {
 			for (int i = 1; i < 3; i++) {
-				if ((!(notManipulablePre || isBlockingPre))
-						&& ((enginePre.getChar(i) == this)
-								|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
+				if ((!(notManipulablePre || isBlockingPre)) && ((enginePre.getChar(i) == this)
+						|| (!hitPost.collidesWith(enginePre.getChar(i).getCharBox())))) {
 					if (getPositionX() != (enginePre.getWidth() - getCharBox().getWidth()))
 						throw new PostconditionError("erreur de positionement (moveRight)");
 				}
@@ -381,12 +415,13 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		checkInvariant();
 
 		// postConditions
-		// post:(notManipulable()@pre || isBlocking()@pre) => faceRight() = faceRight()@pre
+		// post:(notManipulable()@pre || isBlocking()@pre) => faceRight() =
+		// faceRight()@pre
 
-		if(notManipulablePre || isBlockingPre)
+		if (notManipulablePre || isBlockingPre)
 			if (!(faceRight() == faceRightPre))
 				throw new PostconditionError("L'orientation devra pas etre changé");
-		if(!(notManipulablePre || isBlockingPre))
+		if (!(notManipulablePre || isBlockingPre))
 			if ((faceRight() == faceRightPre))
 				throw new PostconditionError("L'orientation n'a pas changé");
 		// \post: getPositionX() == getPositionX()@pre
@@ -396,78 +431,77 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(getPositionY() == positionYPre))
 			throw new PostconditionError("La position Y a changé");
 	}
-	
-		@Override
-		public void setBlokstunned(boolean b) {
-			// preCondition
-			
-			// preInvariants
-			checkInvariant();
-			
-			//run
-			getDelegate().setBlokstunned(b);
-			
-			// postInvariants
-			checkInvariant();
-			
-			// postInvariants
-			// post : getBlokstunned = b
-			if(!(getDelegate().isBlockstunned() == b))
-				throw new PostconditionError("erreur d'initialisation 'Blockstunned' ");
-			
-		}
-			
-		public void setHitstunned(boolean h) {
-			// preCondition
-			
-			// preInvariants
-			checkInvariant();
-			
-			//run
-			getDelegate().setBlokstunned(h);
-			
-			// postInvariants
-			checkInvariant();
-			
-			// postInvariants
-			// post : getHitstunned() = h
-			if(!(getDelegate().isBlockstunned() == h))
-				throw new PostconditionError("erreur d'initialisation 'Histstunned' ");
-		}
-		
-		
-		
-		public void updateLife(int damage) {
-			// precondition
-			// pre : damage > 0
-			if(!(damage >0))
-				throw new PreconditionError("le damage doit etre positif ");
-			
-			// preInvariant
-			checkInvariant();
-			
-			// captures
-			int lifePre = getLife();
-			
-			// run
-			getDelegate().updateLife(damage);
-			
-			// postInvariants
-			checkInvariant();
-		
-			// postConditions
-			// post : getLife()@pre = > dammage -> getLife() = getLife()@pre - damage
-			if((lifePre >= damage)) {
-				if(!(getLife() == lifePre - damage))
-						throw new PostconditionError("la vie doit etre etre == lifePre - damage");
-			}
-			// post : getLife()@pre < damage -> getLife() =0
-			else if(lifePre < damage) {
-				if(!(getLife() == 0))
-					throw new PostconditionError("la vie doit etre etre == 0");
 
-			}
+	@Override
+	public void setBlokstunned(boolean b) {
+		// preCondition
+
+		// preInvariants
+		checkInvariant();
+
+		// run
+		getDelegate().setBlokstunned(b);
+
+		// postInvariants
+		checkInvariant();
+
+		// postInvariants
+		// post : getBlokstunned = b
+		if (!(getDelegate().isBlockstunned() == b))
+			throw new PostconditionError("erreur d'initialisation 'Blockstunned' ");
+
+	}
+
+	public void setHitstunned(boolean h) {
+		// preCondition
+
+		// preInvariants
+		checkInvariant();
+
+		// run
+		getDelegate().setBlokstunned(h);
+
+		// postInvariants
+		checkInvariant();
+
+		// postInvariants
+		// post : getHitstunned() = h
+		if (!(getDelegate().isBlockstunned() == h))
+			throw new PostconditionError("erreur d'initialisation 'Histstunned' ");
+	}
+
+	public void updateLife(int damage) {
+		// precondition
+		// pre : damage > 0
+		if (!(damage > 0))
+			throw new PreconditionError("le damage doit etre positif ");
+
+		// preInvariant
+		checkInvariant();
+
+		// captures
+		int lifePre = getLife();
+
+		// run
+		getDelegate().updateLife(damage);
+
+		// postInvariants
+		checkInvariant();
+
+		// postConditions
+		// post : getLife()@pre = > dammage -> getLife() = getLife()@pre -
+		// damage
+		if ((lifePre >= damage)) {
+			if (!(getLife() == lifePre - damage))
+				throw new PostconditionError("la vie doit etre etre == lifePre - damage");
 		}
+		// post : getLife()@pre < damage -> getLife() =0
+		else if (lifePre < damage) {
+			if (!(getLife() == 0))
+				throw new PostconditionError("la vie doit etre etre == 0");
+
+		}
+	}
 
 	@Override
 	public void step(COMMAND c) {
@@ -477,12 +511,12 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 	}
 
 	@Override
-	public FightCharContract clone(){
+	public FightCharContract clone() {
 		return new FightCharContract(getDelegate().clone());
 	}
-	
+
 	@Override
-	public RectangleHitboxService getCharBox(){
+	public RectangleHitboxService getCharBox() {
 		return getDelegate().getCharBox();
 	}
 }
