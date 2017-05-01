@@ -3,6 +3,7 @@ package impl;
 import enums.COMMAND;
 import services.CharacterService;
 import services.EngineService;
+import services.FightCharService;
 import services.PlayerService;
 
 public class EngineBugImpl implements EngineService {
@@ -28,7 +29,7 @@ public class EngineBugImpl implements EngineService {
 	}
 
 	@Override
-	public CharacterService getChar(int i) {
+	public FightCharService getChar(int i) {
 		return player[i].getCharacter();
 	}
 

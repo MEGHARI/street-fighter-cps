@@ -43,6 +43,7 @@ Observation:
 [crouch]
 	positionX(crouch(C)) = positionX()
 	positionY(crouch(C)) = positionY()
+	Character::getHeight(charBox(crouch(c))) = Character::getHeight(charBox(c))/2
 [moveLeft]:
 	(notManipulable() || isBlocking()) => positionX(moveLeft(C)) = positionX()
 	
@@ -63,11 +64,11 @@ Observation:
 	(notManipulable() || isBlocking()) => positionX(moveRight(C)) = positionX()(∃i, char(engine(C), i) != C ∧ collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
 	⇒ positionX(moveRight(C)) = positionX(C)
 
-	(!(notManipulable() || isBlocking()))∧ positionX(C) ≤ width(engine(C))-speed(C)-RectangleHitBox::with(charBox())∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
+	(!(notManipulable() || isBlocking()))∧ positionX(C) ≤ width(engine(C))-speed(C)-RectangleHitBox::with(charBox(c))∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
 	⇒ positionX(moveLeft(C)) =positionX(C)+speed(C)
 
 	(!(notManipulable() || isBlocking()))∧ positionX(C) > width(engine(C))-speed(C)RectangleHitBox::with(charBox()∧(∀i, char(engine(C), i) != C ⇒ ¬collisionwith(charBox(moveLeft(C)), charBox(char(engine(C), i))))
-	⇒ positionX(moveLeft(C)) =width(engine(C) - width(charBox()))
+	⇒ positionX(moveLeft(C)) =width(engine(C) - RectangleHitBox::width(charBox(c)))
 
 	faceRight(moveRight(C)) = faceRight(C) ∧ life(moveRight(C)) = life(C)
 

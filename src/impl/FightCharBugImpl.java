@@ -22,14 +22,14 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	private RectangleHitboxService charBox;
 
 	@Override
-	public void init(NAME name, int l, int s, boolean f, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
 		super.init(name, l, s, f, e);
-		techs = new Tech[2];
-		charBox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		charBox.init(getPositionX(), getPositionY(), 10, 63);
+		rh.moveTo(getPositionX(), getPositionY());
+		isBlocking = false;
+		this.charBox = rh;
+		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
 
 	}
-
 	public RectangleHitboxService getCharBox() {
 		return charBox;
 	}

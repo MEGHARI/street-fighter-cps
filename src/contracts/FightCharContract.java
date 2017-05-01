@@ -182,13 +182,16 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (notManipulable()) {
 			throw new PreconditionError("le personnage n'est pas sous control");
 		}
+		
+		
 
 		// preInvariants
 		checkInvariant();
 
 		// captures
-		int positionxPre = super.getPositionX();
-		int positionyPre = super.getPositionY();
+		int positionxPre = getDelegate().getPositionX();
+		int positionyPre = getDelegate().getPositionY();
+		int heightHitBoxPre = getDelegate().getCharBox().getHeight();
 		// run
 		getDelegate().crouch();
 
@@ -205,6 +208,10 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(positionyPre == getPositionY())) {
 			throw new PostconditionError("erreur de positionnement lors du crouch 'Y'");
 		}
+		// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
+		if(!(getDelegate().getCharBox().getHeight()==heightHitBoxPre/2))
+			throw new PostconditionError("erreur du redimensienement de l hitbox du fighter");
+			
 	}
 
 	@Override
@@ -504,6 +511,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// \post : c == LEFT => (step(c) == moveLeft(c))
 		// \post : c == RIGHT => (step(c) == moveRIGHT(c))
 		// \post : c==NEUTRAL => (step(c) == step(c)@pre)
+		getDelegate().step(c);
 	}
 
 	@Override

@@ -52,12 +52,13 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// \post : getPositionX()@pre=getPositionX()
 	// \post : getPositionY()@pre=getPositionY()
 	public void jump();
+	
 	// pre: !notManipulable()
 	// \post : getPositionX()@pre=getPositionX()
 	// \post : getPositionY()@pre=getPositionY()
+	// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
 	public void crouch();
-	// \pre : startBloking() requires !isBloking()
-	// \post : isBloking = false;
+
 
 	// pre: !notManipulable() && !notBlocking()
 	// post : isBlocking()=false

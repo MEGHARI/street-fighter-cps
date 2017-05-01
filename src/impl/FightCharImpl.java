@@ -28,8 +28,9 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
 		super.init(name, l, s, f, e);
 		rh.moveTo(getPositionX(), getPositionY());
+		isBlocking = false;
 		this.charBox = rh;
-		techs = new Tech[]{new Tech(40, 5, 3, 2, 5, 2),new Tech(40, 2, 3, 2, 4, 2)};
+		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
 
 	}
 
@@ -80,10 +81,12 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void startTech(Tech tech) {
+		System.out.println((!notManipulable()));
 		if (!notManipulable()) {
 			isTech = true;
 			this.tech = tech;
 			this.techFrame = 0;
+			System.out.println("strat tech");
 		}
 
 	}
@@ -93,7 +96,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		if (!(notManipulable() || isBlocking())) {
 			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX() - getSpeed(), getPositionY());
-			System.out.println(hit.collidesWith(getEngine().getChar(2).getCharBox()));
 			if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
 				if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
 					positionX = Math.max(0, positionX - (speed));
@@ -160,13 +162,14 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void step(COMMAND c) {
-		System.out.println("rentrééé");
 		if (!isDead()) {
-			FightCharService autherFighter = getEngine().getChar(1) == this ? (FightCharService) getEngine().getChar(1)
-					: (FightCharService) getEngine().getChar(2);
+			FightCharContract autherFighter = getEngine().getChar(1).getCharBox() == this.getCharBox()
+					? (FightCharContract) (getEngine().getChar(2))
+					: (FightCharContract) (getEngine().getChar(1));
 			if (isTech) {
-				System.out.println("je suis en plein technique");
-				techFrame++;
+				// System.out.println(this.notManipulable());
+				this.techFrame++;
+				System.out.println(techFrame);
 				if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() + tech.getSframe()
 						&& !isTechHasAlreadyHit) {
 					if (tech.hitbox(getCharBox().getPositionX(),
@@ -186,7 +189,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 				} else if (techFrame > tech.getHframe() + tech.getSframe()
 						&& techFrame <= tech.getRframe() + tech.getHframe() + tech.getSframe()) {
 					isTechHasAlreadyHit = false;
-				} else {
+				} else if (techFrame > tech.getRframe() + tech.getHframe() + tech.getSframe()) {
 					isTech = false;
 					tech = null;
 				}
@@ -204,47 +207,50 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					this.setHitstunned(false);
 
 				}
-			}
+			} else {
 
-			switch (c) {
-			case LEFT:
-				moveLeft();
-				break;
-			case RIGHT:
-				moveRight();
-				break;
-			case JUMP:
-				jump();
-				break;
-			case CROUCH:
-				crouch();
-				break;
-			case TECH_1:
-				startTech(techs[0]);
-				System.out.println("chat");
-				break;
-			case TECH_2:
-				startTech(techs[1]);
-				break;
-			case JUMP_TECH_1:
-				startTech(techs[0]);
-				break;
-			case JUMP_TECH_2:
-				startTech(techs[1]);
-				break;
-			case CROUCH_TECH_1:
-				startTech(techs[0]);
-				break;
-			case CROUCH_TECH_2:
-				startTech(techs[1]);
-				break;
-			case PROTECT:
-				startBlock();
-				break;
-			default:
-				break;
+				switch (c) {
+				case LEFT:
+					System.out.println("mooveLeft");
+					moveLeft();
+					break;
+				case RIGHT:
+					moveRight();
+					break;
+				case JUMP:
+					jump();
+					break;
+				case CROUCH:
+					crouch();
+					break;
+				case TECH_1:
+
+					startTech(techs[0]);
+					break;
+				case TECH_2:
+					startTech(techs[1]);
+					break;
+				case JUMP_TECH_1:
+					startTech(techs[0]);
+					break;
+				case JUMP_TECH_2:
+					startTech(techs[1]);
+					break;
+				case CROUCH_TECH_1:
+					startTech(techs[0]);
+					break;
+				case CROUCH_TECH_2:
+					startTech(techs[1]);
+					break;
+				case PROTECT:
+					startBlock();
+					break;
+				default:
+					break;
+				}
 			}
 		}
+
 	}
 
 	public void setBlokstunned(boolean bool) {
