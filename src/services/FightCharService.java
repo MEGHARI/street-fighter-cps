@@ -32,9 +32,17 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// notManipulable(C) =(min) isTeching(C) || isBlockstunned(C) || isHitStunned(C)
 
 	// Constructors
-
+	
+	// pre: l > 0
+	// pre: s > 0
+	// post: getName() == name
+	// post: getLife() == l
+	// post: getSpeed() == s
+	// post: faceRight() == f
+	// post: getEngine() == e
+	// post: getCharBox() ==rh 
 	// \post: notManipulable(C) = false ^ isBlocking() = false
-	public void init(NAME name,int l, int s, boolean f, EngineService e);
+	public void init(NAME name,int l, int s, boolean f,RectangleHitboxService rh, EngineService e);
 
 	// Operators
 
@@ -119,7 +127,8 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// post : getLife()@pre > dammage => getLife() = getLife()@pre -damage
 	// post : getLife()@pre < damage =>getLife() =0
 	public void updateLife(int dammage);
-
+	
+	
 
 	//@Override
 	public FightCharService clone();

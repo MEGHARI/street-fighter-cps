@@ -31,6 +31,16 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		
 	}
 	
+	@Override
+	public void init(NAME name, int l, int s, boolean f,RectangleHitboxService rh, EngineService e) {
+		super.init(name, l, s, f, e);
+		rh.moveTo(getPositionX(), getPositionY());
+		this.charBox = rh;
+		techs = new Tech[2];
+		
+		
+	}
+	
 	public RectangleHitboxService getCharBox() {
 		return charBox;
 	}
