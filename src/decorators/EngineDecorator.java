@@ -3,6 +3,7 @@ package decorators;
 import enums.COMMAND;
 import services.CharacterService;
 import services.EngineService;
+import services.FightCharService;
 import services.PlayerService;
 
 public class EngineDecorator implements EngineService {
@@ -21,7 +22,7 @@ public class EngineDecorator implements EngineService {
 	}
 
 	@Override
-	public CharacterService getChar(int i) {
+	public FightCharService getChar(int i) {
 		return delegate.getChar(i);
 	}
 	@Override

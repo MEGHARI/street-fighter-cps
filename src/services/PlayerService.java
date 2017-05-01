@@ -3,7 +3,7 @@ package services;
 
 public interface PlayerService {
 	
-	public CharacterService getCharacter();
+	public FightCharService getCharacter();
     
     public int getNum();
     // Invariants
@@ -15,7 +15,7 @@ public interface PlayerService {
     public void init(int n);
     
     
-    public void setCharacter(CharacterService ch);
+    public void setCharacter(FightCharService ch);
     
     
 }

@@ -498,9 +498,12 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 	@Override
 	public void step(COMMAND c) {
-		super.step(c);
+		//super.step(c);
 		// \post : c == JUMP => (step(c) == jump())
 		// \post : c == CROUCH => (step(c) == crouch())
+		// \post : c == LEFT => (step(c) == moveLeft(c))
+		// \post : c == RIGHT => (step(c) == moveRIGHT(c))
+		// \post : c==NEUTRAL => (step(c) == step(c)@pre)
 	}
 
 	@Override

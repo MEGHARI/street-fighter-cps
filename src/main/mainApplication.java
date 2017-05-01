@@ -197,18 +197,12 @@ public class mainApplication extends Application {
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/frameRate), e -> {
 		//System.out.println(commandPlayer1+" > "+commandPlayer2);
-		//engine.step(commandPlayer1, commandPlayer2);
-		//commandPlayer1 = COMMAND.NEUTRAL;
-		//commandPlayer2 = COMMAND.NEUTRAL;
-		if(commandPlayer1 == COMMAND.TECH_1) {
-			commandPlayer2 = COMMAND.NEUTRAL;
-			engine.step(commandPlayer1, commandPlayer2);
-		} else if(commandPlayer2 == COMMAND.TECH_1) {
-			commandPlayer1= COMMAND.NEUTRAL;
-			engine.step(commandPlayer1, commandPlayer2);
-		} else {
-			
-		}
+		System.out.println(commandPlayer1);
+		System.out.println(commandPlayer1);
+		System.out.println(engine.getChar(1));
+		engine.step(commandPlayer1, commandPlayer2);
+		//update();
+		
 		
 
 	});
