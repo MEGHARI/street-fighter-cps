@@ -52,7 +52,7 @@ public class EngineContract extends EngineDecorator {
 	}
 
 	@Override
-	public void init(int h, int w, int s, PlayerService p1, PlayerService p2) {
+	public void init(int w, int h, int s, PlayerService p1, PlayerService p2) {
 
 		// preconditions
 		// \pre: h > 0
@@ -69,7 +69,7 @@ public class EngineContract extends EngineDecorator {
 			throw new PreconditionError("Les joueurs sont identiques");
 
 		// run
-		super.init(h, w, s, p1, p2);
+		super.init(w, h, s, p1, p2);
 
 		// postInvariants
 		checkInvariant();
@@ -88,10 +88,10 @@ public class EngineContract extends EngineDecorator {
 		if (!(getPlayer(2) == p2))
 			throw new PostconditionError("Le joueur 2 n'est pas correctement initialisé");
 		// \post: getChar(1).getPositionX() == w/2 - s/2
-		if (!(getChar(1).getPositionX() == w / 2 - s / 2))
+		if (!(getChar(1).getPositionX() == w / 2 + s / 2))
 			throw new PostconditionError("La position X du joueur 1 n'est pas correctement initialisée");
 		// \post: getChar(2).getPositionX() == w/2 + s/2
-		if (!(getChar(2).getPositionX() == w / 2 + s / 2))
+		if (!(getChar(2).getPositionX() == w / 2 - s / 2))
 			throw new PostconditionError("La position X du joueur 2 n'est pas correctement initialisée");
 		// \post: getChar(1).getPositionY() == 0
 		if (!(getChar(1).getPositionY() == 0))

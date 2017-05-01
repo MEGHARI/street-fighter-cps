@@ -1,12 +1,11 @@
 package main;
 
-import contracts.CharacterContract;
 import contracts.EngineContract;
 import contracts.FightCharContract;
 import contracts.PlayerContract;
+import contracts.RectangleHitboxContract;
 import enums.COMMAND;
 import enums.NAME;
-import impl.CharacterImpl;
 import impl.EngineImpl;
 import impl.FightCharImpl;
 import impl.PlayerImpl;
@@ -20,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
@@ -30,18 +30,17 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import main.MultiplePressedKeysEventHandler.MultiKeyEvent;
 import main.MultiplePressedKeysEventHandler.MultiKeyEventHandler;
-import services.CharacterService;
-import services.FightCharService;
-import services.HitboxService;
+import sun.security.action.GetLongAction;
 
 public class mainApplication extends Application {
+	private Pane paneJoueur1,paneJoueur2;
 	private double xJumpRadius = 20;
 	private final double yJumpRadius = 80;
 	private int frameRate = 1;
 	private EngineContract engine;
 	private PlayerContract p1, p2;
-	private CharacterService fighter1, fighter2;
-	private HitboxService hitFighter1, hitFighter2;
+	private FightCharContract  fighter1, fighter2;
+	private RectangleHitboxContract hitFighter1, hitFighter2;
 	private ProgressBar vieJoueur1, vieJoueur2;
 	private Rectangle joueur1, joueur2;
 	private COMMAND commandPlayer1, commandPlayer2;
@@ -52,57 +51,70 @@ public class mainApplication extends Application {
 		
 		p1 = new PlayerContract(new PlayerImpl());
 		p2 = new PlayerContract(new PlayerImpl());
-		FightCharService c1 = new FightCharContract(new FightCharImpl());
-		FightCharService c2 = new FightCharContract(new FightCharImpl());
+		fighter1 = new FightCharContract(new FightCharImpl());
+		fighter2 = new FightCharContract(new FightCharImpl());
 		engine = new EngineContract(new EngineImpl());
-		c1.init(NAME.RY,15,5,true,engine);
-		c2.init(NAME.BISON,15,5,false,engine);
-		p1.setCharacter(c1);
-		p2.setCharacter(c2);
-		engine.init(659, 340, 20, p1, p2);
+		fighter1.init(NAME.RY,100,5,true,engine);
+		fighter2.init(NAME.BISON,100,5,false,engine);
+		p1.init(1);
+		p1.init(2);
+		p1.setCharacter(fighter1);
+		p2.setCharacter(fighter2);
+		engine.init(659, 340,200, p1, p2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
-
+//      <Pane layoutX="149.0" layoutY="166.0" prefHeight="172.0" prefWidth="63.0" />
+		
 		// joueur 1
+		paneJoueur1 = new Pane();
+		paneJoueur1.setPrefHeight(172.0);
+		paneJoueur1.setPrefWidth(69.0);
+		paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
+		paneJoueur1.setTranslateY(169);
+		
 		vieJoueur1 = new ProgressBar(100);
-		vieJoueur1.setLayoutX(432);
+		vieJoueur1.setLayoutX(339);
 		vieJoueur1.setLayoutY(27);
 		vieJoueur1.prefHeight(20);
 		vieJoueur1.prefHeight(168);
+		
 		joueur1 = new Rectangle();
-		joueur1.setArcHeight(5.0);
-		joueur1.setArcWidth(5.0);
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
 		joueur1.setHeight(172.0);
-		joueur1.setLayoutX(170.0);
-		joueur1.setLayoutY(170.0);
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
-		joueur1.setWidth(63.0);
+		joueur1.setWidth(69.0);
+		paneJoueur1.getChildren().addAll(joueur1);
 
-		// joueur1.setOnKeyPressed(e->{System.out.println("player2");});
 
 		// joueur 2
+		paneJoueur2 = new Pane();
+		paneJoueur2.setLayoutX(engine.getChar(2).getPositionX());
+		paneJoueur2.setLayoutY(168);
+		paneJoueur2.setPrefHeight(172.0);
+		paneJoueur2.setPrefWidth(69.0);
+
+		
 		vieJoueur2 = new ProgressBar(100);
 		vieJoueur2.setLayoutX(65);
 		vieJoueur2.setLayoutY(27);
 		vieJoueur2.prefHeight(20);
 		vieJoueur2.prefHeight(168);
+		
 		joueur2 = new Rectangle();
-		joueur2.setArcHeight(5.0);
-		joueur2.setArcWidth(5.0);
 		joueur2.setFill(Paint.valueOf("#1c1d1e"));
 		joueur2.setHeight(172.0);
-		joueur2.setLayoutX(305.0);
-		joueur2.setLayoutY(172.0);
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
-		joueur2.setWidth(63.0);
-
-		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, joueur1, joueur2);
+		joueur2.setWidth(69.0);
+		paneJoueur2.getChildren().addAll(joueur2);
+		
+		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);
 		anchore.setId("anchore");
 
-		Scene scene = new Scene(anchore, 659, 340);
+		Scene scene = new Scene(anchore,engine.getWidth(), engine.getHeight());
+
+
 		scene.getStylesheets().add("/css/main.css");
 		MultiplePressedKeysEventHandler keyHandler = new MultiplePressedKeysEventHandler(new MultiKeyEventHandler() {
 			@Override
@@ -120,6 +132,11 @@ public class mainApplication extends Application {
 					commandPlayer1 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.LEFT)) {
 					commandPlayer1 = COMMAND.LEFT;
+					engine.getChar(1).moveLeft();
+					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX()-engine.getChar(1).getSpeed());
+					System.out.println(engine.getChar(1).getPositionX());
+					System.out.println(engine.getChar(2).getPositionX());
+					
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer1 = COMMAND.RIGHT;
 				} else if (event.isPressed(KeyCode.DOWN)) {
@@ -174,14 +191,17 @@ public class mainApplication extends Application {
 		Timeline timerThread = new Timeline(keyFrame);
 		timerThread.setCycleCount(Timeline.INDEFINITE);
 		timerThread.play();
+		System.out.println(engine.getWidth()/2 - 10 +" "+ (engine.getWidth()/2 + 10) );
+	
 
 	}
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/frameRate), e -> {
-		System.out.println(commandPlayer1+" > "+commandPlayer2);
-		engine.step(commandPlayer1, commandPlayer2);
-		commandPlayer1 = COMMAND.NEUTRAL;
-		commandPlayer2 = COMMAND.NEUTRAL;
+		//System.out.println(commandPlayer1+" > "+commandPlayer2);
+		//engine.step(commandPlayer1, commandPlayer2);
+		//commandPlayer1 = COMMAND.NEUTRAL;
+		//commandPlayer2 = COMMAND.NEUTRAL;
+		
 
 	});
 

@@ -38,7 +38,7 @@ public class EngineBugImpl implements EngineService {
 	}
 
 	@Override
-	public void init(int h, int s, int w, PlayerService p1, PlayerService p2) {
+	public void init(int w, int h, int s, PlayerService p1, PlayerService p2) {
 		this.height = h;
 		this.width = w;
 		this.player[0] = p1.getNum() == 1 ? p1:p2;

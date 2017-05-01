@@ -4,18 +4,30 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane fx:id="scene" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.PartieController">
    <children>
-      <ImageView fitHeight="358.0" fitWidth="686.0" layoutX="-7.0" onMouseClicked="#essai" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="358.0" fitWidth="686.0" layoutX="-7.0" onMouseClicked="#essai" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0">
          <image>
             <Image url="@../images/partie.gif" />
          </image>
       </ImageView>
       <ProgressBar fx:id="vieJoueur1" layoutX="432.0" layoutY="27.0" prefHeight="19.0" prefWidth="168.0" progress="0.0" />
       <ProgressBar fx:id="vieJoueur2" layoutX="65.0" layoutY="27.0" prefHeight="20.0" prefWidth="168.0" progress="0.0" />
-      <Rectangle fx:id="joueur2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="172.0" layoutX="170.0" layoutY="177.0" stroke="BLACK" strokeType="INSIDE" width="63.0" AnchorPane.bottomAnchor="0.0" />
-      <Rectangle fx:id="joueur1" arcHeight="5.0" arcWidth="5.0" fill="#1c1d1e" height="172.0" layoutX="305.0" layoutY="172.0" stroke="#0d0d0d" strokeType="INSIDE" width="63.0" AnchorPane.bottomAnchor="0.0" />
+      <Pane layoutX="435.0" layoutY="168.0" prefHeight="172.0" prefWidth="69.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <Rectangle fx:id="joueur21" arcHeight="5.0" arcWidth="5.0" fill="#5d21ff" height="172.0" stroke="BLACK" strokeType="INSIDE" width="69.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="-99.0" stroke="BLACK" strokeType="INSIDE" width="168.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="142.0" layoutY="171.0" prefHeight="172.0" prefWidth="63.0" AnchorPane.bottomAnchor="0.0">
+         <children>
+            <Rectangle fx:id="joueur211" arcHeight="5.0" arcWidth="5.0" fill="#5d21ff" height="172.0" stroke="BLACK" strokeType="INSIDE" width="63.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="168.0" />
+            
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -35,8 +35,8 @@ public class EngineDecorator implements EngineService {
 	}
 	
 	@Override
-	public void init(int h, int w, int s, PlayerService p1, PlayerService p2) {
-		delegate.init(h, w, s, p1, p2);
+	public void init(int w, int h, int s, PlayerService p1, PlayerService p2) {
+		delegate.init(w, h, s, p1, p2);
 	}
 	
 	@Override
