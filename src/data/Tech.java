@@ -1,9 +1,9 @@
 package data;
 
 import contracts.RectangleHitboxContract;
-import impl.HitboxImpl;
 import impl.RectangleHitboxImpl;
 import services.HitboxService;
+import services.RectangleHitboxService;
 
 public class Tech {
 	private int damage;
@@ -12,7 +12,7 @@ public class Tech {
 	private int sframe;
 	private int hframe;
 	private int rframe;
-	private HitboxService hitbox;
+	private RectangleHitboxService hitbox;
 
 	public Tech(int damage, int hstun, int bstun, int sframe, int hframe, int rframe) {
 		this.damage = damage;
@@ -48,9 +48,9 @@ public class Tech {
 		return rframe;
 	}
 
-	public HitboxService hitbox(int x, int y) {
+	public RectangleHitboxService hitbox(int x, int y,int w,int h) {
 		hitbox = new RectangleHitboxContract(new RectangleHitboxImpl());
-		((RectangleHitboxContract)hitbox).init(x, y,20,60);
+		hitbox.init(x, y, w, h);
 		return hitbox;
 	}
 }

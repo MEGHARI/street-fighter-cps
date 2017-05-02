@@ -40,10 +40,11 @@ public class mainApplication extends Application {
 	private EngineContract engine;
 	private PlayerContract p1, p2;
 	private FightCharContract fighter1, fighter2;
-	private RectangleHitboxContract hitFighter1, hitFighter2;
+	private RectangleHitboxContract hitFighter1, hitFighter2,hitTEch1,HitTech2;
 	private ProgressBar vieJoueur1, vieJoueur2;
-	private Rectangle joueur1, joueur2;
+	private Rectangle joueur1, joueur2,rectTech1,rectTech2;
 	private COMMAND commandPlayer1, commandPlayer2;
+	
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -80,14 +81,21 @@ public class mainApplication extends Application {
 		vieJoueur1.setLayoutY(27);
 		vieJoueur1.prefHeight(20);
 		vieJoueur1.prefWidth(168);
-
+		
+		rectTech1 = new Rectangle();
+		rectTech1.setFill(Color.RED);
+		rectTech1.setHeight(50.0);
+		rectTech1.setLayoutX(-99);
+		rectTech1.setWidth(168);
+		rectTech1.setVisible(false);
+		
 		joueur1 = new Rectangle();
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
 		joueur1.setHeight(hitFighter1.getHeight());
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
 		joueur1.setWidth(hitFighter1.getWidth());
-		paneJoueur1.getChildren().addAll(joueur1);
+		paneJoueur1.getChildren().addAll(joueur1,rectTech1);
 
 		// joueur 2
 		paneJoueur2 = new Pane();
@@ -95,20 +103,28 @@ public class mainApplication extends Application {
 		paneJoueur2.setLayoutY(168);
 		paneJoueur2.setPrefHeight(172.0);
 		paneJoueur2.setPrefWidth(69.0);
+		
 
 		vieJoueur2 = new ProgressBar(100);
 		vieJoueur2.setLayoutX(65);
 		vieJoueur2.setLayoutY(27);
 		vieJoueur2.prefHeight(20);
 		vieJoueur2.prefWidth(168);
+		
+		rectTech2 = new Rectangle();
+		rectTech2.setFill(Color.BLUE);
+		rectTech2.setHeight(50.0);
+		//rectTech2.setLayoutX(-99);
+		rectTech2.setWidth(168);
+		rectTech2.setVisible(false);
 
 		joueur2 = new Rectangle();
-		joueur2.setFill(Paint.valueOf("#1c1d1e"));
+		joueur2.setFill(Color.BLUE);
 		joueur2.setHeight(hitFighter2.getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
 		joueur2.setWidth(hitFighter2.getWidth());
-		paneJoueur2.getChildren().addAll(joueur2);
+		paneJoueur2.getChildren().addAll(joueur2,rectTech2);
 
 		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);
 		anchore.setId("anchore");
@@ -132,8 +148,8 @@ public class mainApplication extends Application {
 					commandPlayer1 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.LEFT)) {
 					commandPlayer1 = COMMAND.LEFT;
-					engine.getChar(2).moveLeft();
-					paneJoueur2.setLayoutX(engine.getChar(2).getPositionX());
+					engine.getChar(1).moveLeft();
+					paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer1 = COMMAND.RIGHT;
 				} else if (event.isPressed(KeyCode.DOWN)) {
@@ -201,6 +217,17 @@ public class mainApplication extends Application {
 	}
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(2000 / frameRate), e -> {
+		if(engine.getChar(1).isTeching()) {
+			if(engine.getChar(1).getTechFrame() == engine.getChar(1).getTech().getSframe())
+				rectTech1.setVisible(true);
+			else
+				rectTech1.setVisible(false);
+		}if(engine.getChar(2).isTeching()) {
+			if(engine.getChar(2).getTechFrame() == engine.getChar(2).getTech().getSframe())
+				rectTech2.setVisible(true);
+			else
+				rectTech2.setVisible(false);
+		}
 		engine.step(commandPlayer1, commandPlayer2);
 		commandPlayer1=COMMAND.NEUTRAL;
 		commandPlayer2=COMMAND.NEUTRAL;		
