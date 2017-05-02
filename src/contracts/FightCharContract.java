@@ -200,7 +200,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 		// postCondition
 		// \post : getPositionX()@pre=getPositionX()
-		if (!(positionxPre == getPositionY())) {
+		if (!(positionxPre == getPositionX())) {
 			throw new PostconditionError("erreur de positionnement lors du crouch 'X'");
 		}
 

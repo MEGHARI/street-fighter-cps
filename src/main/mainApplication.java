@@ -137,7 +137,16 @@ public class mainApplication extends Application {
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer1 = COMMAND.RIGHT;
 				} else if (event.isPressed(KeyCode.DOWN)) {
+					System.out.println(joueur2.getTranslateX());
+					System.out.println(joueur2.getTranslateY());
 					commandPlayer1 = COMMAND.CROUCH;
+					engine.getChar(2).crouch();
+					paneJoueur2.setPrefHeight(hitFighter1.getHeight()/2);
+					joueur2.setHeight(hitFighter1.getHeight()/2);
+					System.out.println(paneJoueur2.getLayoutX());
+					System.out.println(paneJoueur2.getLayoutY());
+					joueur2.setLayoutY(169);
+					System.out.println(paneJoueur1);
 				} else if (event.isPressed(KeyCode.NUMPAD1)) {
 					commandPlayer1 = COMMAND.TECH_1;
 				} else if (event.isPressed(KeyCode.NUMPAD2)) {
