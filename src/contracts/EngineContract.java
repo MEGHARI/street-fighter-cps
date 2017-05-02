@@ -88,10 +88,10 @@ public class EngineContract extends EngineDecorator {
 		if (!(getPlayer(2) == p2))
 			throw new PostconditionError("Le joueur 2 n'est pas correctement initialisé");
 		// \post: getChar(1).getPositionX() == w/2 - s/2
-		if (!(getChar(1).getPositionX() == w / 2 + s / 2))
+		if (!(getChar(1).getPositionX() == w / 2 - s / 2))
 			throw new PostconditionError("La position X du joueur 1 n'est pas correctement initialisée");
 		// \post: getChar(2).getPositionX() == w/2 + s/2
-		if (!(getChar(2).getPositionX() == w / 2 - s / 2))
+		if (!(getChar(2).getPositionX() == w / 2 + s / 2))
 			throw new PostconditionError("La position X du joueur 2 n'est pas correctement initialisée");
 		// \post: getChar(1).getPositionY() == 0
 		if (!(getChar(1).getPositionY() == 0))
@@ -103,7 +103,7 @@ public class EngineContract extends EngineDecorator {
 		if (!(getChar(1).faceRight()))
 			throw new PostconditionError("L'orientation du joueur 1 n'est pas correctement initialisée");
 		// \post: !(getChar(2).faceRight())
-		if (!(!getChar(2).faceRight()))
+		if ((getChar(2).faceRight()))
 			throw new PostconditionError("L'orientation du joueur 2 n'est pas correctement initialisée");
 	}
 
@@ -134,7 +134,7 @@ public class EngineContract extends EngineDecorator {
 		// then !getChar(1).faceRight() && getChar(2).faceRight()
 		if (getChar(1).getPositionX() < getChar(2).getPositionX()) {
 			if (!(getChar(1).faceRight() && !getChar(2).faceRight())) {
-				System.out.println(!getChar(1).faceRight() +" | "+ getChar(2).faceRight());
+				System.out.println(getChar(1).faceRight() +" | "+ getChar(2).faceRight());
 				throw new PostconditionError("erreur au niveau du face a face");
 			}
 		}

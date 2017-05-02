@@ -27,8 +27,9 @@ Operators:
 	crouch:[FightChar]→ [FightChar]
 		pre crouch(C) require ¬notManipulable(C)
 	startBloking: [FightCharacter] -> [FightChar]
-		pre startBloking(C) requires ¬isBloking(C) && ¬notManipulable(C) 
-
+		pre startBloking(C) requires ¬isBloking(C) && ¬notManipulable(C)
+	updateLife: [FightChar] × int : → [FightChar]
+		pre updateLife(C, d) requires d > 0
 
 Observation:
 
@@ -79,6 +80,11 @@ Observation:
 	faceRight(switchSide(C)) != faceRight(C)
 	positionX(switchSide(C)) = positionX(C)
 	positionY(switchSide(C)) = positionY(C)
+
+[updateLife]
+	life(C) >= d ⇒ life(updateLife(C,d)) = life(C) - d
+	life(C) < d ⇒ life(updateLife(C,d)) = 0
+	
 	
 [step]
 	step(C, LEFT) = moveLeft(C)
@@ -86,4 +92,3 @@ Observation:
 	step(C, NEUTRAL) = C
 	step(C, JUMP) = jump(C)
 	step(C, CROUCH) = crouch(C)
-	

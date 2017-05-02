@@ -130,7 +130,7 @@ public interface FightCharService extends /* refine */ CharacterService {
 	public void setHitstunned(boolean h);
 	
 	// pre : damage > 0
-	// post : getLife()@pre > dammage => getLife() = getLife()@pre -damage
+	// post : getLife()@pre >= dammage => getLife() = getLife()@pre -damage
 	// post : getLife()@pre < damage =>getLife() =0
 	public void updateLife(int dammage);
 	

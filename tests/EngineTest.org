@@ -1,0 +1,80 @@
+* Test Engine
+
+** Test 1.1 : Engine:testInit
+
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** R1 = (def) RectangleHitbox.init(0,0,10,30)
+**** R2 = (def) RectangleHitbox.init(0,0,10,30)
+**** E = (def) new Engine()
+**** F0 = (def) FighChar.init("Ryu", 15, 5, true, E, R1)
+**** F2 = (def) FighChar.init("Ken", 15, 15, true, E, R2)
+**** E1 = (def) Player.setCharacter(P1, F1)
+**** E2 = (def) Player.setCharacter(P2, F3)
+*** Opération : L0 = (def) E.init(500,250, 50, P1,P2)
+*** Oracle :
+**** height(L0) = 250
+**** width(L0) = 500
+**** player(L0,1) = p1
+**** player(L0,2) = p2
+**** Character::positionX(char(L0,1)) = 500/2 - 10/2
+**** Character::positionX(char(L0,2)) = 500/2 + 10/2
+**** Character::positionY(char(L0,1)) = 0
+**** Character::positionY(char(L0,2)) = 0
+**** Character::faceRight(char(L0,1)) = true
+**** Character::faceRight(char(L0,2)) = false
+
+** Test 1.2 : Engine:testFail1
+
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** R1 = (def) RectangleHitbox.init(0,0,10,30)
+**** R2 = (def) RectangleHitbox.init(0,0,10,30)
+**** E = (def) new Engine()
+**** F0 = (def) FighChar.init("Ryu", 15, 5, true, E, R1)
+**** F2 = (def) FighChar.init("Ken", 15, 15, true, E, R2)
+**** E1 = (def) Player.setCharacter(P1, F1)
+**** E2 = (def) Player.setCharacter(P2, F3)
+*** Opération : L0 = (def) E.init(500,250, 50, P1,P1)
+*** Oracle :
+**** P1 == P2
+**** # Exception levée
+
+** Test 1.3 : Engine:testFail2
+
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** R1 = (def) RectangleHitbox.init(0,0,10,30)
+**** R2 = (def) RectangleHitbox.init(0,0,10,30)
+**** E = (def) new Engine()
+**** F0 = (def) FighChar.init("Ryu", 15, 5, true, E, R1)
+**** F2 = (def) FighChar.init("Ken", 15, 15, true, E, R2)
+**** E1 = (def) Player.setCharacter(P1, F1)
+**** E2 = (def) Player.setCharacter(P2, F3)
+*** Opération : L0 = (def) E.init(500,-256, 50, P1,P2)
+*** Oracle :
+**** -256 < 0
+**** # Exception levée
+
+** Test 2.1 : Engine:step
+
+*** Condition initiale :
+**** P1 = (def) Player.init(1)
+**** P2 = (def) Player.init(2)
+**** R1 = (def) RectangleHitbox.init(0,0,10,30)
+**** R2 = (def) RectangleHitbox.init(0,0,10,30)
+**** E = (def) new Engine()
+**** F0 = (def) FighChar.init("Ryu", 15, 5, true, E, R1)
+**** F2 = (def) FighChar.init("Ken", 15, 15, true, E, R2)
+**** E1 = (def) Player.setCharacter(P1, F1)
+**** E2 = (def) Player.setCharacter(P2, F3)
+**** E1 = (def) E.init(500,-10, 10, P1,P2)
+*** Opération : L0 = step(E1, LEFT, RIGHT)
+*** Oracle :
+**** Character::PositionX(char(L0, 1)) = Character::PositionX(Character::moveLeft(char(E1, 1)))
+**** Character::PositionX(char(L0, 2)) = Character::PosisiotnX(Character::moveRight(char(E1, 2)))
+**** Character::PositionY(char(L0, 1)) = Character::PositionY(Character::moveLeft(char(E1, 1)))
+**** Character::PositionY(char(L0, 2)) = Character::PosisiotnY(Character::moveRight(char(E1, 2)))

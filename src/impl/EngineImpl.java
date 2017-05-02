@@ -49,9 +49,9 @@ public class EngineImpl implements EngineService {
 		this.width = w;
 		this.player[0] = p1;
 		this.player[1] = p2;
-		getChar(1).setPositions(w/2+s/2, 0);
+		getChar(1).setPositions(w/2 - s/2, 0);
 		getChar(1).initFace(true);
-		getChar(2).setPositions(w/2 - s/2, 0);
+		getChar(2).setPositions(w/2 + s/2, 0);
 		getChar(2).initFace(false);
 		
 	}

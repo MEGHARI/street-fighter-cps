@@ -1,5 +1,5 @@
 Service:Engine
-Types:bool,int,Commande={LEFT,RIGHT,NEUTRAL}
+Types:bool,int,Commande={LEFT, RIGHT, CROUCH, JUMP, NEUTRAL, TECH_1, TECH_2, PROTECT}
 
 Observators:
 	const height: [Engine] → int
