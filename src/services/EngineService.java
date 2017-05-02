@@ -20,6 +20,10 @@ public interface EngineService {
 
 	/* Invariants */
 	// \inv: isGameOver() == getChar(1).isDead() || getChar(2).isDead()
+	// \inv: if (getChar(1).getPositionX() < getChar(2).getPositionX()) 
+	//			then getChar(1).faceRight() && !getChar(2).faceRight()
+	// \inv: if (getChar(1).getPositionX() >= getChar(2).getPositionX()) 
+	//			then !getChar(1).faceRight() && getChar(2).faceRight() 
 
 	/* Constructors */
 	// \pre: h > 0

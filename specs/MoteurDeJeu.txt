@@ -23,6 +23,9 @@ Observations:
 
 [invariant]:
 	gameOver(E) = ∃i ∈ {1, 2} Character::dead(player(E, i))
+	Character::positionX(char(E,1)) < Character::positionX(char(E,2)) ⇒ Character::faceRight(char(E,1)) ^ !Character::faceRight(char(E,1))
+
+	Character::positionX(char(E,1)) >= Character::positionX(char(E,2)) ⇒ !Character::faceRight(char(E,1)) ^ Character::faceRight(char(E,1))
 
 [init]:
 	height(init(h, w, s, p1, p2)) = h
