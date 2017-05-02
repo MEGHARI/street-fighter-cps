@@ -222,7 +222,7 @@ public class mainApplication extends Application {
 				rectTech1.setVisible(true);
 			else
 				rectTech1.setVisible(false);
-		}if(engine.getChar(2).isTeching()) {
+		}else if(engine.getChar(2).isTeching()) {
 			if(engine.getChar(2).getTechFrame() == engine.getChar(2).getTech().getSframe())
 				rectTech2.setVisible(true);
 			else

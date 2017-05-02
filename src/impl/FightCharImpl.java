@@ -289,3 +289,4 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	}
 
 }
+// mise a jour de data 
