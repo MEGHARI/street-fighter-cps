@@ -173,7 +173,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					? (FightCharContract) (getEngine().getChar(2))
 					: (FightCharContract) (getEngine().getChar(1));
 			RectangleHitboxContract recTechLaunched = getEngine().getChar(1).getCharBox() == this.getCharBox()
-					?hitTechs[0]:hitTechs[1];
+					?hitTechs[1]:hitTechs[0];
 			
 			if (isTech) {
 				tech.hitbox(recTechLaunched.getPositionX(), recTechLaunched.getPositionY(), 
@@ -183,7 +183,24 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 				System.out.println(techFrame);
 				if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() + tech.getSframe()
 						&& !isTechHasAlreadyHit) {
-					if (tech.hitbox(recTechLaunched.getPositionX(), recTechLaunched.getPositionY(), 
+					
+					
+System.out.println(recTechLaunched.getPositionX()+" -->"+autherFighter.getCharBox().getPositionX());
+					
+					System.out.println(recTechLaunched.getPositionY()+" -->"+autherFighter.getCharBox().getPositionY());
+					
+					System.out.println(recTechLaunched.getWidth()+" -->"+autherFighter.getCharBox().getWidth());
+					
+					System.out.println(recTechLaunched.getHeight()+" -->"+autherFighter.getCharBox().getHeight());
+
+
+
+					
+					
+					
+					
+					
+					if (tech.hitbox(recTechLaunched.getPositionX(),getCharBox().getHeight()-recTechLaunched.getHeight(), 
 							recTechLaunched.getWidth(), recTechLaunched.getHeight()).collidesWith(autherFighter.getCharBox())) {
 						isTechHasAlreadyHit = true;
 						System.out.println("bingo");

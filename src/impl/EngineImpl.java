@@ -59,18 +59,8 @@ public class EngineImpl implements EngineService {
 	@Override
 	public void step(COMMAND c1, COMMAND c2) {
 		if(!gameOver) {
-		getChar(1).step(c1);
-		getChar(2).step(c2);
-		/*
-		if(getChar(1).getPositionX()<getChar(2).getPositionX()) {
-			if(getChar(1).faceRight()) {
-				getChar(1).switchSide();
-			}
-			if(!getChar(2).faceRight()) {
-				getChar(2).switchSide();
-			}
-				
-		}*/
+			getChar(1).step(c1);
+			getChar(2).step(c2);
 		}else {
 			System.out.println("game over");
 		}
