@@ -3,12 +3,10 @@ package impl;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import contracts.FightCharContract;
 import enums.COMMAND;
 import javafx.fxml.Initializable;
 import services.CharacterService;
 import services.EngineService;
-import services.FightCharService;
 import services.PlayerService;
 
 public class EngineImpl implements EngineService {
@@ -36,7 +34,7 @@ public class EngineImpl implements EngineService {
 	}
 
 	@Override
-	public FightCharService getChar(int i) {
+	public CharacterService getChar(int i) {
 		return player[i-1].getCharacter();
 	}
 
@@ -55,15 +53,14 @@ public class EngineImpl implements EngineService {
 		getChar(1).initFace(true);
 		getChar(2).setPositions(w/2 - s/2, 0);
 		getChar(2).initFace(false);
-		gameOver = false;
 		
 	}
 
 	@Override
 	public void step(COMMAND c1, COMMAND c2) {
 		if(!gameOver) {
-		((FightCharContract)getChar(1)).step(c1);
-		((FightCharContract)getChar(2)).step(c2);
+		getChar(1).step(c1);
+		getChar(2).step(c2);
 		if(getChar(1).getPositionX()<getChar(2).getPositionX()) {
 			if(getChar(1).faceRight()) {
 				getChar(1).switchSide();

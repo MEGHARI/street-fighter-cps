@@ -1,16 +1,15 @@
 package impl;
 
 import services.CharacterService;
-import services.FightCharService;
 import services.PlayerService;
 
 public class PlayerBugImpl implements PlayerService {
 
-	private FightCharService ch;
+	private CharacterService ch;
 	private int num;
 	
 	@Override
-	public FightCharService getCharacter() {
+	public CharacterService getCharacter() {
 		return ch;
 	}
 	@Override
@@ -19,12 +18,11 @@ public class PlayerBugImpl implements PlayerService {
 	}
 	
 	@Override
-	public void init(int n) {
+	public void init( int n) {
 		this.num =n;
 	}
 	@Override
-	public void setCharacter(FightCharService ch) {
+	public void setCharacter(CharacterService ch) {
 		this.ch=ch;
 	}
-	
 }

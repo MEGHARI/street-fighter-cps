@@ -7,7 +7,6 @@ import errors.PostconditionError;
 import errors.PreconditionError;
 import services.CharacterService;
 import services.EngineService;
-import services.FightCharService;
 import services.PlayerService;
 
 public class EngineContract extends EngineDecorator {
@@ -35,7 +34,7 @@ public class EngineContract extends EngineDecorator {
 	}
 
 	@Override
-	public FightCharService getChar(int i) {
+	public CharacterService getChar(int i) {
 		// run
 		return super.getChar(i);
 	}

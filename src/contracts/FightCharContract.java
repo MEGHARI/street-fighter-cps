@@ -238,6 +238,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 	@Override
 	public void moveLeft() {
+		System.out.println("je bouge");
 		// preInvariant
 		checkInvariant();
 		// captures

@@ -51,7 +51,7 @@ public class mainApplication extends Application {
 		// Initialisation
 
 		hitFighter1 = new RectangleHitboxContract(new RectangleHitboxImpl());
-		hitFighter1.init(0, 0, 69, 172);
+		//hitFighter1.init(0, 0, 69, 172);
 		hitFighter2 = new RectangleHitboxContract(new RectangleHitboxImpl());
 		hitFighter2.init(0, 0, 69, 172);
 		p1 = new PlayerContract(new PlayerImpl());
@@ -88,6 +88,7 @@ public class mainApplication extends Application {
 		rectTech1.setLayoutX(-99);
 		rectTech1.setWidth(168);
 		rectTech1.setVisible(false);
+		System.out.println(rectTech1.getLayoutX()+" "+rectTech1.getLayoutY());
 		
 		joueur1 = new Rectangle();
 		joueur1.setFill(Paint.valueOf("#ff1f1f"));
@@ -117,6 +118,7 @@ public class mainApplication extends Application {
 		//rectTech2.setLayoutX(-99);
 		rectTech2.setWidth(168);
 		rectTech2.setVisible(false);
+		System.out.println(rectTech2.getLayoutX()+" "+rectTech2.getLayoutY());
 
 		joueur2 = new Rectangle();
 		joueur2.setFill(Color.BLUE);
@@ -156,7 +158,7 @@ public class mainApplication extends Application {
 					System.out.println(joueur2.getTranslateX());
 					System.out.println(joueur2.getTranslateY());
 					commandPlayer1 = COMMAND.CROUCH;
-					engine.getChar(2).crouch();
+					fighter1.crouch();
 					paneJoueur2.setPrefHeight(hitFighter1.getHeight()/2);
 					joueur2.setHeight(hitFighter1.getHeight()/2);
 					System.out.println(paneJoueur2.getLayoutX());
@@ -217,13 +219,13 @@ public class mainApplication extends Application {
 	}
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(2000 / frameRate), e -> {
-		if(engine.getChar(1).isTeching()) {
-			if(engine.getChar(1).getTechFrame() == engine.getChar(1).getTech().getSframe())
+		if(fighter1.isTeching()) {
+			if(fighter1.getTechFrame() == fighter1.getTech().getSframe())
 				rectTech1.setVisible(true);
 			else
 				rectTech1.setVisible(false);
-		}else if(engine.getChar(2).isTeching()) {
-			if(engine.getChar(2).getTechFrame() == engine.getChar(2).getTech().getSframe())
+		}else if(fighter1.isTeching()) {
+			if(fighter1.getTechFrame() == fighter1.getTech().getSframe())
 				rectTech2.setVisible(true);
 			else
 				rectTech2.setVisible(false);

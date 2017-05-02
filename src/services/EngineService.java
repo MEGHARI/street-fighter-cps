@@ -11,7 +11,7 @@ public interface EngineService {
 	public int getWidth();
 
 	// pre: i \in { 1, 2 }
-	public FightCharService getChar(int i);
+	public CharacterService getChar(int i);
 
 	// pre: i \in { 1, 2 }
 	public PlayerService getPlayer(int i);

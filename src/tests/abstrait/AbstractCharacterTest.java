@@ -2,7 +2,6 @@ package tests.abstrait;
 
 import impl.CharacterImpl;
 import impl.EngineImpl;
-import impl.FightCharImpl;
 import impl.PlayerImpl;
 
 import org.junit.Assert;
@@ -11,22 +10,20 @@ import org.junit.Test;
 
 import contracts.CharacterContract;
 import contracts.EngineContract;
-import contracts.FightCharContract;
 import enums.COMMAND;
 import enums.NAME;
 import errors.PreconditionError;
 import services.CharacterService;
-import services.FightCharService;
 
 public abstract class AbstractCharacterTest {
 
-	private FightCharService character;
+	private CharacterService character;
 
 	public CharacterService getCharacter() {
 		return character;
 	}
 
-	public void setCharacter(FightCharService character) {
+	public void setCharacter(CharacterService character) {
 		this.character = character;
 	}
 
@@ -44,7 +41,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineImpl e = new EngineImpl();
 		character.init(NAME.RYU, 50,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
 		e.init(400,250,20,p1,p2);
@@ -98,7 +95,7 @@ public abstract class AbstractCharacterTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
 
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 
 		p2.setCharacter(cc);
@@ -124,7 +121,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
@@ -149,7 +146,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,15,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
@@ -175,7 +172,7 @@ public abstract class AbstractCharacterTest {
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,10,true,e);
 
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 
 		p2.setCharacter(cc);
@@ -200,7 +197,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,5,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
@@ -225,7 +222,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
@@ -251,7 +248,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,15,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,15,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
@@ -272,7 +269,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
 		e.init(500, 250,10,p1,p2);
@@ -296,7 +293,7 @@ public abstract class AbstractCharacterTest {
 		p1.setCharacter(character);
 		EngineContract e = new EngineContract(new EngineImpl());
 		character.init(NAME.RYU, 15,5,true,e);
-		FightCharContract cc = new FightCharContract(new FightCharImpl());
+		CharacterContract cc = new CharacterContract(new CharacterImpl());
 		cc.init(NAME.KEN,15,10,false,e);
 		p2.setCharacter(cc);
 		e.init(500,250,10,p1,p2);
