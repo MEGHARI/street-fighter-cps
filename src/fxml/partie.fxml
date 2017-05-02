@@ -24,10 +24,10 @@
       </Pane>
       <Pane layoutX="136.0" layoutY="171.0" prefHeight="116.0" prefWidth="69.0" AnchorPane.bottomAnchor="0.0">
          <children>
-            <Rectangle fx:id="joueur211" arcHeight="5.0" arcWidth="5.0" fill="#5d21ff" height="116.0" stroke="BLACK" strokeType="INSIDE" width="61.0" />
+            <Rectangle fx:id="joueur211" arcHeight="5.0" arcWidth="5.0" fill="#5d21ff" height="116.0" stroke="BLACK" strokeType="INSIDE" width="69.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" width="168.0" />
             
-         </children>
+                     </children>
       </Pane>
    </children>
 </AnchorPane>

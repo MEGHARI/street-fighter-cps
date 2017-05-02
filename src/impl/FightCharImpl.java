@@ -32,11 +32,11 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 		isBlocking = false;
 		this.charBox = rh;
 		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
-		/*hitTechs = new RectangleHitboxContract[] {
-				new RectangleHitboxContract(techs[0].hitbox(-99, 0, , h)),
-				new RectangleHitboxContract(techs[0].hitbox(getPositionX(), getPositionX(), , h))
-				
-		};*/
+		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
+		hitTechs = new RectangleHitboxContract[] { new RectangleHitboxContract(techs[0].hitbox(-99, 0, 158, 60)),
+				new RectangleHitboxContract(techs[1].hitbox(0, 0, 158, 60))
+
+		};
 	}
 
 	public RectangleHitboxService getCharBox() {
@@ -99,6 +99,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void moveLeft() {
 		if (!(notManipulable() || isBlocking())) {
+			System.out.println("mooveLeft");
 			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX() - getSpeed(), getPositionY());
 			if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
@@ -171,21 +172,28 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			FightCharContract autherFighter = getEngine().getChar(1).getCharBox() == this.getCharBox()
 					? (FightCharContract) (getEngine().getChar(2))
 					: (FightCharContract) (getEngine().getChar(1));
+			RectangleHitboxContract recTechLaunched = getEngine().getChar(1).getCharBox() == this.getCharBox()
+					?hitTechs[0]:hitTechs[1];
+			
 			if (isTech) {
+				tech.hitbox(recTechLaunched.getPositionX(), recTechLaunched.getPositionY(), 
+						recTechLaunched.getWidth(), recTechLaunched.getHeight());
+				// System.out.println(this.notManipulable());
 				this.techFrame++;
+				System.out.println(techFrame);
 				if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() + tech.getSframe()
 						&& !isTechHasAlreadyHit) {
-					if (tech.hitbox(getCharBox().getPositionX(),
-							getCharBox().getPositionY() + (getCharBox().getHeight() - 20),20,20)
-							.collidesWith(autherFighter.getCharBox())) {
+					if (tech.hitbox(recTechLaunched.getPositionX(), recTechLaunched.getPositionY(), 
+							recTechLaunched.getWidth(), recTechLaunched.getHeight()).collidesWith(autherFighter.getCharBox())) {
 						isTechHasAlreadyHit = true;
+						System.out.println("bingo");
 						if (autherFighter.isBlocking()) {
 							autherFighter.setBlokstunned(true);
 							System.out.println("l'adversaire s'est protégé");
 						} else {
 							autherFighter.setHitstunned(true);
 							autherFighter.updateLife(tech.getDamage());
-							System.out.println("l'adversaire ne s'est protégé");
+							System.out.println("l'adversaire ne s'est pas protégé");
 						}
 					}
 
@@ -197,13 +205,14 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					tech = null;
 				}
 			} else if (isBlockstunned) {
+				
 				System.out.println("blockstenned");
 				cptBstunned++;
 				if (cptBstunned == autherFighter.getTech().getBstun()) {
 					this.setBlokstunned(false);
 				}
 
-			} else if (isHitstunned) {
+			} else if (isHitstunned) {	
 				cptHstunned++;
 				System.out.println("Hitstunnedstenned");
 				if (cptHstunned == autherFighter.getTech().getHstun()) {
@@ -214,7 +223,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 				switch (c) {
 				case LEFT:
-					System.out.println("mooveLeft");
+					
 					moveLeft();
 					break;
 				case RIGHT:
@@ -227,7 +236,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					crouch();
 					break;
 				case TECH_1:
-
 					startTech(techs[0]);
 					break;
 				case TECH_2:

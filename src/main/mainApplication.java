@@ -11,19 +11,19 @@ import impl.FightCharImpl;
 import impl.PlayerImpl;
 import impl.RectangleHitboxImpl;
 import javafx.animation.KeyFrame;
-import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
@@ -31,7 +31,6 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import main.MultiplePressedKeysEventHandler.MultiKeyEvent;
 import main.MultiplePressedKeysEventHandler.MultiKeyEventHandler;
-import sun.security.action.GetLongAction;
 
 public class mainApplication extends Application {
 	
@@ -49,9 +48,10 @@ public class mainApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Initialisation
-
+		StackPane sp = new StackPane();
+		
 		hitFighter1 = new RectangleHitboxContract(new RectangleHitboxImpl());
-		//hitFighter1.init(0, 0, 69, 172);
+		hitFighter1.init(0, 0, 69, 172);
 		hitFighter2 = new RectangleHitboxContract(new RectangleHitboxImpl());
 		hitFighter2.init(0, 0, 69, 172);
 		p1 = new PlayerContract(new PlayerImpl());
@@ -74,7 +74,7 @@ public class mainApplication extends Application {
 		paneJoueur1.setPrefHeight(172.0);
 		paneJoueur1.setPrefWidth(69.0);
 		paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
-		paneJoueur1.setTranslateY(169);
+		paneJoueur1.setLayoutY(169);
 
 		vieJoueur1 = new ProgressBar(100);
 		vieJoueur1.setLayoutX(339);
@@ -121,17 +121,22 @@ public class mainApplication extends Application {
 		System.out.println(rectTech2.getLayoutX()+" "+rectTech2.getLayoutY());
 
 		joueur2 = new Rectangle();
+		joueur2.setLayoutX(fighter2.getCharBox().getPositionX());
+		joueur2.setLayoutY(fighter2.getCharBox().getPositionY());
 		joueur2.setFill(Color.BLUE);
 		joueur2.setHeight(hitFighter2.getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
 		joueur2.setWidth(hitFighter2.getWidth());
 		paneJoueur2.getChildren().addAll(joueur2,rectTech2);
+		
 
 		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);
 		anchore.setId("anchore");
+		sp.getChildren().add(anchore);
+		sp.setAlignment(anchore, Pos.BOTTOM_LEFT);
 
-		Scene scene = new Scene(anchore, engine.getWidth(), engine.getHeight());
+		Scene scene = new Scene(sp, engine.getWidth(), engine.getHeight());
 
 		scene.getStylesheets().add("/css/main.css");
 		MultiplePressedKeysEventHandler keyHandler = new MultiplePressedKeysEventHandler(new MultiKeyEventHandler() {
@@ -220,7 +225,8 @@ public class mainApplication extends Application {
 
 	KeyFrame keyFrame = new KeyFrame(Duration.millis(2000 / frameRate), e -> {
 		if(fighter1.isTeching()) {
-			if(fighter1.getTechFrame() == fighter1.getTech().getSframe())
+			if(fighter1.getTechFrame() >= fighter1.getTech().getSframe() &&
+					fighter1.getTechFrame()< fighter1.getTech().getSframe()+fighter1.getTech().getHframe())
 				rectTech1.setVisible(true);
 			else
 				rectTech1.setVisible(false);

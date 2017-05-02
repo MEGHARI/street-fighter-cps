@@ -460,14 +460,14 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		checkInvariant();
 
 		// run
-		getDelegate().setBlokstunned(h);
+		getDelegate().setHitstunned(h);
 
 		// postInvariants
 		checkInvariant();
 
 		// postInvariants
 		// post : getHitstunned() = h
-		if (!(getDelegate().isBlockstunned() == h))
+		if (!(getDelegate().isHitstunned() == h))
 			throw new PostconditionError("erreur d'initialisation 'Histstunned' ");
 	}
 
