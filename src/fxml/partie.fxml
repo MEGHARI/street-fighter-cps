@@ -21,5 +21,10 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f23" height="54.0" layoutX="356.0" layoutY="171.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="54.0" layoutX="216.0" layoutY="286.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f23" height="54.0" layoutX="356.0" layoutY="286.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
+      <ImageView fitHeight="101.0" fitWidth="252.0" layoutX="242.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="264.0">
+         <image>
+            <Image url="@../images/gameOver.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

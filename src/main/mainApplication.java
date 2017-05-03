@@ -16,9 +16,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -41,6 +41,9 @@ public class mainApplication extends Application {
 	private ProgressBar vieJoueur1, vieJoueur2;
 	private Rectangle joueur1, joueur2, rectTech1Joueur1, rectTech2Joueur1, rectTech1Joueur2, rectTech2Joueur2;
 	private COMMAND commandPlayer1, commandPlayer2;
+	private AnchorPane anchore;
+	private ImageView gameOver;
+	private Timeline timerThread;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -124,7 +127,16 @@ public class mainApplication extends Application {
 		joueur2.setStrokeType(StrokeType.INSIDE);
 		joueur2.setWidth(hitFighter2.getWidth());
 
-		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, rectTech1Joueur1, rectTech2Joueur1,
+		Image image = new Image("/images/gameOver.jpg");
+		gameOver = new ImageView(image);
+		gameOver.setFitWidth(252.0);
+		gameOver.setLayoutX(200);
+		gameOver.setLayoutY(55.0);
+		gameOver.setPickOnBounds(true);
+		gameOver.setPreserveRatio(true);
+	
+
+		 anchore = new AnchorPane(vieJoueur1, vieJoueur2, rectTech1Joueur1, rectTech2Joueur1,
 				rectTech1Joueur2, rectTech2Joueur2, joueur1, joueur2);
 		anchore.setId("anchore");
 
@@ -197,26 +209,19 @@ public class mainApplication extends Application {
 			}
 		});
 		primaryStage.show();
-		Timeline timerThread = new Timeline(keyFrame);
+		timerThread = new Timeline(keyFrame);
 		timerThread.setCycleCount(Timeline.INDEFINITE);
 		timerThread.play();
 
 	}
 
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000 / 60), e -> {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000 / 30), e -> {
 		if (engine.isGameOver()) {
 			NAME winner = p1.getCharacter().isDead() ? p2.getCharacter().getName() : p1.getCharacter().getName();
-			Alert dialogE = new Alert(AlertType.INFORMATION);
-			dialogE.setTitle(" fin de la partie ");
-			dialogE.setContentText("le joueur " + winner + "a gagner la partie");
-			dialogE.setHeaderText(" GAME OVER");
-			dialogE.show();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e1) {
-				//
-			}
-			System.exit(0);
+			anchore.getChildren().add(gameOver);
+			gameOver.setVisible(true);
+			timerThread.stop();
+			
 
 		} else {
 			engine.step(commandPlayer1, commandPlayer2);

@@ -11,3 +11,7 @@
 #anchore{
 	-fx-background-image: url("/images/partie.gif");
 }
+#gameOver{
+	-fx-background-image: url("/images/gameOver.jpg");
+	
+}
