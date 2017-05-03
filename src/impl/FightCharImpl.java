@@ -24,19 +24,16 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	private RectangleHitboxService charBox;
 	private int cptHstunned = 0;
 	private int cptBstunned = 0;
+	private  int  height  ;
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
 		super.init(name, l, s, f, e);
 		rh.moveTo(getPositionX(), getPositionY());
 		isBlocking = false;
+		height=rh.getHeight();
 		this.charBox = rh;
 		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
-		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
-		hitTechs = new RectangleHitboxContract[] { new RectangleHitboxContract(techs[0].hitbox(-99, 0, 158, 60)),
-				new RectangleHitboxContract(techs[1].hitbox(0, 0, 158, 60))
-
-		};
 	}
 
 	public RectangleHitboxService getCharBox() {
@@ -86,7 +83,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 	@Override
 	public void startTech(Tech tech) {
-		System.out.println((!notManipulable()));
 		if (!notManipulable()) {
 			isTech = true;
 			this.tech = tech;
@@ -99,7 +95,6 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void moveLeft() {
 		if (!(notManipulable() || isBlocking())) {
-			System.out.println("mooveLeft");
 			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
 			hit.moveTo(getPositionX() - getSpeed(), getPositionY());
 			if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
@@ -155,7 +150,8 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void crouch() {
 		if (!notManipulable()) {
-			getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
+			if(!(getCharBox().getHeight() == height/2))
+				getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
 		}
 
 	}
@@ -172,12 +168,18 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 			FightCharContract autherFighter = getEngine().getChar(1).getCharBox() == this.getCharBox()
 					? (FightCharContract) (getEngine().getChar(2))
 					: (FightCharContract) (getEngine().getChar(1));
-			RectangleHitboxContract recTechLaunched = getEngine().getChar(1).getCharBox() == this.getCharBox()
-					?hitTechs[1]:hitTechs[0];
+			RectangleHitboxContract rectech = new RectangleHitboxContract(new RectangleHitboxImpl());
+			if(this.getCharBox() == (getEngine().getChar(2)).getCharBox()) {
+					rectech.init(this.getPositionX()-130,getCharBox().getHeight()-50, 130, 50);
+					System.out.println("player 2");
+					
+			}else {
+				rectech.init(this.getPositionX()+getCharBox().getWidth(), getCharBox().getHeight()-50, 130, 50);
+				System.out.println("player 1");
+			}
 			
 			if (isTech) {
-				tech.hitbox(recTechLaunched.getPositionX(), recTechLaunched.getPositionY(), 
-						recTechLaunched.getWidth(), recTechLaunched.getHeight());
+
 				// System.out.println(this.notManipulable());
 				this.techFrame++;
 				System.out.println(techFrame);
@@ -185,23 +187,16 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 						&& !isTechHasAlreadyHit) {
 					
 					
-System.out.println(recTechLaunched.getPositionX()+" -->"+autherFighter.getCharBox().getPositionX());
 					
-					System.out.println(recTechLaunched.getPositionY()+" -->"+autherFighter.getCharBox().getPositionY());
-					
-					System.out.println(recTechLaunched.getWidth()+" -->"+autherFighter.getCharBox().getWidth());
-					
-					System.out.println(recTechLaunched.getHeight()+" -->"+autherFighter.getCharBox().getHeight());
-
-
-
-					
-					
-					
-					
-					
-					if (tech.hitbox(recTechLaunched.getPositionX(),getCharBox().getHeight()-recTechLaunched.getHeight(), 
-							recTechLaunched.getWidth(), recTechLaunched.getHeight()).collidesWith(autherFighter.getCharBox())) {
+					System.out.println(this.getPositionX());
+					System.out.println(rectech.getPositionX()+" "+
+					autherFighter.getCharBox().getPositionX()+" "+this.getCharBox().getPositionX());
+					System.out.println(rectech.getPositionY()+" "+
+					autherFighter.getCharBox().getPositionY()+" "+this.getCharBox().getPositionY());
+					System.out.println(rectech.getWidth()+" "+autherFighter.getCharBox().getWidth());
+					System.out.println(rectech.getHeight()+" "+autherFighter.getCharBox().getHeight());
+					if (tech.hitbox(rectech.getPositionX(),rectech.getPositionY(), 
+							rectech.getWidth(), rectech.getHeight()).collidesWith(autherFighter.getCharBox())) {
 						isTechHasAlreadyHit = true;
 						System.out.println("bingo");
 						if (autherFighter.isBlocking()) {

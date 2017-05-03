@@ -15,11 +15,13 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -34,7 +36,7 @@ import main.MultiplePressedKeysEventHandler.MultiKeyEventHandler;
 public class mainApplication extends Application {
 
 	private Pane paneJoueur1, paneJoueur2;
-	private int frameRate = 1;
+	private int frameRate = 60;
 	private EngineContract engine;
 	private PlayerContract p1, p2;
 	private FightCharContract fighter1, fighter2;
@@ -59,22 +61,15 @@ public class mainApplication extends Application {
 		fighter1.init(NAME.RY, 100, 5, true, engine, hitFighter1);
 		fighter2.init(NAME.BISON, 100, 5, false, engine, hitFighter2);
 		p1.init(1);
-		p1.init(2);
+		p2.init(2);
 		p1.setCharacter(fighter1);
 		p2.setCharacter(fighter2);
-		engine.init(659, 340, 200, p1, p2);
+		engine.init(660, 340, 200, p1, p2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
 
-		// joueur 1
-		paneJoueur1 = new Pane();
-		paneJoueur1.setPrefHeight(172.0);
-		paneJoueur1.setPrefWidth(69.0);
-		paneJoueur1.setLayoutX(engine.getChar(1).getPositionX());
-		paneJoueur1.setLayoutY(169);
-
-		vieJoueur1 = new ProgressBar(100);
-		vieJoueur1.setLayoutX(339);
+		vieJoueur1 = new ProgressBar(1.0);
+		vieJoueur1.setLayoutX(65);
 		vieJoueur1.setLayoutY(27);
 		vieJoueur1.prefHeight(20);
 		vieJoueur1.prefWidth(168);
@@ -83,28 +78,23 @@ public class mainApplication extends Application {
 		rectTech1 = new Rectangle();
 		rectTech1.setFill(Color.RED);
 		rectTech1.setHeight(50.0);
-		rectTech1.setWidth(168);
+		rectTech1.setWidth(130);
+		rectTech1.setLayoutY(170);
 		rectTech1.setVisible(false);
-		rectTech1 = new Rectangle();
-		System.out.println(rectTech1.getLayoutX() + " " + rectTech1.getLayoutY());
-
+		
 		joueur1 = new Rectangle();
-		joueur1.setFill(Paint.valueOf("#ff1f1f"));
-		joueur1.setHeight(hitFighter1.getHeight());
+		joueur1.setFill(Color.RED);
+		joueur1.setHeight(171);
+		joueur1.setLayoutX(fighter1.getPositionX());
+		joueur1.setLayoutY(169);
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
 		joueur1.setWidth(hitFighter1.getWidth());
-		paneJoueur1.getChildren().addAll(joueur1, rectTech1);
 
-		// joueur 2
-		paneJoueur2 = new Pane();
-		paneJoueur2.setLayoutX(engine.getChar(2).getPositionX());
-		paneJoueur2.setLayoutY(168);
-		paneJoueur2.setPrefHeight(172.0);
-		paneJoueur2.setPrefWidth(69.0);
 
-		vieJoueur2 = new ProgressBar(100);
-		vieJoueur2.setLayoutX(65);
+
+		vieJoueur2 = new ProgressBar(fighter2.getLife());
+		vieJoueur2.setLayoutX(432);
 		vieJoueur2.setLayoutY(27);
 		vieJoueur2.prefHeight(20);
 		vieJoueur2.prefWidth(168);
@@ -112,20 +102,21 @@ public class mainApplication extends Application {
 		rectTech2 = new Rectangle();
 		rectTech2.setFill(Color.BLUE);
 		rectTech2.setHeight(50.0);
-		rectTech2.setLayoutX(-99);
-		rectTech2.setWidth(168);
+		rectTech2.setWidth(130);
+		rectTech2.setLayoutY(170);
 		rectTech2.setVisible(false);
-		System.out.println(rectTech2.getLayoutX() + " " + rectTech2.getLayoutY());
 
 		joueur2 = new Rectangle();
 		joueur2.setFill(Color.BLUE);
+		joueur2.setLayoutX(fighter2.getPositionX());
+		joueur2.setLayoutY(169);
 		joueur2.setHeight(hitFighter2.getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
 		joueur2.setWidth(hitFighter2.getWidth());
-		paneJoueur2.getChildren().addAll(joueur2, rectTech2);
+	
 
-		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2, paneJoueur1, paneJoueur2);
+		AnchorPane anchore = new AnchorPane(vieJoueur1, vieJoueur2,rectTech1,joueur1,rectTech2, joueur2);
 		anchore.setId("anchore");
 
 		Scene scene = new Scene(anchore, engine.getWidth(), engine.getHeight());
@@ -134,7 +125,7 @@ public class mainApplication extends Application {
 		MultiplePressedKeysEventHandler keyHandler = new MultiplePressedKeysEventHandler(new MultiKeyEventHandler() {
 			@Override
 			public void handle(MultiKeyEvent event) {
-				/** player1 **/
+				/** player2 **/
 				if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD1)) {
 					commandPlayer2 = COMMAND.JUMP_TECH_1;
 				} else if (event.isPressed(KeyCode.UP) && event.isPressed(KeyCode.NUMPAD2)) {
@@ -147,13 +138,10 @@ public class mainApplication extends Application {
 					commandPlayer2 = COMMAND.JUMP;
 				} else if (event.isPressed(KeyCode.LEFT)) {
 					commandPlayer2 = COMMAND.LEFT;
-					engine.getChar(2).moveLeft();
-					paneJoueur2.setLayoutX(engine.getChar(2).getPositionX());
 				} else if (event.isPressed(KeyCode.RIGHT)) {
 					commandPlayer2 = COMMAND.RIGHT;
 				} else if (event.isPressed(KeyCode.DOWN)) {
 					commandPlayer2 = COMMAND.CROUCH;
-					System.out.println(paneJoueur1);
 				} else if (event.isPressed(KeyCode.NUMPAD1)) {
 					commandPlayer2 = COMMAND.TECH_1;
 				} else if (event.isPressed(KeyCode.NUMPAD2)) {
@@ -162,7 +150,7 @@ public class mainApplication extends Application {
 					commandPlayer2 = COMMAND.PROTECT;
 				}
 
-				/** player2 **/
+				/** player1 **/
 				else if (event.isPressed(KeyCode.Z) && event.isPressed(KeyCode.E)) {
 					commandPlayer1 = COMMAND.JUMP_TECH_1;
 				} else if (event.isPressed(KeyCode.Z) && event.isPressed(KeyCode.R)) {
@@ -172,16 +160,13 @@ public class mainApplication extends Application {
 				} else if (event.isPressed(KeyCode.S) && event.isPressed(KeyCode.R)) {
 					commandPlayer1 = COMMAND.CROUCH_TECH_2;
 				} else if (event.isPressed(KeyCode.Z)) {
-					
 					commandPlayer1 = COMMAND.JUMP;
-					rize(paneJoueur1);
 				} else if (event.isPressed(KeyCode.D)) {
-					commandPlayer1 = COMMAND.LEFT;
-				} else if (event.isPressed(KeyCode.Q)) {
 					commandPlayer1 = COMMAND.RIGHT;
+				} else if (event.isPressed(KeyCode.Q)) {
+					commandPlayer1 = COMMAND.LEFT;
 				} else if (event.isPressed(KeyCode.S)) {
 					commandPlayer1 = COMMAND.CROUCH;
-					crouch(paneJoueur1);
 				} else if (event.isPressed(KeyCode.E)) {
 					commandPlayer1 = COMMAND.TECH_1;
 				} else if (event.isPressed(KeyCode.R)) {
@@ -210,15 +195,15 @@ public class mainApplication extends Application {
 
 	}
 
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(2000 / frameRate), e -> {
-		if (fighter1.isTeching()) {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(2000 ), e -> {
+		if (fighter1.isTeching() && !fighter1.isBlockstunned() && !fighter1.isHitstunned()) {
 			if (fighter1.getTechFrame() >= fighter1.getTech().getSframe()
 					&& fighter1.getTechFrame() < fighter1.getTech().getSframe() + fighter1.getTech().getHframe())
-		
+	
 				rectTech1.setVisible(true);
 			else
 				rectTech1.setVisible(false);
-		} else if (fighter2.isTeching()) {
+		} else if (fighter2.isTeching() && !fighter2.isBlockstunned() && !fighter2.isHitstunned()) {
 			if (fighter2.getTechFrame() >= fighter2.getTech().getSframe()
 					&& fighter2.getTechFrame() < fighter2.getTech().getSframe() + fighter2.getTech().getHframe())
 				rectTech2.setVisible(true);
@@ -227,12 +212,14 @@ public class mainApplication extends Application {
 		}		
 		
 		engine.step(commandPlayer1, commandPlayer2);
+		//updateGames();
+		vieJoueur1.setProgress(vieJoueur1.getProgress()-0.2);
 		commandPlayer1 = COMMAND.NEUTRAL;
 		commandPlayer2 = COMMAND.NEUTRAL;
 
 	});
 
-	public static Pane crouch(Pane p) {
+	public  Pane crouch(Pane p) {
 		if (p.getTransforms().isEmpty()) {
 			Scale scale = new Scale();
 			// Setting the dimensions for the transformation
@@ -245,9 +232,18 @@ public class mainApplication extends Application {
 		return p;
 	}
 
-	public static Pane rize(Pane p) {
+	public  Pane rize(Pane p) {
 		p.getTransforms().clear();
 		return p;
+	}
+	
+	public void  updateGames() {
+		joueur1.setLayoutX(fighter1.getPositionX());
+		joueur2.setLayoutX(fighter2.getPositionX());
+		//vieJoueur1.setProgress(vieJoueur1.getProgress()-i);
+		//vieJoueur2.setProgress(fighter2.getLife());
+		rectTech1.setLayoutX(fighter1.getPositionX()+fighter1.getCharBox().getWidth());
+		rectTech2.setLayoutX(fighter2.getPositionX()-rectTech2.getWidth());
 	}
 
 	public static void main(String... args) {
