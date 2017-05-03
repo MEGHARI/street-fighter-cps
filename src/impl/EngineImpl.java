@@ -30,6 +30,7 @@ public class EngineImpl implements EngineService {
 
 	@Override
 	public boolean isGameOver() {
+		gameOver = getChar(1).isDead() || getChar(2).isDead();
 		return gameOver;
 	}
 
@@ -61,6 +62,7 @@ public class EngineImpl implements EngineService {
 		if(!gameOver) {
 			getChar(1).step(c1);
 			getChar(2).step(c2);
+			
 		}else {
 			System.out.println("game over");
 		}

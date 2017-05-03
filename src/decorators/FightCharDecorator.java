@@ -37,6 +37,9 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 	public boolean isTeching() {
 		return delegate.isTeching();
 	}
+	public boolean isCrouch() {
+		return delegate.isCrouch();
+	}
 
 	public Tech getTech() {
 		return delegate.getTech();
@@ -63,6 +66,10 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 
 	public void crouch() {
 		delegate.crouch();
+	}
+	
+	public void rise() {
+		delegate.rise();
 	}
 
 	public void startBlock() {

@@ -20,6 +20,7 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	private Tech tech;
 	private Tech[] techs;
 	private RectangleHitboxService charBox;
+	private boolean isCrouch;
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
@@ -67,6 +68,11 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	@Override
 	public int getTechFrame() {
 		return techFrame;
+	}
+	
+	@Override
+	public boolean isCrouch() {
+		return isCrouch;
 	}
 
 	@Override
@@ -139,7 +145,22 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	@Override
 	public void crouch() {
 		if (!notManipulable()) {
-			getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
+			if (!isCrouch) {
+				getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
+				isCrouch = true;
+			}
+		}
+
+	}
+
+	@Override
+	public void rise() {
+		if (!notManipulable()) {
+			if (isCrouch) {
+				getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) * 2);
+				isCrouch = false;
+
+			}
 		}
 
 	}

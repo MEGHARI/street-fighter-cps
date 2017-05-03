@@ -8,7 +8,7 @@ public interface FightCharService extends /* refine */ CharacterService {
 
 	@Override
 	public RectangleHitboxService getCharBox();
-	
+
 	public boolean notManipulable();
 
 	public boolean isBlocking();
@@ -18,6 +18,8 @@ public interface FightCharService extends /* refine */ CharacterService {
 	public boolean isHitstunned();
 
 	public boolean isTeching();
+
+	public boolean isCrouch();
 
 	// pre: isTeching()
 	public Tech getTech();
@@ -29,10 +31,11 @@ public interface FightCharService extends /* refine */ CharacterService {
 	public boolean isTechHasAlreadyHit();
 
 	// Invariants
-	// notManipulable(C) =(min) isTeching(C) || isBlockstunned(C) || isHitStunned(C)
+	// notManipulable(C) =(min) isTeching(C) || isBlockstunned(C) ||
+	// isHitStunned(C)
 
 	// Constructors
-	
+
 	// pre: l > 0
 	// pre: s > 0
 	// post: getName() == name
@@ -40,71 +43,84 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// post: getSpeed() == s
 	// post: faceRight() == f
 	// post: getEngine() == e
-	// post: getCharBox() ==rh 
+	// post: getCharBox() ==rh
 	// \post: notManipulable(C) = false ^ isBlocking() = false
-	public void init(NAME name,int l, int s, boolean f, EngineService e,RectangleHitboxService rh);
+	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh);
 
 	// Operators
 
 	// pre: !notManipulable()
 	public void startTech(Tech tech);
+
 	// pre: !notManipulable()
 	// \post : getPositionX()@pre=getPositionX()
 	// \post : getPositionY()@pre=getPositionY()
 	public void jump();
-	
-	// pre: !notManipulable()
+
+	// pre: !notManipulable() && !isCrouch()
 	// \post : getPositionX()@pre=getPositionX()
 	// \post : getPositionY()@pre=getPositionY()
-	// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
+	// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2 
 	public void crouch();
 
+	// pre: !notManipulable() && isCrouch()
+	// \post : getPositionX()@pre=getPositionX()
+	// \post : getPositionY()@pre=getPositionY()
+	// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()*2
+	public void rise();
 
 	// pre: !notManipulable() && !notBlocking()
 	// post : isBlocking()=false
 	public void startBlock();
 
+	// \post (notManipulable()@pre || isBlocking()@pre) => getPositionX() =
+	// getPositionX()@pre
+	// \post: \exists i:int if ( !(notManipulable()@pre || isBlocking()@pre) &&
+	// getEngine()@pre.getChar(i) != self &&
+	// getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
+	// then getPositionX() == getPositionX()@pre
 
-	// \post (notManipulable()@pre || isBlocking()@pre) => getPositionX() = getPositionX()@pre
-	// \post:  \exists i:int if ( !(notManipulable()@pre || isBlocking()@pre) && getEngine()@pre.getChar(i) != self &&
-	//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
-	//	then getPositionX() == getPositionX()@pre
+	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) &&
+	// getPositionX()@pre <= getSpeed()) &&
+	// (\forall i: int { getEngine()@pre.getChar(i) == self)
+	// || !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+	// then getPositionX() == 0
 
-	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) && getPositionX()@pre <= getSpeed()) && 
-	//(\forall i: int { getEngine()@pre.getChar(i) == self)
-	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then   getPositionX() == 0
-
-	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) && getPositionX()@pre > getSpeed()) && 
-	//(\forall i: int { getEngine()@pre.getChar(i) == self)
-	//	|| !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-	//        then  getPositionX() == getPositionX()@pre -getSpeed()@pre
+	// \post: if ( !(notManipulable()@pre || isBlocking()@pre) &&
+	// getPositionX()@pre > getSpeed()) &&
+	// (\forall i: int { getEngine()@pre.getChar(i) == self)
+	// || !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+	// then getPositionX() == getPositionX()@pre -getSpeed()@pre
 
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 
 	// \post: getPositionY() == getPositionY()@pre
 	@Override
 	public void moveLeft();
-	// \post:(notManipulable()@pre || isBlocking()@pre) => getPositionX()@pre = getPositionX()
+	// \post:(notManipulable()@pre || isBlocking()@pre) => getPositionX()@pre =
+	// getPositionX()
 
-	// \post:  \exists i:int if ( !(notManipulable()@pre || isBlocking()@pre) && getEngine()@pre.getChar(i) != self &&
-	//	getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
-	//	then getPositionX() == getPositionX()@pre
+	// \post: \exists i:int if ( !(notManipulable()@pre || isBlocking()@pre) &&
+	// getEngine()@pre.getChar(i) != self &&
+	// getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox()) )
+	// then getPositionX() == getPositionX()@pre
 
 	// \post: if (!(notManipulable()@pre || isBlocking()@pre) &&
-			// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
-			// (\forall i: int { getEngine()@pre.getChar(i) == self)
-			// ||
-			// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-			// then getPositionX() == getPositionX()@pre+getSpeed()@pre
+	// (getPositionX()@pre <=
+	// getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
+	// (\forall i: int { getEngine()@pre.getChar(i) == self)
+	// ||
+	// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+	// then getPositionX() == getPositionX()@pre+getSpeed()@pre
 
 	// \post: if ( !(notManipulable()@pre || isBlocking()@pre)
-			// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre -getCharBox().getWidth()) &&
-			// (\exists i: int { getEngine()@pre.getChar(i) == self)
-			// ||
-			// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
-			// then getPositionX() == getEngine()@pre.getWidth() -
-			// getCharBox().getWith()
+	// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre
+	// -getCharBox().getWidth()) &&
+	// (\exists i: int { getEngine()@pre.getChar(i) == self)
+	// ||
+	// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
+	// then getPositionX() == getEngine()@pre.getWidth() -
+	// getCharBox().getWith()
 
 	// \post: faceRight() == faceRight()@pre && getLife() == getLife()@pre
 
@@ -112,8 +128,10 @@ public interface FightCharService extends /* refine */ CharacterService {
 	@Override
 	public void moveRight();
 
-	// post:(notManipulable()@pre || isBlocking()@pre) => faceRight() = faceRight()@pre
-	// post:!(notManipulable()@pre || isBlocking()@pre) => faceRight() != faceRight()@pre
+	// post:(notManipulable()@pre || isBlocking()@pre) => faceRight() =
+	// faceRight()@pre
+	// post:!(notManipulable()@pre || isBlocking()@pre) => faceRight() !=
+	// faceRight()@pre
 	// \post: getPositionX() == getPositionX()@pre
 	// \post: getPositionY() == getPositionY()@pre
 	@Override
@@ -123,20 +141,19 @@ public interface FightCharService extends /* refine */ CharacterService {
 
 	@Override
 	public void step(COMMAND c);
-	
+
 	// _post : getBlokstunned = b
 	public void setBlokstunned(boolean b);
+
 	// post : getHitstunned() = h
 	public void setHitstunned(boolean h);
-	
+
 	// pre : damage > 0
 	// post : getLife()@pre >= dammage => getLife() = getLife()@pre -damage
 	// post : getLife()@pre < damage =>getLife() =0
 	public void updateLife(int dammage);
-	
-	
 
-	//@Override
+	// @Override
 	public FightCharService clone();
 
 }

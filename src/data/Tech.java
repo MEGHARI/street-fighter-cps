@@ -53,4 +53,8 @@ public class Tech {
 		hitbox.init(x, y, w, h);
 		return hitbox;
 	}
+	
+	public RectangleHitboxService getHitBox() {
+		return hitbox;
+	}
 }

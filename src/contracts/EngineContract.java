@@ -127,7 +127,7 @@ public class EngineContract extends EngineDecorator {
 
 		// preConditions
 		// pre: !isGameOver()
-		if (!(!isGameOver()))
+		if ((isGameOver()))
 			throw new PostconditionError("La partie est terminée !!");
 
 		// preInvariants

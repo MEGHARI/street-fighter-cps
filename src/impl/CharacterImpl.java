@@ -62,7 +62,7 @@ public class CharacterImpl implements CharacterService {
 
 	@Override
 	public boolean isDead() {
-		return (getLife()<=0);
+		return (getLife()<= 0);
 	}
 
 	@Override

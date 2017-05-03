@@ -19,5 +19,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f23" height="171.0" layoutX="487.0" layoutY="169.0" stroke="BLACK" strokeType="INSIDE" width="58.0" AnchorPane.bottomAnchor="0.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="54.0" layoutX="216.0" layoutY="171.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f23" height="54.0" layoutX="356.0" layoutY="171.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="54.0" layoutX="216.0" layoutY="286.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f23" height="54.0" layoutX="356.0" layoutY="286.0" stroke="BLACK" strokeType="INSIDE" width="131.0" />
    </children>
 </AnchorPane>

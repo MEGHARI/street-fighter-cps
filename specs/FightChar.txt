@@ -14,6 +14,8 @@ Observators:
 		pre techFrame(C) requires isTeching(C)
 	techHasAlreadyHit: [FightChar] → bool
 		pre techHasAlreadyHit(C) requires isTeching(C)
+	isCrouch:[FightChar] :bool
+	isRise:[FightChar] :bool
 Constructors:
 	init: String × int × int × bool × Engine x RectangleHitbox → [FightChar]
 		pre init(l,s,f,e,r) requires l > 0 ∧ s > 0
@@ -25,11 +27,15 @@ Operators:
 	jump :[FightChar]→ [FightChar]
 		pre jump(C) require  ¬notManipulable(C)
 	crouch:[FightChar]→ [FightChar]
-		pre crouch(C) require ¬notManipulable(C)
+		pre crouch(C) require ¬notManipulable(C) && !isCrouch(C)
 	startBloking: [FightCharacter] -> [FightChar]
 		pre startBloking(C) requires ¬isBloking(C) && ¬notManipulable(C)
 	updateLife: [FightChar] × int : → [FightChar]
 		pre updateLife(C, d) requires d > 0
+	rise :[FightChar]→ [FightChar]
+		pre rise(C) require ¬notManipulable(C) && isCrouch(C)
+	
+	
 
 Observation:
 
@@ -44,7 +50,7 @@ Observation:
 [crouch]
 	positionX(crouch(C)) = positionX()
 	positionY(crouch(C)) = positionY()
-	Character::getHeight(charBox(crouch(c))) = Character::getHeight(charBox(c))/2
+	Character::Height(charBox(crouch(c))) = Character::Height(charBox(c))/2
 [moveLeft]:
 	(notManipulable() || isBlocking()) => positionX(moveLeft(C)) = positionX()
 	
@@ -61,6 +67,10 @@ Observation:
 
 	positionY(moveLeft(C)) = positionY(C)
 
+[rise]
+	positionX(crouch(C)) = positionX()
+	positionY(crouch(C)) = positionY()
+	Character::Height(charBox(rise(c))) = Character::Height(charBox(c))*2
 [moveRight]:
 	(notManipulable() || isBlocking()) => positionX(moveRight(C)) = positionX()(∃i, char(engine(C), i) != C ∧ collisionwith(charBox(moveRight(C)), charBox(char(engine(C), i))))
 	⇒ positionX(moveRight(C)) = positionX(C)

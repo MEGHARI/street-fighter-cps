@@ -60,6 +60,11 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 	}
 
 	@Override
+	public boolean isCrouch() {
+		return getDelegate().isCrouch();
+	}
+
+	@Override
 	public Tech getTech() {
 		// preCondition
 		// pre tech() requires isTeching()
@@ -89,9 +94,8 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		return getDelegate().isTechHasAlreadyHit();
 	}
 
-
 	// Operators:
-	public void init(NAME name, int l, int s, boolean f, EngineService e,RectangleHitboxService rh) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
 		// preconditions
 		// pre: l > 0
 		if (!(l > 0))
@@ -101,7 +105,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			throw new PreconditionError("Vitesse négative ou nulle");
 
 		// run
-		getDelegate().init(name, l, s, f,  e,rh);
+		getDelegate().init(name, l, s, f, e, rh);
 
 		// postInvariants
 		checkInvariant();
@@ -122,14 +126,13 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// post: getEngine() == e
 		if (!(getEngine() == e))
 			throw new PostconditionError("initialisation du moteur de jeu incorrect");
-		// post:  getCharBox() == rh 
+		// post: getCharBox() == rh
 		if (!(getCharBox() == rh))
 			throw new PostconditionError("initialisation de la hitbox  incorrect");
 		if (notManipulable())
 			throw new PostconditionError("le figghter doit etre manipulable a linitiialisation");
 		if (isBlocking())
 			throw new PostconditionError("le fighter doit etre sans protection a linitialisation");
-
 
 	}
 
@@ -175,15 +178,22 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		}
 	}
 
+		// pre: !notManipulable() && !isCrouch()
+		// \post : getPositionX()@pre=getPositionX()
+		// \post : getPositionY()@pre=getPositionY()
+		// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
+
 	@Override
 	public void crouch() {
 		// precondition
-		// \pre: startTech(tech) requires ¬notManipulable()
+		// \pre:  ¬notManipulable()
 		if (notManipulable()) {
 			throw new PreconditionError("le personnage n'est pas sous control");
 		}
-		
-		
+		// \pre: ¬isCrouch()
+		if (isCrouch()) {
+			throw new PreconditionError("le personnage est dejas en mode crouche");
+		}
 
 		// preInvariants
 		checkInvariant();
@@ -192,6 +202,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		int positionxPre = getDelegate().getPositionX();
 		int positionyPre = getDelegate().getPositionY();
 		int heightHitBoxPre = getDelegate().getCharBox().getHeight();
+		boolean isCrouchPre = getDelegate().isCrouch();
 		// run
 		getDelegate().crouch();
 
@@ -208,10 +219,51 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		if (!(positionyPre == getPositionY())) {
 			throw new PostconditionError("erreur de positionnement lors du crouch 'Y'");
 		}
-		// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
-		if(!(getDelegate().getCharBox().getHeight()==heightHitBoxPre/2))
-			throw new PostconditionError("erreur du redimensienement de l hitbox du fighter");
-			
+		// \post :getCharBox().getHeight() = getCharBox()@pre.getHeight()/2
+			if (!(getDelegate().getCharBox().getHeight() == heightHitBoxPre /2 ))
+				throw new PostconditionError("erreur du redimensienement de l hitbox du fighter");
+
+	}
+
+	@Override
+	public void rise() {
+		// precondition
+		// \pre: ¬notManipulable()
+		if (notManipulable()) {
+			throw new PreconditionError("le personnage n'est pas sous control");
+		}
+		// \pre : isCrouch()
+		if (isCrouch()) {
+			throw new PreconditionError("le personnage n'est pas sous control");
+		}
+
+		// preInvariants
+		checkInvariant();
+
+		// captures
+		int positionxPre = getDelegate().getPositionX();
+		int positionyPre = getDelegate().getPositionY();
+		int heightHitBoxPre = getDelegate().getCharBox().getHeight();
+		// run
+		getDelegate().rise();
+
+		// preInvariants
+		checkInvariant();
+
+		// postCondition
+		// \post : getPositionX()@pre=getPositionX()
+		if (!(positionxPre == getPositionX())) {
+			throw new PostconditionError("erreur de positionnement lors du crouch 'X'");
+		}
+
+		// \post : getPositionY()@pre=getPositionY()
+		if (!(positionyPre == getPositionY())) {
+			throw new PostconditionError("erreur de positionnement lors du crouch 'Y'");
+		}
+		// \post : getCharBox().getHeight() = getCharBox()@pre.getHeight()*2
+			if (!(getDelegate().getCharBox().getHeight() == heightHitBoxPre * 2))
+				throw new PostconditionError("erreur du redimensienement de l hitbox du fighter");
+
 	}
 
 	@Override
@@ -358,7 +410,8 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			}
 		}
 		// \post: if (!(notManipulable()@pre || isBlocking()@pre) &&
-		// (getPositionX()@pre <= getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
+		// (getPositionX()@pre <=
+		// getEngine()@pre.getWidth()-getSpeed()@pre-getCharBox().getWidth()) &&
 		// (\forall i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
@@ -373,7 +426,8 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 			}
 		}
 		// \post: if ( !(notManipulable()@pre || isBlocking()@pre)
-		// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre -getCharBox().getWidth()) &&
+		// &&(getPositionX()@pre > getEngine()@pre.getWidth()-getSpeed()@pre
+		// -getCharBox().getWidth()) &&
 		// (\exists i: int { getEngine()@pre.getChar(i) == self)
 		// ||
 		// !getCharBox().collidesWith(getEngine()@pre.getChar(i).getCharBox())))
@@ -506,7 +560,7 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 
 	@Override
 	public void step(COMMAND c) {
-		//super.step(c);
+		// super.step(c);
 		// \post : c == JUMP => (step(c) == jump())
 		// \post : c == CROUCH => (step(c) == crouch())
 		// \post : c == LEFT => (step(c) == moveLeft(c))
