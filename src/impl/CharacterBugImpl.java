@@ -113,7 +113,8 @@ public class CharacterBugImpl implements CharacterService {
 		hit.moveTo(getPositionX()+getSpeed(),getPositionY());
 		if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
 			if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
-				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				// bug 
+				positionX = positionX + speed;
 				getCharBox().moveTo(this.positionX, this.positionY);
 			}
 		}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){

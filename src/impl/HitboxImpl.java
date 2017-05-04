@@ -35,7 +35,6 @@ public class HitboxImpl implements HitboxService {
 
 	@Override
 	public boolean equalsTo(HitboxService h) {
-		// bug
 		return this ==h;
 	}
 

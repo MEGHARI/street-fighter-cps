@@ -19,7 +19,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	private boolean isTech;
 	private boolean isTechHasAlreadyHit;
 	private Tech tech;
-	public Tech[] techs;
+	private Tech[] techs;
 	private RectangleHitboxContract hitTechs[];
 	private RectangleHitboxService charBox;
 	private int cptHstunned = 0;
@@ -235,7 +235,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					isTechHasAlreadyHit = false;
 				} else if (techFrame > tech.getRframe() + tech.getHframe() + tech.getSframe()) {
 					isTech = false;
-					tech = null;
+					//tech = null;
 				}
 			} else if (isBlockstunned) {
 				cptBstunned++;

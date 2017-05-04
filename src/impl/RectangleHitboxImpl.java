@@ -53,15 +53,7 @@ public class RectangleHitboxImpl extends HitboxImpl implements RectangleHitboxSe
 				for (int j = getPositionY(); j < height+getPositionY(); j++)
 					if (h.belongsTo(i,j))
 						return true;
-			
-			
-		/*	System.out.println("coucou");
-			return positionX < ((RectangleHitboxService) h).getPositionX() + ((RectangleHitboxService) h).getWidth()
-					&& positionX > ((RectangleHitboxService) h).getPositionX()
-					&& positionY < ((RectangleHitboxService) h).getPositionY()
-							+ ((RectangleHitboxService) h).getHeight()
-					&& height + positionY > ((RectangleHitboxService) h).getPositionY();
-		*/
+
 		}
 
 		else

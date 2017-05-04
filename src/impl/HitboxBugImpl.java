@@ -4,8 +4,8 @@ import services.HitboxService;
 
 public class HitboxBugImpl implements HitboxService {
 
-	private int positionX;
-	private int positionY;
+	protected int positionX;
+	protected int positionY;
 
 	@Override
 	public void init(int x, int y) {
@@ -25,7 +25,8 @@ public class HitboxBugImpl implements HitboxService {
 
 	@Override
 	public boolean belongsTo(int x, int y) {
-		return this.positionX == x && this.positionY == y;
+		// bug
+		return this.positionX == x || this.positionY == y;
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class HitboxBugImpl implements HitboxService {
 
 	@Override
 	public boolean equalsTo(HitboxService h) {
-		return belongsTo(h.getPositionX(), h.getPositionY());
+		return this ==h;
 	}
 
 	@Override
@@ -45,8 +46,8 @@ public class HitboxBugImpl implements HitboxService {
 	}
 	
 	@Override
-	public HitboxImpl clone(){
-		HitboxImpl h = new HitboxImpl();
+	public HitboxBugImpl clone(){
+		HitboxBugImpl h = new HitboxBugImpl();
 		h.init(positionX,positionY);
 		return h;
 	}

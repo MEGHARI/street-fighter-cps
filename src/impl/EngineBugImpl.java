@@ -11,6 +11,8 @@ public class EngineBugImpl implements EngineService {
 	private int width;
 	private PlayerService player[] = new PlayerService[2];
 	private boolean gameOver;
+	
+	
 
 	@Override
 	public int getHeight() {
@@ -24,40 +26,45 @@ public class EngineBugImpl implements EngineService {
 
 	@Override
 	public boolean isGameOver() {
+		gameOver = getChar(1).isDead() || getChar(2).isDead();
 		return gameOver;
 	}
 
 	@Override
 	public CharacterService getChar(int i) {
-		return player[i].getCharacter();
+		return player[i-1].getCharacter();
 	}
 
 	@Override
 	public PlayerService getPlayer(int i) {
-		return player[i];
+		return player[i-1];
 	}
 
 	@Override
 	public void init(int w, int h, int s, PlayerService p1, PlayerService p2) {
 		this.height = h;
 		this.width = w;
-		this.player[0] = p1.getNum() == 1 ? p1:p2;
-		this.player[1] = p1.getNum() == 2 ? p1:p2;;
-		player[0].getCharacter().setPositions(w/2 - s/2, 0);
+		this.player[0] = p1;
+		this.player[1] = p2;
 		// bug
-		player[0].getCharacter().initFace(false);
+		getChar(1).setPositions(w/2, 0);
 		// bug
-		player[1].getCharacter().setPositions(w/2 + s, 0);
-		// bug
-		player[1].getCharacter().initFace(true);
+		getChar(1).initFace(false);
+		getChar(2).setPositions(w/2 + s/2, 0);
+		getChar(2).initFace(false);
 		
 	}
 
 	@Override
 	public void step(COMMAND c1, COMMAND c2) {
-		player[0].getCharacter().step(c1);
-		player[1].getCharacter().step(c2);
-		// bug
+		if(!gameOver) {
+			getChar(1).step(c1);
+			getChar(2).step(c2);
+			
+		}else {
+			System.out.println("game over");
+		}
 	}
+	
 
 }

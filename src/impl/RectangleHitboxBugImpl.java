@@ -28,8 +28,8 @@ public class RectangleHitboxBugImpl extends HitboxImpl implements RectangleHitbo
 	@Override
 	public void init(int x, int y, int w, int h) {
 		init(x, y);
-		this.positionX = x;
-		this.positionY = y;
+		this.width = w;
+		this.height = h;
 
 	}
 
@@ -48,44 +48,26 @@ public class RectangleHitboxBugImpl extends HitboxImpl implements RectangleHitbo
 
 	@Override
 	public boolean collidesWith(HitboxService h) {
+		// bug
 		if (h instanceof RectangleHitboxService){
 			for (int i = getPositionX(); i < width+getPositionX(); i++)
 				for (int j = getPositionY(); j < height+getPositionY(); j++)
 					if (h.belongsTo(i,j))
 						return true;
-			
-			
-		/*	System.out.println("coucou");
-			return positionX < ((RectangleHitboxService) h).getPositionX() + ((RectangleHitboxService) h).getWidth()
-					&& positionX > ((RectangleHitboxService) h).getPositionX()
-					&& positionY < ((RectangleHitboxService) h).getPositionY()
-							+ ((RectangleHitboxService) h).getHeight()
-					&& height + positionY > ((RectangleHitboxService) h).getPositionY();
-		*/
 		}
-
-		else
-			for (int i = 0; i < width; i++)
-				for (int j = 0; j < height; j++)
-					if (h.belongsTo(i + positionX, j + positionY))
-						return true;
 
 		return false;
 	}
 
 	@Override
 	public boolean equalsTo(HitboxService h) {
+		// bug
 		if (h instanceof RectangleHitboxService)
 			return ((RectangleHitboxService) h).getPositionX() == positionX
 					&& ((RectangleHitboxService) h).getPositionY() == positionY
 					&& ((RectangleHitboxService) h).getHeight() == height
 					&& ((RectangleHitboxService) h).getWidth() == width;
-		else
-			for (int i = 0; i < width; i++)
-				for (int j = 0; j < height; j++)
-					if (!h.belongsTo(i + positionX, j + positionY))
-						return false;
-		return true;
+		return false;
 	}
 
 	@Override

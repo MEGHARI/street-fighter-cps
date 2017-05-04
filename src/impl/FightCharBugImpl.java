@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.FightCharContract;
 import contracts.HitboxContract;
 import contracts.RectangleHitboxContract;
 import data.Tech;
@@ -18,19 +19,25 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	private boolean isTech;
 	private boolean isTechHasAlreadyHit;
 	private Tech tech;
-	private Tech[] techs;
+	public Tech[] techs;
+	private RectangleHitboxContract hitTechs[];
 	private RectangleHitboxService charBox;
-	private boolean isCrouch;
+	private int cptHstunned = 0;
+	private int cptBstunned = 0;
+	private int height;
+	private boolean isCrouch = false;
+
 
 	@Override
 	public void init(NAME name, int l, int s, boolean f, EngineService e, RectangleHitboxService rh) {
 		super.init(name, l, s, f, e);
 		rh.moveTo(getPositionX(), getPositionY());
 		isBlocking = false;
+		height = rh.getHeight();
 		this.charBox = rh;
-		techs = new Tech[] { new Tech(40, 5, 3, 2, 5, 2), new Tech(40, 2, 3, 2, 4, 2) };
-
+		techs = new Tech[] { new Tech(30, 5, 3, 2, 5, 2), new Tech(10, 2, 3, 2, 4, 2) };
 	}
+
 	public RectangleHitboxService getCharBox() {
 		return charBox;
 	}
@@ -61,6 +68,11 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	}
 
 	@Override
+	public boolean isCrouch() {
+		return isCrouch;
+	}
+
+	@Override
 	public Tech getTech() {
 		return tech;
 	}
@@ -69,22 +81,16 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	public int getTechFrame() {
 		return techFrame;
 	}
-	
-	@Override
-	public boolean isCrouch() {
-		return isCrouch;
-	}
 
 	@Override
 	public boolean isTechHasAlreadyHit() {
-		// TODO Auto-generated method stub
 		return isTechHasAlreadyHit;
 	}
 
 	@Override
 	public void startTech(Tech tech) {
 		if (!notManipulable()) {
-			isTech = true;
+			// bug
 			this.tech = tech;
 			this.techFrame = 0;
 		}
@@ -94,36 +100,38 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	@Override
 	public void moveLeft() {
 		// bug
-		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
-		hit.moveTo(getPositionX() - getSpeed(), getPositionY());
-		if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
-			if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
-				positionX = Math.max(0, positionX - speed);
-				getCharBox().moveTo(this.positionX, this.positionY);
+			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
+			hit.moveTo(getPositionX() - getSpeed(), getPositionY());
+			if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
+				if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
+					positionX = Math.max(0, positionX - (speed));
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
+				if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
+					positionX = Math.max(0, positionX - speed);
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
 			}
-		} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
-			if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
-				positionX = Math.max(0, positionX - speed);
-				getCharBox().moveTo(this.positionX, this.positionY);
-			}
-		}
 
+		
 	}
 
 	@Override
 	public void moveRight() {
-		// bug
-		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
-		hit.moveTo(getPositionX() + getSpeed(), getPositionY());
-		if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
-			if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
-				positionX = Math.min(positionX + speed, getEngine().getWidth());
-				getCharBox().moveTo(this.positionX, this.positionY);
-			}
-		} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
-			if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
-				positionX = Math.min(positionX + speed, getEngine().getWidth());
-				getCharBox().moveTo(this.positionX, this.positionY);
+		if (!(notManipulable() || isBlocking())) {
+			RectangleHitboxContract hit = (RectangleHitboxContract) this.getCharBox().clone();
+			hit.moveTo(getPositionX() + getSpeed(), getPositionY());
+			if (getEngine().getChar(1).getCharBox() != this.getCharBox()) {
+				if (!(hit.collidesWith(getEngine().getChar(1).getCharBox()))) {
+					positionX = Math.min(positionX + speed, getEngine().getWidth() - getCharBox().getWidth());
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
+			} else if (getEngine().getChar(2).getCharBox() != this.getCharBox()) {
+				if (!(hit.collidesWith(getEngine().getChar(2).getCharBox()))) {
+					positionX = Math.min(positionX + speed, getEngine().getWidth() - getCharBox().getWidth());
+					getCharBox().moveTo(this.positionX, this.positionY);
+				}
 			}
 		}
 
@@ -138,13 +146,16 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 
 	@Override
 	public void jump() {
-		// TODO Auto-generated method stub
+		if (!notManipulable()) {
+
+		}
 
 	}
 
 	@Override
 	public void crouch() {
-		if (!notManipulable()) {
+		// bug
+		if (notManipulable()) {
 			if (!isCrouch) {
 				getCharBox().resize(getCharBox().getWidth(), (getCharBox().getHeight()) / 2);
 				isCrouch = true;
@@ -173,65 +184,113 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 
 	@Override
 	public void step(COMMAND c) {
-		switch (c) {
-		case LEFT:
-			moveLeft();
-			break;
-		case RIGHT:
-			moveRight();
-			break;
-		case JUMP:
-			jump();
-			break;
-		case CROUCH:
-			crouch();
-			break;
-		case TECH_1:
-			startTech(techs[0]);
-			break;
-		case TECH_2:
-			startTech(techs[1]);
-			break;
-		case JUMP_TECH_1:
-			break;
-		case JUMP_TECH_2:
-			break;
-		case CROUCH_TECH_1:
-			break;
-		case CROUCH_TECH_2:
-			break;
-		case PROTECT:
-			startBlock();
-			break;
-		default:
-			break;
-		}
+		// bug
+		if (isDead()) {
+			FightCharContract autherFighter = getEngine().getChar(1).getCharBox() == this.getCharBox()
+					? (FightCharContract) (getEngine().getChar(2))
+					: (FightCharContract) (getEngine().getChar(1));
+			RectangleHitboxContract rectech = new RectangleHitboxContract(new RectangleHitboxImpl());
+			
 
-		if (isTeching()) {
-			FightCharService autherFighter = getEngine().getChar(1) == this ? (FightCharService) getEngine().getChar(1)
-					: (FightCharService) getEngine().getChar(2);
-
-			techFrame++;
-			if (techFrame <= tech.getSframe()) {
-
-			} else if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() && !isTechHasAlreadyHit) {
-				if (getCharBox().collidesWith(autherFighter.getCharBox())) {
-					isTechHasAlreadyHit = true;
-					if (autherFighter.isBlocking()) {
-						autherFighter.setBlokstunned(true);
-					} else {
-						autherFighter.setHitstunned(true);
-						autherFighter.updateLife(tech.getDamage());
+			if (isTech) {
+				
+				this.techFrame++;
+				System.out.println(techFrame);
+				if (getCharBox() == getEngine().getChar(2).getCharBox()) {
+					if(getTech() == techs[0]) {
+						rectech.init(this.getPositionX() - 130, getCharBox().getHeight() - 50, 130, 50);
+					System.out.println("techs[0]");	
 					}
+					else
+						
+						rectech.init(this.getPositionX() - 130, getCharBox().getHeight() - 50, 130, 50);
+
+				} else {
+					if(getTech() == techs[0]) {
+						rectech.init(this.getPositionX() + getCharBox().getWidth(), getCharBox().getHeight() - 50, 130, 50);
+					}
+					else
+						rectech.init(this.getPositionX() + getCharBox().getWidth(),0, 130, 50);
+						//rectech.init(this.getPositionX() + getCharBox().getWidth(), getCharBox().getHeight() - 50, 130, 50);
+
+				}
+				if (techFrame > tech.getSframe() && techFrame <= tech.getHframe() + tech.getSframe()
+						&& !isTechHasAlreadyHit) {
+
+					if (tech.hitbox(rectech.getPositionX(), rectech.getPositionY(), rectech.getWidth(),
+							rectech.getHeight()).collidesWith(autherFighter.getCharBox()) && !isTechHasAlreadyHit) {
+						isTechHasAlreadyHit = true;
+						System.out.println("essa");
+						if (autherFighter.isBlocking()) {
+							autherFighter.setBlokstunned(true);
+							System.out.println("l'adversaire s'est protégé");
+						} else {
+							autherFighter.setHitstunned(true);
+							autherFighter.updateLife(tech.getDamage());
+							System.out.println("l'adversaire ne s'est pas protégé");
+						}
+					}
+
+				} else if (techFrame > tech.getHframe() + tech.getSframe()
+						&& techFrame <= tech.getRframe() + tech.getHframe() + tech.getSframe()) {
+					isTechHasAlreadyHit = false;
+				} else if (techFrame > tech.getRframe() + tech.getHframe() + tech.getSframe()) {
+					isTech = false;
+					//tech = null;
+				}
+			} else if (isBlockstunned) {
+				cptBstunned++;
+				if (cptBstunned == autherFighter.getTech().getBstun()) {
+					this.setBlokstunned(false);
 				}
 
-			} else if (techFrame > tech.getHframe() && techFrame <= tech.getRframe()) {
-				isTechHasAlreadyHit = false;
+			} else if (isHitstunned) {
+				cptHstunned++;
+				if (cptHstunned >autherFighter.getTech().getHstun()) {
+					this.setHitstunned(false);
+
+				}
 			} else {
-				isTech = false;
-				tech = null;
+
+				switch (c) {
+				case LEFT:
+					moveLeft();
+					break;
+				case RIGHT:
+					moveRight();
+					break;
+				case JUMP:
+					rise();
+					jump();
+					break;
+				case CROUCH:
+					crouch();
+					break;
+				case TECH_1:
+					if(isCrouch)
+						startTech(techs[1]);
+					else
+						startTech(techs[0]);
+					break;
+				case TECH_2:
+					startTech(techs[1]);
+					break;
+				case PROTECT:
+					startBlock();
+					break;
+				case RIZE:
+					rise();
+					break;
+				case ENDPROTECT:
+					isBlocking = false;
+					break;
+				default:
+					break;
+				}
 			}
-		}
+		} else
+			System.out.println();
+
 	}
 
 	public void setBlokstunned(boolean bool) {
@@ -243,8 +302,8 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	}
 
 	public void updateLife(int damage) {
-		if(damage > 0) {
-			life= Math.max(0, life-damage);
+		if (damage > 0) {
+			life = Math.max(0, life - damage);
 		}
 	}
 
