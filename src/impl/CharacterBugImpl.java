@@ -1,5 +1,6 @@
 package impl;
 
+import contracts.HitboxContract;
 import enums.COMMAND;
 import enums.NAME;
 import services.CharacterService;
@@ -8,15 +9,14 @@ import services.HitboxService;
 
 public class CharacterBugImpl implements CharacterService {
 
-	private int positionX;
-	private int positionY;
-	private NAME name;
-	private EngineService engine;
-	private HitboxService charBox;
-	private int life;
-	private int speed;
-	private boolean faceRight;
-	private boolean dead ;
+	protected int positionX;
+	protected int positionY;
+	protected NAME name;
+	protected EngineService engine;
+	protected HitboxService charBox;
+	protected int life;
+	protected int speed;
+	protected boolean faceRight;
 
 	@Override
 	public int getPositionX() {
@@ -27,6 +27,7 @@ public class CharacterBugImpl implements CharacterService {
 	public int getPositionY() {
 		return positionY;
 	}
+
 	@Override
 	public NAME getName() {
 		return name;
@@ -59,45 +60,75 @@ public class CharacterBugImpl implements CharacterService {
 
 	@Override
 	public boolean isDead() {
-		return dead;
+		return (getLife()<= 0);
 	}
 
 	@Override
-	public void init(NAME name,int l, int s, boolean f, EngineService e) {
+	public void init(NAME name, int l, int s, boolean f, EngineService e) {
 		this.name = name;
 		this.life = l;
-		this.dead = false;
 		this.speed = s;
 		this.faceRight = f;
 		this.engine = e;
+		this.charBox = new HitboxContract(new HitboxImpl());
+		this.charBox.init(getPositionX(), getPositionY());
+
 	}
-	
+
 	@Override
 	public void setPositions(int x, int y) {
-		this.positionX =x;
-		this.positionY =y;	
+		this.positionX = x;
+		this.positionY = y;
+		getCharBox().moveTo(x, y);
 	}
-	
+
 	@Override
 	public void initFace(boolean face) {
 		faceRight = face;
-		
+
 	}
 
 	@Override
 	public void moveLeft() {
-		positionX -=speed;
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX()-getSpeed(),getPositionY());
+		if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+				// bug
+				positionX = Math.max(0, positionX);
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+				// bug
+				positionX = Math.max(0, positionX );
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
 	}
 
 	@Override
 	public void moveRight() {
-		positionX +=speed; 
+		HitboxContract hit = (HitboxContract) this.getCharBox().clone();
+		hit.moveTo(getPositionX()+getSpeed(),getPositionY());
+		if(getEngine().getChar(1).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(1).getCharBox()))){
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}else if(getEngine().getChar(2).getCharBox() != this.getCharBox()){
+			if(!(hit.collidesWith(getEngine().getChar(2).getCharBox()))){
+				positionX = Math.min(positionX + speed, getEngine().getWidth());
+				getCharBox().moveTo(this.positionX, this.positionY);
+			}
+		}
 	}
-	
-	
+
 	@Override
 	public void switchSide() {
 		faceRight = !faceRight;
+		getCharBox().moveTo(this.positionX, this.positionY);
+
 	}
 
 	@Override
@@ -111,14 +142,19 @@ public class CharacterBugImpl implements CharacterService {
 			break;
 		case NEUTRAL:
 			break;
+		default:
+			break;
+
 		}
 	}
+
+
+
 	
 	@Override
 	public CharacterBugImpl clone(){
 		CharacterBugImpl ci = new CharacterBugImpl();
 		ci.charBox = charBox.clone();
-		ci.dead = dead;
 		ci.engine = engine;
 		ci.faceRight = faceRight;
 		ci.life = life;
@@ -126,6 +162,7 @@ public class CharacterBugImpl implements CharacterService {
 		ci.positionX = positionX;
 		ci.positionY = positionY;
 		ci.speed = speed;
+	
 		return ci;
 	}
 }

@@ -245,7 +245,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 			} else if (isHitstunned) {
 				cptHstunned++;
-				if (cptHstunned >= autherFighter.getTech().getHstun()) {
+				if (cptHstunned >autherFighter.getTech().getHstun()) {
 					this.setHitstunned(false);
 
 				}
@@ -266,7 +266,10 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 					crouch();
 					break;
 				case TECH_1:
-					startTech(techs[0]);
+					if(isCrouch)
+						startTech(techs[1]);
+					else
+						startTech(techs[0]);
 					break;
 				case TECH_2:
 					startTech(techs[1]);
