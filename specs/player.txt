@@ -1,16 +1,27 @@
 Service : player
-type : int,String,Command
-
+type : int,String
+use:Character
+ 
 Observators:
 character[player]->Character
 numPlayer[player]->int
-command[player] ->Command
+
 
 
 Constructors:
-/* MAJ */ init: int -> [player]
-
+pre init(p,n) require n == 1 || n == 2
+init[player] * int -> [player]
 Operators :
-selectCharacter[player]-> Character
-pressCommand[player]->[player]
+selectCharacter[player] * Character -> player
+
+
+
+Observations:
+
+[init]
+numPlayer(init(p,n)) == n
+
+[selectCharacter]
+character(selectCharacter(p,c))==c
+
 

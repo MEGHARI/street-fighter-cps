@@ -1,6 +1,7 @@
 Service: FightChar 
 refines: Character
-
+type:bool,int
+use : HitBox
 Observators:
 
 	notManipulable: [FightChar] -> bool
@@ -85,7 +86,7 @@ Observation:
 
 	positionY(moveRight(C)) = positionY(C)
 [startBloking]
-	isBloking = false;
+	isBloking = true;
 [switchSide]
 	faceRight(switchSide(C)) != faceRight(C)
 	positionX(switchSide(C)) = positionX(C)
@@ -102,3 +103,5 @@ Observation:
 	step(C, NEUTRAL) = C
 	step(C, JUMP) = jump(C)
 	step(C, CROUCH) = crouch(C)
+	step(C,PROTECT) = startProtect(C)
+	step(C,RIZE) = rize(C)

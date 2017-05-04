@@ -245,7 +245,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 
 			} else if (isHitstunned) {
 				cptHstunned++;
-				if (cptHstunned > autherFighter.getTech().getHstun()) {
+				if (cptHstunned >= autherFighter.getTech().getHstun()) {
 					this.setHitstunned(false);
 
 				}
