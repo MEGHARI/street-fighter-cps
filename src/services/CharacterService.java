@@ -101,7 +101,6 @@ public interface CharacterService {
 	// \post: getPositionX() == getPositionX()@pre
 	// \post: getPositionY() == getPositionY()@pre
 	public void switchSide();
-	// \pre : c ∈ {RIGHT, LEFT, NEUTRAL }
 	// \pre : !isDead()
 	// \post : c == LEFT => (step(c) == moveLeft())
 	// \post : c == RIGHT => (step(c) == moveRight())

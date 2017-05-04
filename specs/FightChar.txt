@@ -1,7 +1,8 @@
 Service: FightChar 
 refines: Character
-type:bool,int
+type:bool,int,COMMAND {LEFT,RIGHT,JUMP,RIZE,NEUTRAL,PROTECT,CROUCH,ENDPROTECT,TECH_1, TECH_2}
 use : HitBox
+
 Observators:
 
 	notManipulable: [FightChar] -> bool

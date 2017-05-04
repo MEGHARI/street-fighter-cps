@@ -1,6 +1,6 @@
 Service:Engine
-Types:bool,int,Commande={LEFT, RIGHT, CROUCH, JUMP, NEUTRAL, TECH_1, TECH_2, PROTECT}
-
+Types:bool,int
+use : player
 Observators:
 	const height: [Engine] → int
 	const width: [Engine] → int

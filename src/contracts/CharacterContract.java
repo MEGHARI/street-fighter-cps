@@ -349,10 +349,6 @@ public class CharacterContract extends CharacterDecorator {
 		// pre: !isDead()
 		if (isDead())
 			throw new PreconditionError("Le personnage est KO");
-		// \pre : c ∈ {RIGHT, LEFT, NEUTRAL }
-		if(!(c==COMMAND.RIGHT || c == COMMAND.LEFT || c==COMMAND.NEUTRAL))
-			throw new PreconditionError("COMMANDE INVALIDE");
-
 		// preInvariants
 		checkInvariant();
 
