@@ -63,6 +63,14 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 	public boolean isCrouch() {
 		return getDelegate().isCrouch();
 	}
+	@Override
+	public int getJumpFrame() {
+		return getDelegate().getJumpFrame();
+	}
+	@Override
+	public boolean isJump() {
+		return getDelegate().isJump();
+	}
 
 	@Override
 	public Tech getTech() {
@@ -556,6 +564,29 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 				throw new PostconditionError("la vie doit etre etre == 0");
 
 		}
+	}
+	
+	@Override
+	public void startJump() {
+		// precondition
+		// pre : !isJump()
+		// post: isJump() = true
+		if(isJump())
+			throw new PreconditionError("le personage est dejas en mode jump");
+		//pre :!isHitstunned()
+		if(isHitstunned())
+			throw new PreconditionError("le personnage est etourdie");
+		// preInvariant
+		checkInvariant();
+		
+		getDelegate().startJump();
+		
+		// postInvariant
+		checkInvariant();
+		
+		// postCondition
+		if(!(isJump()))
+			throw new PostconditionError("le personnage devra etre en mode jump");
 	}
 
 	@Override

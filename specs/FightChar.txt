@@ -18,6 +18,8 @@ Observators:
 		pre techHasAlreadyHit(C) requires isTeching(C)
 	isCrouch:[FightChar] :bool
 	isRise:[FightChar] :bool
+	isJump:[FightChar] :bool
+	jumpFrame:[FightChar] :int
 Constructors:
 	init: String × int × int × bool × Engine x RectangleHitbox → [FightChar]
 		pre init(l,s,f,e,r) requires l > 0 ∧ s > 0
@@ -36,6 +38,8 @@ Operators:
 		pre updateLife(C, d) requires d > 0
 	rise :[FightChar]→ [FightChar]
 		pre rise(C) require ¬notManipulable(C) && isCrouch(C)
+	startJump :[FightChar]→ [FightChar]
+		pre startJump(c) require ¬isjump() && ¬isHitsStunned()
 	
 	
 
@@ -96,7 +100,8 @@ Observation:
 [updateLife]
 	life(C) >= d ⇒ life(updateLife(C,d)) = life(C) - d
 	life(C) < d ⇒ life(updateLife(C,d)) = 0
-	
+[startJump]
+	isJump(startJump(c)) = true
 	
 [step]
 	step(C, LEFT) = moveLeft(C)

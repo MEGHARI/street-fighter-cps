@@ -20,6 +20,10 @@ public interface FightCharService extends /* refine */ CharacterService {
 	public boolean isTeching();
 
 	public boolean isCrouch();
+	
+	public boolean isJump();
+	
+	public int getJumpFrame();
 
 	// pre: isTeching()
 	public Tech getTech();
@@ -152,7 +156,10 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// post : getLife()@pre >= dammage => getLife() = getLife()@pre -damage
 	// post : getLife()@pre < damage =>getLife() =0
 	public void updateLife(int dammage);
-
+	
+	// pre : !isJump() && !isHitstunned()
+	// post: isJump() = true
+	public void startJump();
 	// @Override
 	public FightCharService clone();
 

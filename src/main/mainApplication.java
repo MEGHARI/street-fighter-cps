@@ -1,5 +1,7 @@
 package main;
 
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+
 import contracts.EngineContract;
 import contracts.FightCharContract;
 import contracts.PlayerContract;
@@ -91,9 +93,9 @@ public class mainApplication extends Application {
 
 		joueur1 = new Rectangle();
 		joueur1.setFill(Color.RED);
-		joueur1.setHeight(171);
+		joueur1.setHeight(170);
 		joueur1.setLayoutX(fighter1.getPositionX());
-		joueur1.setLayoutY(169);
+		joueur1.setLayoutY(170);
 		joueur1.setStroke(Color.BLACK);
 		joueur1.setStrokeType(StrokeType.INSIDE);
 		joueur1.setWidth(hitFighter1.getWidth());
@@ -121,7 +123,7 @@ public class mainApplication extends Application {
 		joueur2 = new Rectangle();
 		joueur2.setFill(Color.BLUE);
 		joueur2.setLayoutX(fighter2.getPositionX());
-		joueur2.setLayoutY(169);
+		joueur2.setLayoutY(170);
 		joueur2.setHeight(hitFighter2.getHeight());
 		joueur2.setStroke(Color.BLUE);
 		joueur2.setStrokeType(StrokeType.INSIDE);
@@ -134,10 +136,9 @@ public class mainApplication extends Application {
 		gameOver.setLayoutY(55.0);
 		gameOver.setPickOnBounds(true);
 		gameOver.setPreserveRatio(true);
-	
 
-		 anchore = new AnchorPane(vieJoueur1, vieJoueur2, rectTech1Joueur1, rectTech2Joueur1,
-				rectTech1Joueur2, rectTech2Joueur2, joueur1, joueur2);
+		anchore = new AnchorPane(vieJoueur1, vieJoueur2, rectTech1Joueur1, rectTech2Joueur1, rectTech1Joueur2,
+				rectTech2Joueur2, joueur1, joueur2);
 		anchore.setId("anchore");
 
 		Scene scene = new Scene(anchore, engine.getWidth(), engine.getHeight());
@@ -215,13 +216,11 @@ public class mainApplication extends Application {
 
 	}
 
-	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000 / 30), e -> {
+	KeyFrame keyFrame = new KeyFrame(Duration.millis(1000/30), e -> {
 		if (engine.isGameOver()) {
-			NAME winner = p1.getCharacter().isDead() ? p2.getCharacter().getName() : p1.getCharacter().getName();
 			anchore.getChildren().add(gameOver);
 			gameOver.setVisible(true);
 			timerThread.stop();
-			
 
 		} else {
 			engine.step(commandPlayer1, commandPlayer2);
@@ -277,6 +276,21 @@ public class mainApplication extends Application {
 			}
 
 		}
+
+		if (fighter1.getJumpFrame() >= 0 && fighter1.getJumpFrame() <= 3)
+			joueur1.setLayoutY(joueur1.getLayoutY() - fighter1.getPositionY());
+		else if (fighter1.getJumpFrame() > 3 && fighter1.getJumpFrame() <= 7) {
+			joueur1.setLayoutY(joueur1.getLayoutY() + fighter1.getPositionY());
+		}
+		
+
+		if (fighter2.getJumpFrame() >= 0 && fighter2.getJumpFrame() <= 3)
+			joueur2.setLayoutY(joueur2.getLayoutY() - fighter2.getPositionY());
+		else if (fighter2.getJumpFrame() > 3 && fighter2.getJumpFrame() <= 7) {
+			joueur2.setLayoutY(joueur2.getLayoutY() + fighter2.getPositionY());
+		} 
+
+		
 		joueur1.setLayoutX(fighter1.getPositionX());
 		joueur2.setLayoutX(fighter2.getPositionX());
 		vieJoueur1.setProgress((double) fighter1.getLife() / 100);

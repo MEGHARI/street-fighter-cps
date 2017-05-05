@@ -48,6 +48,14 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 	public int getTechFrame() {
 		return delegate.getTechFrame();
 	}
+	
+	public int getJumpFrame() {
+		return delegate.getJumpFrame();
+	}
+	
+	public boolean isJump() {
+		return delegate.isJump();
+	}
 
 	public boolean isTechHasAlreadyHit() {
 		return delegate.isTechHasAlreadyHit();
@@ -94,6 +102,9 @@ public class FightCharDecorator extends CharacterDecorator implements FightCharS
 	@Override
 	public void setBlokstunned(boolean b) {
 		delegate.setBlokstunned(b);
+	}
+	public void startJump() {
+		delegate.startJump();
 	}
 	
 	
