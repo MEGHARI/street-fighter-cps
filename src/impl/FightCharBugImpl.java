@@ -26,6 +26,8 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	private int cptBstunned = 0;
 	private int height;
 	private boolean isCrouch = false;
+	private boolean isJump;
+	private int jumpFrame;
 
 
 	@Override
@@ -86,7 +88,17 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	public boolean isTechHasAlreadyHit() {
 		return isTechHasAlreadyHit;
 	}
-
+	@Override
+	public int getJumpFrame() {
+		return jumpFrame;
+	}
+	
+	@Override
+	public boolean isJump() {
+		return isJump;
+	}
+	
+	
 	@Override
 	public void startTech(Tech tech) {
 		if (!notManipulable()) {
@@ -180,6 +192,13 @@ public class FightCharBugImpl extends CharacterImpl implements FightCharService 
 	public void startBlock() {
 		isBlocking = true;
 
+	}
+	@Override
+	public void startJump() {
+		if (!isJump && !notManipulable()) {
+			isJump = true;
+			jumpFrame = 0;
+		}
 	}
 
 	@Override

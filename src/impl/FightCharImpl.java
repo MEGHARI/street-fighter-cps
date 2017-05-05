@@ -164,27 +164,27 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	@Override
 	public void jump() {
 		jumpFrame++;
-		if (jumpFrame == 1) {
-			this.positionY = 50;
+		if (jumpFrame == 1 ) {
+			this.positionY = 30;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 	
 		} else if (jumpFrame == 2) {
-			this.positionY = 100;
+			this.positionY = 60;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 		} else if (jumpFrame == 3) {
-			this.positionY = 150;
+			this.positionY = 90;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 
 		} else if (jumpFrame == 4) {
-			this.positionY = 150;
+			this.positionY = 90;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 
 		} else if (jumpFrame == 5) {
-			this.positionY = 100;
+			this.positionY = 60;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 
 		}else if (jumpFrame == 6) {
-			this.positionY = 50;
+			this.positionY = 30;
 			this.getCharBox().moveTo(this.getPositionX(), this.positionY);
 
 		} else if (jumpFrame == 7) {
