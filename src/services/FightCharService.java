@@ -157,7 +157,7 @@ public interface FightCharService extends /* refine */ CharacterService {
 	// post : getLife()@pre < damage =>getLife() =0
 	public void updateLife(int dammage);
 	
-	// pre : !isJump() && !isHitstunned()
+	// pre : !isJump() && !notManipulable()
 	// post: isJump() = true
 	public void startJump();
 	// @Override

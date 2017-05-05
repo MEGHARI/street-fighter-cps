@@ -155,7 +155,7 @@ public class FightCharImpl extends CharacterImpl implements FightCharService {
 	}
 
 	public void startJump() {
-		if (!isJump && !isHitstunned) {
+		if (!isJump && !notManipulable()) {
 			isJump = true;
 			jumpFrame = 0;
 		}

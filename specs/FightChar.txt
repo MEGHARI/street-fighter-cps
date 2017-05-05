@@ -39,7 +39,7 @@ Operators:
 	rise :[FightChar]→ [FightChar]
 		pre rise(C) require ¬notManipulable(C) && isCrouch(C)
 	startJump :[FightChar]→ [FightChar]
-		pre startJump(c) require ¬isjump() && ¬isHitsStunned()
+		pre startJump(c) require ¬isjump() && ¬notManipulable(C)
 	
 	
 

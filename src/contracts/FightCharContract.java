@@ -573,8 +573,8 @@ public class FightCharContract extends CharacterContract implements FightCharSer
 		// post: isJump() = true
 		if(isJump())
 			throw new PreconditionError("le personage est dejas en mode jump");
-		//pre :!isHitstunned()
-		if(isHitstunned())
+		//pre :!notManipulable
+		if(notManipulable())
 			throw new PreconditionError("le personnage est etourdie");
 		// preInvariant
 		checkInvariant();
