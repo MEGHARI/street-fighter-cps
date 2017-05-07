@@ -129,13 +129,13 @@ public class mainApplication extends Application {
 		joueur2.setStrokeType(StrokeType.INSIDE);
 		joueur2.setWidth(hitFighter2.getWidth());
 
-		Image image = new Image("/images/gameOver.jpg");
+		/*Image image = new Image("/images/gameOver.jpg");
 		gameOver = new ImageView(image);
 		gameOver.setFitWidth(252.0);
 		gameOver.setLayoutX(200);
 		gameOver.setLayoutY(55.0);
 		gameOver.setPickOnBounds(true);
-		gameOver.setPreserveRatio(true);
+		gameOver.setPreserveRatio(true);*/
 
 		anchore = new AnchorPane(vieJoueur1, vieJoueur2, rectTech1Joueur1, rectTech2Joueur1, rectTech1Joueur2,
 				rectTech2Joueur2, joueur1, joueur2);
